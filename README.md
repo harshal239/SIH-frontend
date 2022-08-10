@@ -1,4 +1,4 @@
 # SIH-frontend
 
-## Team : 
+## TEAM : 
 - Shubham
