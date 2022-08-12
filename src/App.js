@@ -1,64 +1,55 @@
 // import logo from './logo.svg';
 import './App.css';
-import IndexNavbar from "./Components/Navbars/IndexNavbar";
+
+import { Routes, Route, useNavigate} from 'react-router-dom';
+
 // styles for this kit
 import "./assets/css/bootstrap.min.css";
 import "./assets/scss/now-ui-kit.scss?v=1.5.0";
 import "./assets/demo/demo.css?v=1.5.0";
 import "./assets/demo/nucleo-icons-page-styles.css?v=1.5.0";
 
+// import {useNavigate} from 'react-router-dom';
+import Index from 'views/Index';
+import NucleoIcons from 'views/NucleoIcons';
+import LoginPage from 'views/examples/LoginPage';
+import LandingPage from 'views/examples/LandingPage';
+import ProfilePage from 'views/examples/ProfilePage';
 
-// templates comp
-import Index from './views/Index';
-
-// views
-import Images from "./views/index-sections/Images.js";
-import BasicElements from "./views/index-sections/BasicElements.js";
-import Navbars from "./views/index-sections/Navbars.js";
-import Tabs from "./views/index-sections/Tabs.js";
-import Pagination from "./views/index-sections/Pagination.js";
-import Notifications from "./views/index-sections/Notifications.js";
-import Typography from "./views/index-sections/Typography.js";
-import Javascript from "./views/index-sections/Javascript.js";
-import Carousel from "./views/index-sections/Carousel.js";
-import NucleoIcons from "./views/index-sections/NucleoIcons.js";
-import CompleteExamples from "./views/index-sections/CompleteExamples.js";
-import SignUp from "./views/index-sections/SignUp.js";
-import Examples from "./views/index-sections/Examples.js";
-import Download from "./views/index-sections/Download.js";
+import IndexNavbar from 'Components/Navbars/IndexNavbar';
 
 function App() {
+  const nav = useNavigate();
   return (
     <div className="App">
-      <header className="App-header">
-        
-      </header>
+      <IndexNavbar />
 
-      <IndexNavbar/>
-      <div className="wrapper">
-        <Index/>
-        {/* <IndexHeader /> */}
-        {/* <div className="main">
-          <Images />
-          <BasicElements />
-          <Navbars />
-          <Tabs />
-          <Pagination />
-          <Notifications />
-          <Typography />
-          <Javascript />
-          <Carousel />
-          <NucleoIcons />
-          <CompleteExamples />
-          <SignUp />
-          <Examples />
-          <Download />
-        </div> */}
-        {/* <DarkFooter /> */}
-      </div>
-
-
-      <div style={{"height":"5000px"}}></div>
+      {/* <ul>
+        <li onClick={()=>nav('/allIndex')}>All Index</li>
+        <li onClick={()=>nav('/nucleo-icons')}>Nuclie Icons</li>
+        <li onClick={()=>nav('/landing-page')}>Landing Page</li>
+        <li onClick={()=>nav('profile-page')}>Profile Page</li>
+        <li onClick={()=>nav('/login-page')}>Login Page</li>
+      </ul> */}
+      <Routes>
+          <Route path="/allIndex" element={<Index/>} />
+          <Route
+            path="/nucleo-icons"
+            element={<NucleoIcons/>}
+          />
+          <Route
+            path="/landing-page"
+            element={<LandingPage/>}
+          />
+          <Route
+            path="/profile-page"
+            element={<ProfilePage/>}
+          />
+          <Route
+            path="/login-page"
+            element={<LoginPage/>}
+          />
+        </Routes>
     </div>
   );
 }

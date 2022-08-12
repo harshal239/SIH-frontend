@@ -5,13 +5,13 @@ import React from "react";
 // } from "reactstrap";
 
 // core components
-// import IndexNavbar from "components/Navbars/IndexNavbar.js";
+import IndexNavbar from "Components/Navbars/IndexNavbar.js";
 
-// import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
+import ExamplesNavbar from "Components/Navbars/ExamplesNavbar.js";
 
 
-// import IndexHeader from "components/Headers/IndexHeader.js";
-// import DarkFooter from "components/Footers/DarkFooter.js";
+import IndexHeader from "Components/Headers/IndexHeader.js";
+import DarkFooter from "Components/Footers/DarkFooter.js";
 
 // sections for this page
 import Images from "./index-sections/Images.js";
@@ -43,9 +43,9 @@ function Index() {
   });
   return (
     <>
-      {/* <IndexNavbar /> */}
+      <IndexNavbar />
       <div className="wrapper">
-        {/* <IndexHeader /> */}
+        <IndexHeader />
         <div className="main">
           <Images />
           <BasicElements />
@@ -64,7 +64,7 @@ function Index() {
           {/* <Examples /> */}
           <Download />
         </div>
-        {/* <DarkFooter /> */}
+        <DarkFooter />
       </div>
     </>
   );
