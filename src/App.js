@@ -16,6 +16,8 @@ import LoginPage from 'views/examples/LoginPage';
 import LandingPage from 'views/examples/LandingPage';
 import ProfilePage from 'views/examples/ProfilePage';
 
+import AicteProfile from 'Components/AICTE Profile/Profile';
+
 import IndexNavbar from 'Components/Navbars/IndexNavbar';
 
 function App() {
@@ -45,6 +47,7 @@ function App() {
             path="/profile-page"
             element={<ProfilePage/>}
           />
+          <Route path="/aicte-profile" element={<AicteProfile/>}/>
           <Route
             path="/login-page"
             element={<LoginPage/>}

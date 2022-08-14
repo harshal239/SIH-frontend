@@ -1,0 +1,86 @@
+.mapWrapper svg{
+    position: relative !important;
+}
+
+.sticky__index{
+    position: sticky;
+    top: 140px;
+    height: 300px;
+}
+
+.graph_index_list{
+    list-style: none;
+    font-size: 24px;
+}
+
+.graph_index_list li{
+    margin: 30px 0;
+}
+.graph_index_list li i{
+    margin: 10px;
+}
+
+.graph_index_list li{
+        display: flex;
+    position: relative;
+    color: #000000;
+
+}
+
+.graph_index_list li::after{
+    content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color:#f96332;
+  transform-origin: bottom right;
+}
+
+.graph_index_list .active::after{
+    transform: scaleX(1);
+  transform-origin: bottom left;
+  transition: transform 0.25s ease-out;
+}
+
+.graph_index_list .active{
+    font-weight: 600;
+    font-size: 28px;
+    margin-left: 30px;
+}
+
+
+.graph_container{
+    margin: 0 5%;
+    max-width: unset;
+}
+
+.graphs_left div{
+    margin: 150px 0;
+}
+
+.pie canvas {
+    height: 400px !important;
+    width: 400px !important;
+    margin: auto;
+}
+
+.filter_container{
+    position: sticky;
+    display: flex;
+    flex-wrap: wrap;
+    color:#000000;
+}
+
+.filter_row{
+    position: sticky;
+    top:85px;
+    flex-wrap: nowrap;
+}
+
+.drp_toggle{
+    color:#000000;
+}
+

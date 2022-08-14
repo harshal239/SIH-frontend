@@ -5,7 +5,7 @@ import { Container } from "reactstrap";
 
 // core components
 
-function ProfilePageHeader() {
+function AicteHeader() {
   let pageHeader = React.createRef();
 
   React.useEffect(() => {
@@ -38,20 +38,16 @@ function ProfilePageHeader() {
           <div className="photo-container">
             <img alt="..." src={require("assets/img/aicteLogo.png")}></img>
           </div>
-          <h3 className="title">Ryan Scheinder</h3>
-          <p className="category">Photographer</p>
+          <h3 className="title">AICTE</h3>
+          <p className="category">All India Council for Technical Education</p>
           <div className="content">
             <div className="social-description">
-              <h2>26</h2>
-              <p>Comments</p>
+              <h2>8999</h2>
+              <p>Total Institutions</p>
             </div>
             <div className="social-description">
-              <h2>26</h2>
-              <p>Comments</p>
-            </div>
-            <div className="social-description">
-              <h2>48</h2>
-              <p>Bookmarks</p>
+              <h2>21M</h2>
+              <p>Total Students</p>
             </div>
           </div>
         </Container>
@@ -60,4 +56,4 @@ function ProfilePageHeader() {
   );
 }
 
-export default ProfilePageHeader;
+export default AicteHeader;

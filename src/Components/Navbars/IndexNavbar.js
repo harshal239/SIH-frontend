@@ -91,31 +91,6 @@ function IndexNavbar() {
               <NavItem>             
                 <NavLink onClick={()=>nav('/login-page')}>Login Page</NavLink>
               </NavItem>
-              <UncontrolledDropdown nav>
-                <DropdownToggle
-                  caret
-                  color="default"
-                  href="#pablo"
-                  nav
-                  onClick={(e) => e.preventDefault()}
-                >
-                  <i className="now-ui-icons design_app mr-1"></i>
-                  <p>Components</p>
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem to="/index">
-                    <i className="now-ui-icons business_chart-pie-36 mr-1"></i>
-                    All components
-                  </DropdownItem>
-                  <DropdownItem
-                    href="https://demos.creative-tim.com/now-ui-kit-react/#/documentation/introduction?ref=nukr-index-navbar"
-                    target="_blank"
-                  >
-                    <i className="now-ui-icons design_bullet-list-67 mr-1"></i>
-                    Documentation
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
               <NavItem>
                 <NavLink onClick={()=>nav('/nucleo-icons')}>Nuclie Icons</NavLink>    
               </NavItem>
@@ -125,6 +100,10 @@ function IndexNavbar() {
               <NavItem>
                 <NavLink onClick={()=>nav('profile-page')}>Profile Page</NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink onClick={()=>nav('/aicte-profile')}>AICTE</NavLink>
+              </NavItem>
+              
             </Nav>
           </Collapse>
         </Container>
