@@ -55,6 +55,7 @@
 .graph_container{
     margin: 0 5%;
     max-width: unset;
+    width: 90%;
 }
 
 .graphs_left div{

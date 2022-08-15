@@ -23,10 +23,14 @@ import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, BarElement, T
 
 import { Pie, Bar } from 'react-chartjs-2';
 
-import { PieData, BarData} from "./dataset";
+import { PieData, BarData, Chart3dData, mapRegionData} from "../dataset";
 
 
 import DatamapsIndia from 'react-datamaps-india'
+
+
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
 
 import ScrollIntoView from 'react-scroll-into-view'
 
@@ -35,7 +39,7 @@ import useIntersection from "Components/CustomHooks/useIntersection";
 import AicteHeader from "./AicteHeader";
 import DefaultFooter from "Components/Footers/DefaultFooter.js";
 
-import styles from './profile.module.css';
+import styles from '../profile.module.css';
 
 function AicteProfile() {
   React.useEffect(() => {
@@ -78,9 +82,11 @@ function AicteProfile() {
 
   const pieRef = useRef();
   const barRef = useRef();
+  const diversityBarRef = useRef();
   const mapRef = useRef();
   const pieInViewport = useIntersection(pieRef, '-300px');
   const barInViewport = useIntersection(barRef, '-300px');
+  const diversityBarInViewport = useIntersection(diversityBarRef, '-300px');
   const mapInViewport = useIntersection(mapRef, '-300px');
   const statArray = [1,2,3,4,5,6];
   const filterArray = [1,2,3,4,5,6,7];
@@ -176,6 +182,11 @@ function AicteProfile() {
                       <span>Bar Chart</span>
                       </ScrollIntoView>
                     </li>
+                    <li className={diversityBarInViewport ? styles.active : ""}>
+                      <i className="now-ui-icons location_map-big"/>
+                      Employability Diversity
+                    </li>
+
                     <li className={mapInViewport ? styles.active : ""}>
                       <i className="now-ui-icons location_map-big"/>
                       Map
@@ -189,38 +200,41 @@ function AicteProfile() {
                   <div ref={barRef} id="barid">
                   <Bar options={barOptions} data={BarData}/>
                   </div>
+                  
+                  <div ref={diversityBarRef}>
+                    <HighchartsReact
+                        highcharts={Highcharts}
+                        options={Chart3dData}
+                    />
+                  </div>
                   <div className={styles.mapWrapper}  ref={mapRef}>
-                  <DatamapsIndia
-                    regionData={{
-                      Maharashtra: {
-                        value: 10,
-                      },
-                      Gujarat:{
-                        value: 60,
-                      }
-                    }}
-                    hoverComponent={({ value }) => {
-                      return (
-                        <>
-                          <p>{value.name}</p>
-                          <p>{value.value}</p>
-                        </>
-                      )
-                    }}
-                    mapLayout={{
-                      title: 'Title',
-                      legendTitle: 'Legend Title',
-                      startColor: '#FFDAB9',
-                      endColor: '#FF6347',
-                      hoverTitle: 'Count',
-                      noDataColor: '#f5f5f5',
-                      borderColor: '#8D8D8D',
-                      hoverBorderColor: '#8D8D8D',
-                      hoverColor: 'green',
-                    }}
-                  />
+                    <DatamapsIndia
+                      regionData={mapRegionData}
+                      hoverComponent={({ value }) => {
+                        return (
+                          <>
+                            <p>{value.name}</p>
+                            <p>{value.value}</p>
+                          </>
+                        )
+                      }}
+                      mapLayout={{
+                        title: 'Title',
+                        legendTitle: 'Legend Title',
+                        startColor: '#FFDAB9',
+                        endColor: '#FF6347',
+                        hoverTitle: 'Count',
+                        noDataColor: '#f5f5f5',
+                        borderColor: '#8D8D8D',
+                        hoverBorderColor: '#8D8D8D',
+                        hoverColor: 'green',
+                      }}
+                    />
 
                   </div>
+
+
+                    
                 </Col>
               </Row>
 

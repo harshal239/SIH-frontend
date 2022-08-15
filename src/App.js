@@ -12,11 +12,11 @@ import "./assets/demo/nucleo-icons-page-styles.css?v=1.5.0";
 // import {useNavigate} from 'react-router-dom';
 import Index from 'views/Index';
 import NucleoIcons from 'views/NucleoIcons';
-import LoginPage from 'views/examples/LoginPage';
 import LandingPage from 'views/examples/LandingPage';
-import ProfilePage from 'views/examples/ProfilePage';
 
 import AicteProfile from 'Components/AICTE Profile/Profile';
+import CollegeProfile from 'Components/College Profile/CollegeProfile';
+import Login from 'Components/Login/Login';
 
 import IndexNavbar from 'Components/Navbars/IndexNavbar';
 
@@ -35,6 +35,7 @@ function App() {
       </ul> */}
       <Routes>
           <Route path="/allIndex" element={<Index/>} />
+          <Route path="/login" element={<Login/>}/>
           <Route
             path="/nucleo-icons"
             element={<NucleoIcons/>}
@@ -44,13 +45,14 @@ function App() {
             element={<LandingPage/>}
           />
           <Route
-            path="/profile-page"
-            element={<ProfilePage/>}
+            path="/upload-record"
+            element={<Login/>}
           />
           <Route path="/aicte-profile" element={<AicteProfile/>}/>
+          <Route path="/college-profile" element={<CollegeProfile/>}/>
           <Route
-            path="/login-page"
-            element={<LoginPage/>}
+            path="sign-in"
+            element={<Login/>}
           />
         </Routes>
     </div>
