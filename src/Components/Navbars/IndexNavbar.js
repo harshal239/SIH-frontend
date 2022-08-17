@@ -81,15 +81,15 @@ function IndexNavbar() {
         <Container>
           <div className="navbar-translate">
             <NavbarBrand
-              href="#"
               target="_blank"
               id="navbar-brand"
+              onClick={()=>nav('/homepage')}
             >
               Campus Placement
             </NavbarBrand>
-            <UncontrolledTooltip target="#navbar-brand">
+            {/* <UncontrolledTooltip target="#navbar-brand">
               Designed by Invision. Coded by Creative Tim
-            </UncontrolledTooltip>
+            </UncontrolledTooltip> */}
             <button
               className="navbar-toggler navbar-toggler"
               onClick={() => {
@@ -115,25 +115,16 @@ function IndexNavbar() {
 
               {/* custom nav links */}
               <NavItem>
-                <NavLink onClick={()=>nav('/login')}>Login</NavLink>
-              </NavItem>
-              <NavItem>             
-                <NavLink onClick={()=>nav('/login-page')}>Login Page</NavLink>
+                <NavLink onClick={()=>nav('/sign-up')}>Sign-Up</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink onClick={()=>nav('/nucleo-icons')}>Nuclie Icons</NavLink>    
-              </NavItem>
-              <NavItem>
-                <NavLink onClick={()=>nav('/landing-page')}>Landing Page</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink onClick={()=>nav('profile-page')}>Profile Page</NavLink>
+                <NavLink onClick={()=>nav('/coorporate-profile')}>Coorporate</NavLink>    
               </NavItem>
               <NavItem>
                 <NavLink onClick={()=>nav('/aicte-profile')}>AICTE</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink onClick={()=>nav('/college-profile')}>PICT</NavLink>
+                <NavLink onClick={()=>nav('/college-profile')}>College</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink onClick={() => setModal1(true)}>Upload placement record</NavLink>

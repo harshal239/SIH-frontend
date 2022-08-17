@@ -44,6 +44,12 @@ export const BarData = {
         data: [65,87,12,32,9,76],
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
+      
+      {
+        label: 'Dataset 2',
+        data: [65,87,12,32,9,76],
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
     ],
   };
 
@@ -111,6 +117,33 @@ export const Chart3dData = {
     },
 
   ]
+}
+
+export const diversityData = {
+  labels,
+  datasets: [
+  {
+    label: "Minority",
+    data: [0, 1, 1, 0, 1, 1],
+    backgroundColor: 'rgba(53, 162, 235, 0.5)',
+  },
+  {
+    label: "Female",
+    data: [0, 1, 1, 2, 1, 1],
+    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+  },
+  {
+    label: "Male",
+    data: [1, 3, 2, 5, 2, 1],
+    backgroundColor: 'rgba(255, 206, 86, 1)',
+  },
+  {
+    label: "Placed",
+    data: [1, 5, 4, 7, 4, 3],
+    backgroundColor: 'rgba(53, 162, 235, 0.5)',
+  },
+  ]
+
 }
 
 export const mapRegionData = {

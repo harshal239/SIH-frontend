@@ -18,9 +18,9 @@ import {
   DropdownItem,
   UncontrolledTooltip,
   Modal,
-  ModalHeader,
+  ModalBody,
   ModalFooter,
-  ModalBody
+  ModalHeader,
 } from "reactstrap";
 
 import {
@@ -32,20 +32,17 @@ import {
   Title,
   Tooltip,
   Legend,
-  PointElement,
-  LineElement,
 } from "chart.js";
 
-import { Pie, Bar, Line } from "react-chartjs-2";
+import { Pie, Bar } from "react-chartjs-2";
 
 import {
   PieData,
   BarData,
   Chart3dData,
   mapRegionData,
-  LineData,
-  hbarData,
-} from "../dataset";
+  diversityData,
+} from "./dataset";
 
 import DatamapsIndia from "react-datamaps-india";
 
@@ -56,12 +53,11 @@ import ScrollIntoView from "react-scroll-into-view";
 
 import useIntersection from "Components/CustomHooks/useIntersection";
 // core components
-import CollegeHeader from "./CollegeHeader";
 import DefaultFooter from "Components/Footers/DefaultFooter.js";
 
-import styles from "../profile.module.css";
+import styles from "./profile.module.css";
 
-function CollegeProfile() {
+function Profile() {
   const [filterModal, setfilterModal] = useState(false);
   React.useEffect(() => {
     document.body.classList.add("profile-page");
@@ -83,8 +79,8 @@ function CollegeProfile() {
     LinearScale,
     BarElement,
     Title,
-    LineElement,
-    PointElement
+    Tooltip,
+    Legend
   );
 
   // dummy data for pie chart
@@ -102,25 +98,6 @@ function CollegeProfile() {
     },
   };
 
-  const hbarOptions = {
-    indexAxis: "y",
-    elements: {
-      bar: {
-        borderWidth: 2,
-      },
-    },
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "right",
-      },
-      title: {
-        display: true,
-        text: "Chart.js Horizontal Bar Chart",
-      },
-    },
-  };
-
   const pieRef = useRef();
   const barRef = useRef();
   const diversityBarRef = useRef();
@@ -128,13 +105,13 @@ function CollegeProfile() {
   const pieInViewport = useIntersection(pieRef, "-300px");
   const barInViewport = useIntersection(barRef, "-300px");
   const diversityBarInViewport = useIntersection(diversityBarRef, "-300px");
+  const mapInViewport = useIntersection(mapRef, "-300px");
   const statArray = [1, 2, 3, 4, 5, 6];
   const filterArray = [1, 2, 3, 4, 5, 6, 7];
 
   return (
     <>
       <div className="wrapper">
-        <CollegeHeader />
         <div className="section">
           <Container>
             <Row style={{ marginTop: -106 }}>
@@ -216,7 +193,6 @@ function CollegeProfile() {
             </ModalFooter>
           </Modal>
 
-
           <div className={`container ${styles.graph_container}`}>
             <div className={styles.filter_row}>
               <h3>Graphs and Charts</h3>
@@ -251,22 +227,28 @@ function CollegeProfile() {
 
             {/* main container for graph and charts */}
             <Row>
-              {/* graph nav index */}
               <Col md="3" className={styles.sticky__index}>
+                {/* <h2>Graphs and Charts</h2> */}
                 <ul className={styles.graph_index_list}>
                   <li className={pieInViewport ? styles.active : ""}>
                     <i className="now-ui-icons business_chart-pie-36"> </i>
-                    Salary Based Pie Chart
+                    Unemployability Distribution
                   </li>
+
                   <li className={barInViewport ? styles.active : ""}>
                     <i className="now-ui-icons business_chart-bar-32"> </i>
                     <ScrollIntoView selector="#barid" alignToTop={true}>
-                      <span>Gender Diversity</span>
+                      <span>Bar Chart</span>
                     </ScrollIntoView>
                   </li>
                   <li className={diversityBarInViewport ? styles.active : ""}>
                     <i className="now-ui-icons location_map-big" />
-                    Top 10 hiring Companies
+                    Employability Diversity
+                  </li>
+
+                  <li className={mapInViewport ? styles.active : ""}>
+                    <i className="now-ui-icons location_map-big" />
+                    Map
                   </li>
                 </ul>
               </Col>
@@ -275,10 +257,41 @@ function CollegeProfile() {
                   <Pie data={PieData} />
                 </div>
                 <div ref={barRef} id="barid">
-                  <Line options={barOptions} data={LineData} />
+                  <Bar options={barOptions} data={BarData} />
                 </div>
+
                 <div ref={diversityBarRef}>
-                  <Bar options={hbarOptions} data={hbarData} />
+                  <Bar options={barOptions} data={diversityData} />
+                </div>
+                {/* <div ref={diversityBarRef} className={styles.high_chart}>
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={Chart3dData}
+                  />
+                </div> */}
+                <div className={styles.mapWrapper} ref={mapRef}>
+                  <DatamapsIndia
+                    regionData={mapRegionData}
+                    hoverComponent={({ value }) => {
+                      return (
+                        <>
+                          <p>{value.name}</p>
+                          <p>{value.value}</p>
+                        </>
+                      );
+                    }}
+                    mapLayout={{
+                      title: "Title",
+                      legendTitle: "Legend Title",
+                      startColor: "#FFDAB9",
+                      endColor: "#FF6347",
+                      hoverTitle: "Count",
+                      noDataColor: "#f5f5f5",
+                      borderColor: "#8D8D8D",
+                      hoverBorderColor: "#8D8D8D",
+                      hoverColor: "green",
+                    }}
+                  />
                 </div>
               </Col>
             </Row>
@@ -290,4 +303,4 @@ function CollegeProfile() {
   );
 }
 
-export default CollegeProfile;
+export default Profile;

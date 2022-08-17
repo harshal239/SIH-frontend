@@ -58,6 +58,9 @@
     width: 90%;
 }
 
+.graphs_left{
+    overflow-x: hidden;
+}
 .graphs_left div{
     margin: 150px 0;
 }
@@ -76,12 +79,55 @@
 }
 
 .filter_row{
+    display: flex;
     position: sticky;
     top:85px;
     flex-wrap: nowrap;
+    z-index: 1;
+    justify-content: space-between;
 }
 
 .drp_toggle{
     color:#000000;
+}
+
+
+
+.modal_size{
+    background-color: aqua;
+    height: 100%;
+    margin: 0;
+    max-width: unset;
+}
+
+.modal__content  {
+    height: 100% !important;
+}
+
+.filter_row span{
+    display: none;
+}
+
+.high_chart{
+    height: 500px;
+}
+
+
+@media only screen and (max-width: 992px) {
+    .filter_row{
+        /* flex-wrap: wrap; */
+        justify-content: space-between;
+    }
+
+    .filter_row span{
+        display: block;
+    }
+
+    .filter_container{
+        display: none;
+    }
+    .sticky__index{
+        display: none;
+    }
 }
 

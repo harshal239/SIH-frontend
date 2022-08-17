@@ -12,9 +12,10 @@ import "./assets/demo/nucleo-icons-page-styles.css?v=1.5.0";
 // import {useNavigate} from 'react-router-dom';
 import Index from 'views/Index';
 import NucleoIcons from 'views/NucleoIcons';
-import LandingPage from 'views/examples/LandingPage';
 
-import AicteProfile from 'Components/AICTE Profile/Profile';
+import Landing from 'Components/Landing Page/Landing';
+import CoorporateProfile from 'Components/Coorporate Profile/CoorporateProfile';
+import AicteProfile from 'Components/AICTE Profile/AicteProfile';
 import CollegeProfile from 'Components/College Profile/CollegeProfile';
 import Login from 'Components/Login/Login';
 
@@ -26,28 +27,20 @@ function App() {
     <div className="App">
       <IndexNavbar />
 
-      {/* <ul>
-        <li onClick={()=>nav('/allIndex')}>All Index</li>
-        <li onClick={()=>nav('/nucleo-icons')}>Nuclie Icons</li>
-        <li onClick={()=>nav('/landing-page')}>Landing Page</li>
-        <li onClick={()=>nav('profile-page')}>Profile Page</li>
-        <li onClick={()=>nav('/login-page')}>Login Page</li>
-      </ul> */}
       <Routes>
+          <Route path="/" element={<Landing/>}/>
           <Route path="/allIndex" element={<Index/>} />
-          <Route path="/login" element={<Login/>}/>
+          <Route path="/sign-up" element={<Login/>}/>
           <Route
-            path="/nucleo-icons"
+            path="/icons"
             element={<NucleoIcons/>}
           />
-          <Route
-            path="/landing-page"
-            element={<LandingPage/>}
-          />
+          <Route path="/homepage" element={<Landing/>}/>
           <Route
             path="/upload-record"
             element={<Login/>}
           />
+          <Route path="/coorporate-profile" element={<CoorporateProfile/>}/>
           <Route path="/aicte-profile" element={<AicteProfile/>}/>
           <Route path="/college-profile" element={<CollegeProfile/>}/>
           <Route
