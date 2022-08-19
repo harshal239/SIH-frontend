@@ -1,65 +1,26 @@
-import React, { useRef, useState } from "react";
-
+import React, { useRef, useState, useEffect} from "react";
 // reactstrap components
-import {
-  Button,
-  NavItem,
-  NavLink,
-  Nav,
-  TabContent,
-  TabPane,
-  Container,
-  Row,
-  Col,
-  UncontrolledDropdown,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledTooltip,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-} from "reactstrap";
-
-import {
-  Chart as ChartJS,
-  ArcElement,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-
+import {Button,Container,Row,Col,Dropdown,DropdownToggle,DropdownMenu,DropdownItem,Modal,ModalBody,ModalFooter,ModalHeader} from "reactstrap";
+import {Chart as ChartJS,ArcElement,CategoryScale,LinearScale,BarElement,Title,Tooltip,Legend} from "chart.js";
 import { Pie, Bar } from "react-chartjs-2";
-
-import {
-  PieData,
-  BarData,
-  Chart3dData,
-  mapRegionData,
-  diversityData,
-} from "./dataset";
-
 import DatamapsIndia from "react-datamaps-india";
-
-import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-
 import ScrollIntoView from "react-scroll-into-view";
-
 import useIntersection from "Components/CustomHooks/useIntersection";
-// core components
 import DefaultFooter from "Components/Footers/DefaultFooter.js";
-
+import { BarOptions, MapLayout} from "./Graph_options"; // graph static data
+import HighchartsReact from "highcharts-react-official";
+import Highcharts from 'highcharts'
+import highcharts3d from 'highcharts/highcharts-3d'
 import styles from "./profile.module.css";
+
+
+
+// sample dataset for graphs ************** to be removed upon integration
+import {PieData,BarData,mapRegionData,diversityData} from "./dataset";
 
 function Profile() {
   const [filterModal, setfilterModal] = useState(false);
-  React.useEffect(() => {
+  useEffect(() => {
     document.body.classList.add("profile-page");
     document.body.classList.add("sidebar-collapse");
     document.documentElement.classList.remove("nav-open");
@@ -71,32 +32,81 @@ function Profile() {
     };
   }, []);
 
-  ChartJS.register(
-    Legend,
-    Tooltip, // common
-    ArcElement, // pie
-    CategoryScale, // bar
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend
-  );
 
-  // dummy data for pie chart
-
-  const barOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: true,
-        text: "Chart.js Bar Chart",
+  highcharts3d(Highcharts)
+  const highChartoptions = {
+    chart: {
+      type: "column",
+      options3d: {
+        enabled: true,
+        alpha: 15,
+        beta: 15,
+        viewDistance: 25,
+        depth: 40,
       },
     },
+  
+    title: {
+      text: "Total fruit consumption, grouped by gender",
+    },
+  
+    xAxis: {
+      categories: ["Apples", "Oranges", "Pears", "Grapes", "Bananas"],
+      labels: {
+        skew3d: true,
+        style: {
+          fontSize: "16px",
+        },
+      },
+    },
+  
+    yAxis: {
+      allowDecimals: false,
+      min: 0,
+      title: {
+        text: "Number of fruits",
+        skew3d: true,
+      },
+    },
+  
+    tooltip: {
+      headerFormat: "<b>{point.key}</b><br>",
+      pointFormat:
+        '<span style="color:{series.color}">\u25CF</span> {series.name}: {point.y} / {point.stackTotal}',
+    },
+  
+    plotOptions: {
+      column: {
+        stacking: "normal",
+        depth: 40,
+      },
+    },
+  
+    series: [
+      {
+        name: "John",
+        data: [5, 3, 4, 7, 2],
+        stack: "male",
+      },
+      {
+        name: "Joe",
+        data: [3, 4, 4, 2, 5],
+        stack: "male",
+      },
+      {
+        name: "Jane",
+        data: [2, 5, 6, 2, 1],
+        stack: "female",
+      },
+      {
+        name: "Janet",
+        data: [3, 0, 4, 4, 3],
+        stack: "female",
+      },
+    ],
   };
+
+  ChartJS.register(Legend,Tooltip,ArcElement,CategoryScale,LinearScale,BarElement,Title,Tooltip,Legend);
 
   const pieRef = useRef();
   const barRef = useRef();
@@ -106,11 +116,14 @@ function Profile() {
   const barInViewport = useIntersection(barRef, "-300px");
   const diversityBarInViewport = useIntersection(diversityBarRef, "-300px");
   const mapInViewport = useIntersection(mapRef, "-300px");
+
+
+  // for rendering list via map functionality ************* to be removed
   const statArray = [1, 2, 3, 4, 5, 6];
+  // filter dropdowns static data, to be modified.. will remain static
   const filterArray = [1, 2, 3, 4, 5, 6, 7];
 
   return (
-    <>
       <div className="wrapper">
         <div className="section">
           <Container>
@@ -143,15 +156,12 @@ function Profile() {
             </Row>
             <h3 className="title">About</h3>
             <h5 className="description">
-              An artist of considerable range, Ryan — the name taken by
-              Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs
-              and records all of his own music, giving it a warm, intimate feel
-              with a solid groove structure. An artist of considerable range.
+              An artist of considerable range, Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. An artist of considerable range.
             </h5>
 
-            {/* FILTERS */}
           </Container>
-
+          
+          {/* FILTERS */}
           <Modal
             isOpen={filterModal}
             toggle={() => setfilterModal(false)}
@@ -228,13 +238,11 @@ function Profile() {
             {/* main container for graph and charts */}
             <Row>
               <Col md="3" className={styles.sticky__index}>
-                {/* <h2>Graphs and Charts</h2> */}
                 <ul className={styles.graph_index_list}>
                   <li className={pieInViewport ? styles.active : ""}>
                     <i className="now-ui-icons business_chart-pie-36"> </i>
                     Unemployability Distribution
                   </li>
-
                   <li className={barInViewport ? styles.active : ""}>
                     <i className="now-ui-icons business_chart-bar-32"> </i>
                     <ScrollIntoView selector="#barid" alignToTop={true}>
@@ -245,61 +253,38 @@ function Profile() {
                     <i className="now-ui-icons location_map-big" />
                     Employability Diversity
                   </li>
-
                   <li className={mapInViewport ? styles.active : ""}>
                     <i className="now-ui-icons location_map-big" />
                     Map
                   </li>
                 </ul>
               </Col>
-              <Col md="9" className={styles.graphs_left}>
-                <div ref={pieRef} className={styles.pie}>
-                  <Pie data={PieData} />
-                </div>
-                <div ref={barRef} id="barid">
-                  <Bar options={barOptions} data={BarData} />
-                </div>
 
-                <div ref={diversityBarRef}>
-                  <Bar options={barOptions} data={diversityData} />
-                </div>
-                {/* <div ref={diversityBarRef} className={styles.high_chart}>
-                  <HighchartsReact
-                    highcharts={Highcharts}
-                    options={Chart3dData}
-                  />
-                </div> */}
+              <Col md="9" className={styles.graphs_left}>
+                <div ref={pieRef} className={styles.pie}><Pie data={PieData}/></div>
+                <div ref={barRef} id="barid"> <Bar options={BarOptions} data={BarData}/></div>
+                <div ref={diversityBarRef}><Bar options={BarOptions} data={diversityData}/></div>
                 <div className={styles.mapWrapper} ref={mapRef}>
                   <DatamapsIndia
                     regionData={mapRegionData}
                     hoverComponent={({ value }) => {
                       return (
                         <>
-                          <p>{value.name}</p>
-                          <p>{value.value}</p>
+                          <p>{value.name}</p><p>{value.value}</p>
                         </>
                       );
                     }}
-                    mapLayout={{
-                      title: "Title",
-                      legendTitle: "Legend Title",
-                      startColor: "#FFDAB9",
-                      endColor: "#FF6347",
-                      hoverTitle: "Count",
-                      noDataColor: "#f5f5f5",
-                      borderColor: "#8D8D8D",
-                      hoverBorderColor: "#8D8D8D",
-                      hoverColor: "green",
-                    }}
+                    mapLayout={MapLayout}
                   />
                 </div>
+
+                <HighchartsReact highcharts={Highcharts} options={highChartoptions}/>
               </Col>
             </Row>
           </div>
         </div>
         <DefaultFooter />
       </div>
-    </>
   );
 }
 

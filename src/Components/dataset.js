@@ -1,6 +1,4 @@
 
-// import faker from 'faker';
-
 export const PieData = {
     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
     datasets: [
@@ -78,22 +76,6 @@ export const Chart3dData = {
   title: {
     text: 'Year vs Employability by diversity'
   },
-  // subtitle: {
-  //   // text: 'Test options by dragging the sliders below'
-  // },
-  // xAxis: {
-
-  //   categories: ['2014-15', '2015-16', '2016-17', '2017-18', '2018-19', '2020-21']
-  // },
-  // yAxis: {
-  //   categories: ['0M', '2M', '4M', '6M', '8M', '10M', '12M', '14M']
-  // },
-  // plotOptions: {
-  //   column: {
-  //     depth: 25,
-  //     grouping: false
-  //   }
-  // },
   series: [
     {
       name: "Minority",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect}from "react";
 
 // reactstrap components
 import {
@@ -25,6 +25,7 @@ import {
 // core components
 import ExamplesNavbar from "Components/Navbars/ExamplesNavbar.js";
 import TransparentFooter from "Components/Footers/TransparentFooter.js";
+
 
 function Login() {
   const [firstFocus, setFirstFocus] = React.useState(false);

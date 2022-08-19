@@ -3,11 +3,8 @@ import React from "react";
 // reactstrap components
 import { Container } from "reactstrap";
 
-// core components
-
 function AicteHeader() {
   let pageHeader = React.createRef();
-
   React.useEffect(() => {
     if (window.innerWidth > 991) {
       const updateScroll = () => {

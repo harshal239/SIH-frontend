@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import styles from './modal.module.css';
-
+import axios from "axios";
+import { baseurl } from "Components/baseUrl";
+import styles from "./modal.module.css";
 
 // reactstrap components
 import {
@@ -10,6 +10,8 @@ import {
   FormGroup,
   Modal,
   ModalBody,
+  ModalHeader,
+  ModalFooter,
   Row,
   Col,
   PopoverBody,
@@ -32,20 +34,109 @@ import {
   InputGroupText,
   InputGroupAddon,
   Label,
-  CustomInput
+  CustomInput,
 } from "reactstrap";
 
-function IndexNavbar() {
-  
-  const [modal1, setModal1] = useState(false);
-  const [modal2, setModal2] = useState(false);
 
-  
+
+
+import React from 'react'
+
+const NavItems = ({role, toggleUpload, togglelogin, removerole}) => {
+
+  const nav = useNavigate();
+
+  const handlelogout = () => {
+    axios
+      .get(baseurl+"/user/logout")
+      .then((res)=>{
+        console.log(res);
+        alert("Logout Successfull");
+        removerole();
+      }
+      );
+  }
+
+  switch(role){
+    case "college":
+      return(
+        <>
+        <NavItem>
+          <NavLink onClick={() => nav("/college-profile")}>
+            College
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink onClick={() => toggleUpload()}>
+            Upload placement record
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink onClick={()=>handlelogout()}>Logout</NavLink>
+        </NavItem>
+        </>
+      );
+    case "corporate":
+      return(
+        <>
+          <NavItem>
+            <NavLink onClick={() => nav("/coorporate-profile")}>
+            Coorporate
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink>
+              Reason of Unemployability
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink onClick={()=>handlelogout()}>Logout</NavLink>
+          </NavItem>
+        </>
+      );
+    case "aicte":
+      return(
+        <>
+          <NavItem>
+            <NavLink onClick={() => nav("/aicte-profile")}>AICTE</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink onClick={()=>handlelogout()}>Logout</NavLink>
+          </NavItem>
+        </>
+      );
+    default:
+      return(
+          <>
+            <NavItem>
+              <NavLink onClick={() => nav("/sign-up")}>Sign-Up</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink onClick={() => togglelogin()}>
+                Sign In
+              </NavLink>
+            </NavItem>
+          </>
+      );
+  }
+}
+
+
+function IndexNavbar() {
   const [firstFocus, setFirstFocus] = useState(false);
   const [lastFocus, setLastFocus] = useState(false);
 
   const [navbarColor, setNavbarColor] = useState("navbar-transparent");
   const [collapseOpen, setCollapseOpen] = useState(false);
+
+  const [username, setuserName] = useState("test");
+  const [password, setpassword] = useState("testpass");
+  const [role, setrole] = useState("none");
+
+  const [modal1, setModal1] = useState(false);
+  const [modal2, setModal2] = useState(false);
+  const [reasonsModal, setReasonsModal] = useState(false);
+
   const nav = useNavigate();
   useEffect(() => {
     const updateNavbarColor = () => {
@@ -66,6 +157,29 @@ function IndexNavbar() {
       window.removeEventListener("scroll", updateNavbarColor);
     };
   });
+
+  const handleLogin = () => {
+    console.log("login clicked");
+    console.log(username, password);
+    const data = {
+      userName: username,
+      password: password,
+    };
+    axios
+      .post("http://localhost:4000/api/v1/user/login", data)
+      .then((res) => {
+        console.log("exslkjf");
+        console.log(res.data.body.user.role);
+        setrole(res.data.body.user.role);
+        setModal2(false);
+
+        alert("Login Successfull , role: ", res.data.body.user.role);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const toggleupload = () => setModal1(!modal1);
+  const togglelogin = () => setModal2(!modal2);
   return (
     <>
       {collapseOpen ? (
@@ -83,7 +197,7 @@ function IndexNavbar() {
             <NavbarBrand
               target="_blank"
               id="navbar-brand"
-              onClick={()=>nav('/homepage')}
+              onClick={() => nav("/homepage")}
             >
               Campus Placement
             </NavbarBrand>
@@ -110,30 +224,11 @@ function IndexNavbar() {
             navbar
           >
             <Nav navbar>
-              
-
-
               {/* custom nav links */}
-              <NavItem>
-                <NavLink onClick={()=>nav('/sign-up')}>Sign-Up</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink onClick={()=>nav('/coorporate-profile')}>Coorporate</NavLink>    
-              </NavItem>
-              <NavItem>
-                <NavLink onClick={()=>nav('/aicte-profile')}>AICTE</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink onClick={()=>nav('/college-profile')}>College</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink onClick={() => setModal1(true)}>Upload placement record</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink onClick={() => setModal2(true)}>Sign In</NavLink>
-              </NavItem>
+              {}
+              <NavItems role={role} toggleUpload={toggleupload} togglelogin={togglelogin} removerole={()=>setrole("none")}/>
 
-            
+              {/* upload placement record modal */}
               <Modal isOpen={modal1} toggle={() => setModal1(false)}>
                 <div className="modal-header justify-content-center">
                   <button
@@ -146,31 +241,51 @@ function IndexNavbar() {
                   <h4 className="title title-up">Upload Placement Record</h4>
                 </div>
                 <ModalBody>
-                <div className={styles.fileupload}>
-                  <button className={styles.file_upld_btn} type="file" onclick="$('.file-upload-input').trigger( 'click' )">
-                    Add file
-                  </button>
-          
-                  <div className={styles.img_upload_wrapper}>
-                    <input className={styles.file_upload_input} type="file" onchange="readURL(this);" accept="image/*" />
-                    <div className={styles.drag_text}>
-                      <h3> or Drag and drop a file here!</h3>
-                    </div>
-                  </div>
+                  <div className={styles.fileupload}>
+                    <button
+                      className={styles.file_upld_btn}
+                      type="file"
+                      onclick="$('.file-upload-input').trigger( 'click' )"
+                    >
+                      Add file
+                    </button>
 
-                  
-                  <div className={styles.file_upload_content}>
-                    <img className={styles.file_upload_image} src="#" alt="your image" />
-                    <div className={styles.image_title_wrap}>
-                      <button type="button" onclick="removeUpload()" className="image-btn btn btn-danger">
-                        Remove <span class="image-title">Uploaded Image</span>
-                      </button>
-                      <button type="button" className="btn btn-success image-btn">
-                        Upload <span className="image-title">Upload Image</span>
-                      </button>
+                    <div className={styles.img_upload_wrapper}>
+                      <input
+                        className={styles.file_upload_input}
+                        type="file"
+                        onchange="readURL(this);"
+                        accept="image/*"
+                      />
+                      <div className={styles.drag_text}>
+                        <h3> or Drag and drop a file here!</h3>
+                      </div>
+                    </div>
+
+                    <div className={styles.file_upload_content}>
+                      <img
+                        className={styles.file_upload_image}
+                        src="#"
+                        alt="your image"
+                      />
+                      <div className={styles.image_title_wrap}>
+                        <button
+                          type="button"
+                          onclick="removeUpload()"
+                          className="image-btn btn btn-danger"
+                        >
+                          Remove <span class="image-title">Uploaded Image</span>
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-success image-btn"
+                        >
+                          Upload{" "}
+                          <span className="image-title">Upload Image</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
                 </ModalBody>
 
                 <div className="modal-footer">
@@ -186,6 +301,8 @@ function IndexNavbar() {
                   </Button>
                 </div>
               </Modal>
+
+              {/* // sign in modal */}
               <Modal
                 modalClassName="modal-mini modal-info"
                 toggle={() => setModal2(false)}
@@ -204,6 +321,8 @@ function IndexNavbar() {
                       </InputGroupText>
                     </InputGroupAddon>
                     <Input
+                      value={username}
+                      onChange={(e) => setuserName(e.target.value)}
                       placeholder="Username"
                       type="text"
                       onFocus={() => setFirstFocus(true)}
@@ -218,6 +337,8 @@ function IndexNavbar() {
                       </InputGroupText>
                     </InputGroupAddon>
                     <Input
+                      value={password}
+                      onChange={(e) => setpassword(e.target.value)}
                       placeholder="Password"
                       type="password"
                       onFocus={() => setLastFocus(true)}
@@ -225,19 +346,14 @@ function IndexNavbar() {
                       className={styles.login_input}
                     ></Input>
                   </InputGroup>
-
-                    
-                    <FormGroup>
-                      <Label for="exampleCheckbox">Role</Label>
-                      <div>
-                        <CustomInput type="radio" id="exampleCustomRadio" name="customRadio" label="College" />
-                        <CustomInput type="radio" id="exampleCustomRadio2" name="customRadio" label="AICTE" />
-                        <CustomInput type="radio" id="exampleCustomRadio3" label="Coorporate"/>
-                      </div>
-                    </FormGroup>
                 </ModalBody>
                 <div className={`modal-footer ${styles.footer}`}>
-                  <Button className="btn-neutral" color="link" type="button" onClick={()=>console.log("Login click")}>
+                  <Button
+                    className="btn-neutral"
+                    color="link"
+                    type="button"
+                    onClick={handleLogin}
+                  >
                     Login
                   </Button>
                   <Button
@@ -250,30 +366,39 @@ function IndexNavbar() {
                   </Button>
                 </div>
               </Modal>
-              
+
+              {/* view reasons of unemployability modal */}
+              <Modal
+                isOpen={reasonsModal}
+                toggle={() => setReasonsModal(false)}
+              >
+                <ModalHeader toggle={() => setReasonsModal(false)}>
+                  Modal title
+                </ModalHeader>
+                <ModalBody>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="primary">Do Something</Button>{" "}
+                  <Button
+                    color="secondary"
+                    onClick={() => setReasonsModal(false)}
+                  >
+                    Cancel
+                  </Button>
+                </ModalFooter>
+              </Modal>
             </Nav>
           </Collapse>
         </Container>
       </Navbar>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
     </>
   );
 }
