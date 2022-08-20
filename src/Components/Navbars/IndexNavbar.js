@@ -5,121 +5,11 @@ import { baseurl } from "Components/baseUrl";
 import styles from "./modal.module.css";
 
 // reactstrap components
-import {
-  Button,
-  FormGroup,
-  Modal,
-  ModalBody,
-  ModalHeader,
-  ModalFooter,
-  Row,
-  Col,
-  PopoverBody,
-  PopoverHeader,
-  UncontrolledPopover,
-  Collapse,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  NavbarBrand,
-  Navbar,
-  NavItem,
-  NavLink,
-  Nav,
-  Container,
-  UncontrolledTooltip,
-  InputGroup,
-  Input,
-  InputGroupText,
-  InputGroupAddon,
-  Label,
-  CustomInput,
-} from "reactstrap";
-
-
-
-
+import {Button, Modal, ModalBody,ModalHeader, ModalFooter, Collapse, NavbarBrand, Navbar, NavItem, NavLink, Nav, Container, InputGroup, Input, InputGroupText,InputGroupAddon} from "reactstrap";
+import NavItems from "./NavItems";
 import React from 'react'
 
-const NavItems = ({role, toggleUpload, togglelogin, removerole}) => {
 
-  const nav = useNavigate();
-
-  const handlelogout = () => {
-    axios
-      .get(baseurl+"/user/logout")
-      .then((res)=>{
-        console.log(res);
-        alert("Logout Successfull");
-        removerole();
-      }
-      );
-  }
-
-  switch(role){
-    case "college":
-      return(
-        <>
-        <NavItem>
-          <NavLink onClick={() => nav("/college-profile")}>
-            College
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink onClick={() => toggleUpload()}>
-            Upload placement record
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink onClick={()=>handlelogout()}>Logout</NavLink>
-        </NavItem>
-        </>
-      );
-    case "corporate":
-      return(
-        <>
-          <NavItem>
-            <NavLink onClick={() => nav("/coorporate-profile")}>
-            Coorporate
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink>
-              Reason of Unemployability
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink onClick={()=>handlelogout()}>Logout</NavLink>
-          </NavItem>
-        </>
-      );
-    case "aicte":
-      return(
-        <>
-          <NavItem>
-            <NavLink onClick={() => nav("/aicte-profile")}>AICTE</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink onClick={()=>handlelogout()}>Logout</NavLink>
-          </NavItem>
-        </>
-      );
-    default:
-      return(
-          <>
-            <NavItem>
-              <NavLink onClick={() => nav("/sign-up")}>Sign-Up</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink onClick={() => togglelogin()}>
-                Sign In
-              </NavLink>
-            </NavItem>
-          </>
-      );
-  }
-}
 
 
 function IndexNavbar() {
@@ -129,8 +19,8 @@ function IndexNavbar() {
   const [navbarColor, setNavbarColor] = useState("navbar-transparent");
   const [collapseOpen, setCollapseOpen] = useState(false);
 
-  const [username, setuserName] = useState("test");
-  const [password, setpassword] = useState("testpass");
+  const [username, setuserName] = useState("");
+  const [password, setpassword] = useState("");
   const [role, setrole] = useState("none");
 
   const [modal1, setModal1] = useState(false);
@@ -138,6 +28,17 @@ function IndexNavbar() {
   const [reasonsModal, setReasonsModal] = useState(false);
 
   const nav = useNavigate();
+
+  useEffect(()=>{
+    // cheking if user is already logged in 
+    let checkrole = localStorage.getItem('role');
+    console.log(checkrole);
+    if (checkrole){
+      setrole(checkrole);
+    }
+
+  },[])
+  
   useEffect(() => {
     const updateNavbarColor = () => {
       if (
@@ -156,6 +57,9 @@ function IndexNavbar() {
     return function cleanup() {
       window.removeEventListener("scroll", updateNavbarColor);
     };
+
+
+    
   });
 
   const handleLogin = () => {
@@ -166,13 +70,12 @@ function IndexNavbar() {
       password: password,
     };
     axios
-      .post("http://localhost:4000/api/v1/user/login", data)
+      .post(baseurl + "/user/login", data)
       .then((res) => {
-        console.log("exslkjf");
         console.log(res.data.body.user.role);
         setrole(res.data.body.user.role);
         setModal2(false);
-
+        localStorage.setItem('role',res.data.body.user.role);
         alert("Login Successfull , role: ", res.data.body.user.role);
       })
       .catch((err) => console.log(err));
