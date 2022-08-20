@@ -61,45 +61,83 @@ export const hbarData = {
     }
   ],
 };
-export const Chart3dData = {
+
+
+export const highChartoptions = {
   chart: {
-    renderTo: 'container',
-    type: 'column',
+    type: "column",
     options3d: {
       enabled: true,
-      alpha: 4,
-      beta: 36,
-      depth: 100,
-      viewDistance: 25
-    }
+      alpha: 10,
+      beta: 25,
+      depth: 220,
+      viewDistance: 25,
+    },
   },
   title: {
-    text: 'Year vs Employability by diversity'
+    text: "",
   },
+
+  legend: {       
+         verticalAlign: 'right',
+         layout: 'horizontal',
+         x: 0,
+         y: 0
+     },
+
+  xAxis: {
+    categories: ['2014-15', '2015-16', '2016-17', '2017-18', '2018-19', '2020-21'],
+    labels: {
+      skew3d: true,
+      style: {
+        fontSize: "16px",
+      },
+    },
+  },
+
+  yAxis: {
+    categories: ['0M', '2M', '4M', '6M', '8M', '10M', '12M', '14M'],
+    allowDecimals: false,
+    min: 0,
+    title: {
+      text: "Number of Students",
+      skew3d: true,
+    },
+  },
+  plotOptions: {
+    column: {
+      stacking: true,
+      // groupZPadding: 10,
+      depth: 40,
+      grouping: false
+    },
+  },
+
   series: [
     {
       name: "Minority",
       data: [0, 1, 1, 0, 1, 1],
-      stack: "c",
+      stack: 0,
     },
     {
       name: "Female",
       data: [0, 2, 1, 2, 1, 1],
-      stack: "b",
+      stack: 1,
     },
     {
       name: "Male",
       data: [1, 3, 2, 5, 2, 1],
-      stack: "a",
+      stack: 2,
     },
     {
       name: "Placed",
-      data: [1, 5, 3, 5, 3, 2],
-      stack: "c",
+      data: [1, 5, 3, 7, 3, 2],
+      stack: 3,
     },
+  ],
+};
 
-  ]
-}
+
 
 export const diversityData = {
   labels,
@@ -127,6 +165,7 @@ export const diversityData = {
   ]
 
 }
+
 
 export const mapRegionData = {
   Maharashtra: {
