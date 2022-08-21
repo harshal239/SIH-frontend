@@ -23,6 +23,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import axios from "axios";
 import { Pie, Bar } from "react-chartjs-2";
 import DatamapsIndia from "react-datamaps-india";
 import ScrollIntoView from "react-scroll-into-view";
@@ -49,10 +50,28 @@ import {
   diversityData,
   highChartoptions,
 } from "../dataset";
+import { baseurl } from "Components/baseUrl";
 
 function AicteProfile() {
   const [filterModal, setfilterModal] = useState(false);
+
+  let data = {
+    "year":2022, 
+    "gender":"",
+   "institutionType": "Private",
+   "state":"Maharashtra",
+        "minority":"yes" 
+}
+  const getprogramwiseplacement = () => {
+    axios.get(baseurl + "/chart/programWisePlacement", data)
+      .then(res=>{
+        console.log(res);
+      })
+  }
+
   useEffect(() => {
+    getprogramwiseplacement();
+
     document.body.classList.add("profile-page");
     document.body.classList.add("sidebar-collapse");
     document.documentElement.classList.remove("nav-open");
@@ -118,14 +137,6 @@ function AicteProfile() {
   const filterArray = [1, 2, 3, 4, 5, 6, 7];
   // dropdown options
 
-  // year
-    // program
-    // state
-    // iswomen, gender
-  // minority
-  
-  // //institute type
-  // //state
 
   // year, gender, state, institutionType, minority 
   const {year, setyear} = useState("");
