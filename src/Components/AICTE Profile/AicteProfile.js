@@ -41,38 +41,32 @@ import { Card, CardBody, CardTitle } from "reactstrap";
 import { Dropdown, Selection } from "react-dropdown-now";
 import "react-dropdown-now/style.css";
 
-import { yearOptions, instituteTypes, statesOptions } from "./DropdownOptions";
+import { yearOptions, programOptions, instituteTypes, statesOptions } from "./DropdownOptions";
 // sample dataset for graphs ************** to be removed upon integration
 import {
   PieData,
   // ProgramData,
   InstituteTypeData,
-  mapRegionData,
   diversityData,
   highChartoptions,
 } from "../dataset";
 import { baseurl } from "Components/baseUrl";
 
-// export const ProgramData = {
-//   labels:programs,
-//   datasets: [
-//     {
-//       label: 'Placed',
-//       data: [65,23,54,76,12,5,45,32,71],
-//       backgroundColor: '#2CA8FF',
-//     },
-//     {
-//       label: 'Unplaced',
-//       data: [23,11,43,32,9,5,32,31,23],
-//       backgroundColor: '#FFB236',
-//     }
-//   ],
-// };
+
 
 function AicteProfile() {
   const [filterModal, setfilterModal] = useState(false);
   const [programWise, setProgramWise] = useState({});
   const [instituteWise, setInstituteWise] = useState({});
+  const [mapRegionData, setmapregionData] = useState({});
+  const [filters, setfilters] = useState({
+    year: "",
+    program: "",
+    instituteType: "",
+    state:"",
+    gender:"",
+    minority:"",
+  })
 
   const dataMapper = (data) => {
     const ids = [];
@@ -88,16 +82,18 @@ function AicteProfile() {
   };
 
   const getprogramwiseplacement = async () => {
+
+    let data = {
+      year : parseInt(filters.year),
+      gender: (filters.gender === "Female") ? "Female" : "",
+      state: filters.state,
+      institutionType: filters.instituteType,
+      minority: (filters.minority === "Yes") ? "Yes" : "",
+    }
     try {
       const program = await axios.post(
         "https://optimizers-sih-backend.herokuapp.com/api/v1/chart/programWisePlacement",
-        {
-          year: 2022,
-          gender: "",
-          state: "",
-          institutionType: "",
-          minority: "",
-        }
+        data
       );
       const response = dataMapper(program.data);
       setProgramWise(response);
@@ -107,18 +103,18 @@ function AicteProfile() {
   };
 
   const getinstitutewisePlacement = async () => {
+    let data = {
+      year : parseInt(filters.year),
+      gender: (filters.gender === "Female") ? "Female" : "",
+      state: filters.state,
+      program: filters.program,
+      minority: (filters.minority === "Yes") ? "Yes" : "",
+    }
     try {
       const institute = await axios.post(
         "https://optimizers-sih-backend.herokuapp.com/api/v1/chart/institutionTypeWisePlacement",
-        {
-          year: 2021,
-          gender: "",
-          state: "",
-          program: "",
-          minority: "",
-        }
+        data
       );
-
       const res = dataMapper(institute.data);
       setInstituteWise(res);
     } catch (err) {
@@ -126,9 +122,44 @@ function AicteProfile() {
     }
   };
 
+
+  const getstatewisePlacement = async() => {
+    let data = {
+      year : parseInt(filters.year),
+      gender: (filters.gender === "Female") ? "Female" : "",
+      institutionType: filters.instituteType,
+      program: filters.program,
+      minority: (filters.minority === "Yes") ? "Yes" : "",
+
+    }
+    try{
+      const res = await axios.post(
+        "https://optimizers-sih-backend.herokuapp.com/api/v1/chart/stateWisePlacement",
+        data
+      );
+      console.log(res.data[0]);
+
+      let obj1 = {};
+      res.data.map((item) => {
+        obj1[item._id] = {value:item.unplacedStudentCount};
+      })
+      console.log(obj1);
+      setmapregionData(obj1);
+        // placedStudentCount: 1
+        // unplacedStudentCount: 1
+        // _id: "Gujarat"
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
+
+
+
   useEffect(() => {
     getprogramwiseplacement();
     getinstitutewisePlacement();
+    getstatewisePlacement();
     document.body.classList.add("profile-page");
     document.body.classList.add("sidebar-collapse");
     document.documentElement.classList.remove("nav-open");
@@ -139,6 +170,14 @@ function AicteProfile() {
       document.body.classList.remove("sidebar-collapse");
     };
   }, []);
+
+
+  // to update graphs
+  useEffect(()=>{
+    getprogramwiseplacement();
+    getinstitutewisePlacement();
+    getstatewisePlacement();
+  },[filters]);
 
   highcharts3d(Highcharts);
 
@@ -194,9 +233,6 @@ function AicteProfile() {
   const filterArray = [1, 2, 3, 4, 5, 6, 7];
   // dropdown options
 
-  // year, gender, state, institutionType, minority
-  const { year, setyear } = useState("");
-  const { program, setprogram } = useState("");
 
   return (
     <div className="wrapper">
@@ -294,14 +330,67 @@ function AicteProfile() {
                 className="my-className"
                 options={yearOptions}
                 value="one"
-                onChange={(item) => setyear(item.value)}
+                onChange={(item) => setfilters({...filters, year:item.value})}
                 // onSelect={(value) => console.log('selected!', value)} // always fires once a selection happens even if there is no change
-                onClose={(closedBySelection) =>
-                  console.log("closedBySelection?:", closedBySelection)
-                }
-                onOpen={() => console.log("open!")}
+                // onClose={(closedBySelection) =>
+                //   closedBySelection && updategraphs()
+                // }
               />
-              ;{/* gender filter */}
+
+              {/* program filter */}
+              <Dropdown
+                placeholder="Select Program"
+                className="my-className"
+                options={programOptions}
+                value="one"
+                onChange={(item) => setfilters({...filters, program:item.value})}
+              />
+
+              {/* institute type filter */}
+              <Dropdown
+                placeholder="Select Institute Type"
+                className="my-className"
+                options={instituteTypes}
+                value="one"
+                onChange={(item) => setfilters({...filters, instituteType:item.value})}
+              />
+
+              {/* state filters */}
+              <Dropdown
+                placeholder="Select State"
+                className="my-className"
+                options={statesOptions}
+                value="one"
+                onChange={(item) => {
+                  setfilters({...filters, state:item.value});
+                }}
+  
+              />
+
+              {/* gender filter */}
+              <Dropdown
+                placeholder="Select Gender"
+                className="my-className"
+                options={["Male", "Female"]}
+                value="one"
+                onChange={(item) => {
+                  setfilters({...filters, gender:item.value});
+                }}
+              />
+
+              {/* minority filter */}
+              <Dropdown
+                placeholder="Select Minority"
+                className="my-className"
+                options={["Yes", "No"]}
+                value="one"
+                onChange={(item) => {
+                  setfilters({...filters, minority:item.value});
+                }}
+              />
+
+
+{/* 
               {filterArray.map((item) => {
                 return (
                   <UncontrolledDropdown>
@@ -315,7 +404,7 @@ function AicteProfile() {
                     </DropdownMenu>
                   </UncontrolledDropdown>
                 );
-              })}
+              })} */}
             </div>
           </div>
 
