@@ -11,7 +11,8 @@ import {
   Modal,
   ModalBody,
   ModalFooter,
-  ModalHeader, UncontrolledDropdown
+  ModalHeader,
+  UncontrolledDropdown,
 } from "reactstrap";
 import {
   Chart as ChartJS,
@@ -37,14 +38,14 @@ import styles from "../profile.module.css";
 import AicteHeader from "./AicteHeader";
 import { Card, CardBody, CardTitle } from "reactstrap";
 
-import { Dropdown, Selection } from 'react-dropdown-now';
-import 'react-dropdown-now/style.css';
+import { Dropdown, Selection } from "react-dropdown-now";
+import "react-dropdown-now/style.css";
 
-import { yearOptions, programs, instituteTypes, statesOptions} from "./DropdownOptions";
+import { yearOptions, instituteTypes, statesOptions } from "./DropdownOptions";
 // sample dataset for graphs ************** to be removed upon integration
 import {
   PieData,
-  ProgramData,
+  // ProgramData,
   InstituteTypeData,
   mapRegionData,
   diversityData,
@@ -52,26 +53,82 @@ import {
 } from "../dataset";
 import { baseurl } from "Components/baseUrl";
 
+// export const ProgramData = {
+//   labels:programs,
+//   datasets: [
+//     {
+//       label: 'Placed',
+//       data: [65,23,54,76,12,5,45,32,71],
+//       backgroundColor: '#2CA8FF',
+//     },
+//     {
+//       label: 'Unplaced',
+//       data: [23,11,43,32,9,5,32,31,23],
+//       backgroundColor: '#FFB236',
+//     }
+//   ],
+// };
+
 function AicteProfile() {
   const [filterModal, setfilterModal] = useState(false);
+  const [programWise, setProgramWise] = useState({});
+  const [instituteWise, setInstituteWise] = useState({});
 
-  let data = {
-    "year":2022, 
-    "gender":"",
-   "institutionType": "Private",
-   "state":"Maharashtra",
-        "minority":"yes" 
-}
-  const getprogramwiseplacement = () => {
-    axios.get(baseurl + "/chart/programWisePlacement", data)
-      .then(res=>{
-        console.log(res);
-      })
-  }
+  const dataMapper = (data) => {
+    const ids = [];
+    const placedCount = [];
+    const unplacedCount = [];
+
+    data.map((obj) => {
+      ids.push(obj._id);
+      placedCount.push(obj.placedStudentCount);
+      unplacedCount.push(obj.unplacedStudentCount);
+    });
+    return { ids, placedCount, unplacedCount };
+  };
+
+  const getprogramwiseplacement = async () => {
+    try {
+      const program = await axios.post(
+        "https://optimizers-sih-backend.herokuapp.com/api/v1/chart/programWisePlacement",
+        {
+          year: 2022,
+          gender: "",
+          state: "",
+          institutionType: "",
+          minority: "",
+        }
+      );
+      const response = dataMapper(program.data);
+      setProgramWise(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getinstitutewisePlacement = async () => {
+    try {
+      const institute = await axios.post(
+        "https://optimizers-sih-backend.herokuapp.com/api/v1/chart/institutionTypeWisePlacement",
+        {
+          year: 2021,
+          gender: "",
+          state: "",
+          program: "",
+          minority: "",
+        }
+      );
+
+      const res = dataMapper(institute.data);
+      setInstituteWise(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     getprogramwiseplacement();
-
+    getinstitutewisePlacement();
     document.body.classList.add("profile-page");
     document.body.classList.add("sidebar-collapse");
     document.documentElement.classList.remove("nav-open");
@@ -137,10 +194,10 @@ function AicteProfile() {
   const filterArray = [1, 2, 3, 4, 5, 6, 7];
   // dropdown options
 
+  // year, gender, state, institutionType, minority
+  const { year, setyear } = useState("");
+  const { program, setprogram } = useState("");
 
-  // year, gender, state, institutionType, minority 
-  const {year, setyear} = useState("");
-  const {program, setprogram} = useState("");
   return (
     <div className="wrapper">
       <AicteHeader />
@@ -231,37 +288,32 @@ function AicteProfile() {
             />
 
             <div className={styles.filter_container}>
-          
-          {/* academic year filter */}
-          <Dropdown
-            placeholder="Select year"
-            className="my-className"
-            options={yearOptions}
-            value="one"
-            onChange={(item) => setyear(item.value)}
-            // onSelect={(value) => console.log('selected!', value)} // always fires once a selection happens even if there is no change
-            onClose={(closedBySelection) => console.log('closedBySelection?:', closedBySelection)}
-            onOpen={() => console.log('open!')}
-          />;
-
-          {/* gender filter */}
-
-
-                
+              {/* academic year filter */}
+              <Dropdown
+                placeholder="Select year"
+                className="my-className"
+                options={yearOptions}
+                value="one"
+                onChange={(item) => setyear(item.value)}
+                // onSelect={(value) => console.log('selected!', value)} // always fires once a selection happens even if there is no change
+                onClose={(closedBySelection) =>
+                  console.log("closedBySelection?:", closedBySelection)
+                }
+                onOpen={() => console.log("open!")}
+              />
+              ;{/* gender filter */}
               {filterArray.map((item) => {
                 return (
                   <UncontrolledDropdown>
-                  <DropdownToggle caret>
-                    Dropdown
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    <DropdownItem header>Header</DropdownItem>
-                    <DropdownItem disabled>Action</DropdownItem>
-                    <DropdownItem>Another Action</DropdownItem>
-                    <DropdownItem divider />
-                    <DropdownItem>Another Action</DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
+                    <DropdownToggle caret>Dropdown</DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem header>Header</DropdownItem>
+                      <DropdownItem disabled>Action</DropdownItem>
+                      <DropdownItem>Another Action</DropdownItem>
+                      <DropdownItem divider />
+                      <DropdownItem>Another Action</DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
                 );
               })}
             </div>
@@ -306,10 +358,45 @@ function AicteProfile() {
 
             <Col md="9" className={styles.graphs_left}>
               <div ref={barRef} id="barid">
-                <Bar options={BarOptions} data={ProgramData} />
+                <Bar
+                  options={BarOptions}
+                  data={{
+                    labels: programWise.ids,
+                    datasets: [
+                      {
+                        label: "Placed",
+                        data: programWise.placedCount,
+                        backgroundColor: "#2CA8FF",
+                      },
+                      {
+                        label: "Unplaced",
+                        data: programWise.unplacedCount,
+                        backgroundColor: "#FFB236",
+                      },
+                    ],
+                  }}
+                />
               </div>
+
               <div ref={barRef} id="barid">
-                <Bar options={BarOptions} data={InstituteTypeData} />
+                <Bar
+                  options={BarOptions}
+                  data={{
+                    labels: instituteWise.ids,
+                    datasets: [
+                      {
+                        label: "Placed",
+                        data: instituteWise.placedCount,
+                        backgroundColor: "#2CA8FF",
+                      },
+                      {
+                        label: "Unplaced",
+                        data: instituteWise.unplacedCount,
+                        backgroundColor: "#FFB236",
+                      },
+                    ],
+                  }}
+                />
               </div>
               <div className={styles.mapWrapper} ref={mapRef}>
                 <DatamapsIndia

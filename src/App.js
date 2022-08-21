@@ -8,7 +8,6 @@ import "./assets/scss/now-ui-kit.scss?v=1.5.0";
 import "./assets/demo/demo.css?v=1.5.0";
 import "./assets/demo/nucleo-icons-page-styles.css?v=1.5.0";
 
-import Index from 'views/Index';
 import NucleoIcons from 'views/NucleoIcons';
 
 import Landing from 'Components/Landing Page/Landing';
@@ -25,7 +24,6 @@ function App() {
       <IndexNavbar />
       <Routes>
           <Route path="/" element={<Landing/>}/>
-          <Route path="/allIndex" element={<Index/>}/>
           <Route path="/sign-up" element={<Login/>}/>
           <Route path="/icons" element={<NucleoIcons/>}/>
           <Route path="/homepage" element={<Landing/>}/>
