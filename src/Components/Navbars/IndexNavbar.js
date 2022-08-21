@@ -25,6 +25,7 @@ function IndexNavbar() {
   const [addreasonsModal, setAddreasons] = useState(false);
   const [reasonsModal, setReasonsModal] = useState(false);
   const [role, setrole] = useState("");
+  const [userId, setUserId] = useState("");
 
   const nav = useNavigate();
 
@@ -110,13 +111,13 @@ function IndexNavbar() {
             <Nav navbar>
               {/* custom nav links */}
               {}
-              <NavItems role={role} toggleUpload={toggleupload} togglelogin={togglelogin} toggleAddreason={toggleAddreason} removerole={()=>setrole("none")}/>
+              <NavItems role={role} toggleUpload={toggleupload} togglelogin={togglelogin} toggleAddreason={toggleAddreason} removerole={()=>setrole("none")} userId={userId}/>
 
               {/* upload placement record modal */}
               <UploadCSV isopen={modal1} togglemodal={toggleupload}/>
 
               {/* // sign in modal */}
-              <Login isopen={modal2} togglemodal={togglelogin} passRole={(val)=>setrole(val)}/>
+              <Login isopen={modal2} togglemodal={togglelogin} passRole={(val)=>setrole(val)} setId={val=>setUserId(val)}/>
 
 
               <AddReasons addreasonsModal={addreasonsModal} toggleAddreason={toggleAddreason} />

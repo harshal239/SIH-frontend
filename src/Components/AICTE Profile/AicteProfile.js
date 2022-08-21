@@ -5,14 +5,13 @@ import {
   Container,
   Row,
   Col,
-  Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
   Modal,
   ModalBody,
   ModalFooter,
-  ModalHeader,
+  ModalHeader, UncontrolledDropdown
 } from "reactstrap";
 import {
   Chart as ChartJS,
@@ -37,6 +36,10 @@ import styles from "../profile.module.css";
 import AicteHeader from "./AicteHeader";
 import { Card, CardBody, CardTitle } from "reactstrap";
 
+import { Dropdown, Selection } from 'react-dropdown-now';
+import 'react-dropdown-now/style.css';
+
+import { yearOptions, programs, instituteTypes, statesOptions} from "./DropdownOptions";
 // sample dataset for graphs ************** to be removed upon integration
 import {
   PieData,
@@ -113,7 +116,20 @@ function AicteProfile() {
   ];
   // filter dropdowns static data, to be modified.. will remain static
   const filterArray = [1, 2, 3, 4, 5, 6, 7];
+  // dropdown options
 
+  // year
+    // program
+    // state
+    // iswomen, gender
+  // minority
+  
+  // //institute type
+  // //state
+
+  // year, gender, state, institutionType, minority 
+  const {year, setyear} = useState("");
+  const {program, setprogram} = useState("");
   return (
     <div className="wrapper">
       <AicteHeader />
@@ -151,13 +167,6 @@ function AicteProfile() {
               })
             }
           </Row>
-          <h3 className="title">About</h3>
-          <h5 className="description">
-            An artist of considerable range, Ryan — the name taken by
-            Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and
-            records all of his own music, giving it a warm, intimate feel with a
-            solid groove structure. An artist of considerable range.
-          </h5>
         </Container>
 
         {/* FILTERS */}
@@ -211,24 +220,37 @@ function AicteProfile() {
             />
 
             <div className={styles.filter_container}>
+          
+          {/* academic year filter */}
+          <Dropdown
+            placeholder="Select year"
+            className="my-className"
+            options={yearOptions}
+            value="one"
+            onChange={(item) => setyear(item.value)}
+            // onSelect={(value) => console.log('selected!', value)} // always fires once a selection happens even if there is no change
+            onClose={(closedBySelection) => console.log('closedBySelection?:', closedBySelection)}
+            onOpen={() => console.log('open!')}
+          />;
+
+          {/* gender filter */}
+
+
+                
               {filterArray.map((item) => {
                 return (
-                  <Dropdown isOpen={false}>
-                    <DropdownToggle
-                      caret
-                      color="neutral"
-                      className={styles.drp_toggle}
-                    >
-                      Default value
-                    </DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem header>Header</DropdownItem>
-                      <DropdownItem disabled>Action</DropdownItem>
-                      <DropdownItem>Another Action</DropdownItem>
-                      <DropdownItem divider />
-                      <DropdownItem>Another Action</DropdownItem>
-                    </DropdownMenu>
-                  </Dropdown>
+                  <UncontrolledDropdown>
+                  <DropdownToggle caret>
+                    Dropdown
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    <DropdownItem header>Header</DropdownItem>
+                    <DropdownItem disabled>Action</DropdownItem>
+                    <DropdownItem>Another Action</DropdownItem>
+                    <DropdownItem divider />
+                    <DropdownItem>Another Action</DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
                 );
               })}
             </div>
@@ -255,8 +277,10 @@ function AicteProfile() {
                   StateWise
                 </li>
                 <div className={styles.disabled}>
-                  <hr/>
-                  <span><i>future scope</i></span>
+                  <hr />
+                  <span>
+                    <i>future scope</i>
+                  </span>
                   <li>
                     <i className="now-ui-icons business_chart-pie-36"> </i>
                     Unemployability Distribution
@@ -265,7 +289,6 @@ function AicteProfile() {
                     <i className="now-ui-icons location_map-big" />
                     Employability Diversity
                   </li>
-
                 </div>
               </ul>
             </Col>
@@ -291,7 +314,7 @@ function AicteProfile() {
                   mapLayout={MapLayout}
                 />
               </div>
-              <hr/>
+              <hr />
               <div ref={pieRef} className={styles.pie}>
                 <Pie data={PieData} />
               </div>

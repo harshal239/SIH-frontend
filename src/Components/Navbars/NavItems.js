@@ -8,7 +8,7 @@ import {NavItem, NavLink} from "reactstrap";
 import React from 'react'
 
 
-const NavItems = ({role, toggleUpload, togglelogin, toggleAddreason, removerole}) => {
+const NavItems = ({role, toggleUpload, togglelogin, toggleAddreason, removerole, userId}) => {
 
     const nav = useNavigate();
   
@@ -20,6 +20,7 @@ const NavItems = ({role, toggleUpload, togglelogin, toggleAddreason, removerole}
           alert("Logout Successfull");
           removerole();
           localStorage.removeItem('role');
+          localStorage.removeItem('userid');
         }
         );
     }
@@ -29,8 +30,8 @@ const NavItems = ({role, toggleUpload, togglelogin, toggleAddreason, removerole}
         return(
           <>
           <NavItem>
-            <NavLink onClick={() => nav("/college-profile")}>
-              College
+            <NavLink onClick={() => nav("/college-profile", {state:userId})}>
+              College Dashboard
             </NavLink>
           </NavItem>
           <NavItem>
@@ -42,6 +43,9 @@ const NavItems = ({role, toggleUpload, togglelogin, toggleAddreason, removerole}
             <NavLink onClick={() => toggleAddreason()}>Add reason of Unemployability</NavLink>
           </NavItem>
           <NavItem>
+              <NavLink onClick={() => nav("/aicte-profile")}>AICTE Statistics</NavLink>
+          </NavItem>
+          <NavItem>
             <NavLink onClick={()=>handlelogout()}>Logout</NavLink>
           </NavItem>
           </>
@@ -51,13 +55,16 @@ const NavItems = ({role, toggleUpload, togglelogin, toggleAddreason, removerole}
           <>
             <NavItem>
               <NavLink onClick={() => nav("/coorporate-profile")}>
-              Coorporate
+              Coorporate Dashboard
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink>
                 Reason of Unemployability
               </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink onClick={() => nav("/aicte-profile")}>AICTE Statistics</NavLink>
             </NavItem>
             <NavItem>
               <NavLink onClick={()=>handlelogout()}>Logout</NavLink>
@@ -68,7 +75,7 @@ const NavItems = ({role, toggleUpload, togglelogin, toggleAddreason, removerole}
         return(
           <>
             <NavItem>
-              <NavLink onClick={() => nav("/aicte-profile")}>AICTE</NavLink>
+              <NavLink onClick={() => nav("/aicte-profile")}>AICTE Statistics</NavLink>
             </NavItem>
             <NavItem>
               <NavLink onClick={()=>handlelogout()}>Logout</NavLink>
@@ -83,7 +90,7 @@ const NavItems = ({role, toggleUpload, togglelogin, toggleAddreason, removerole}
               </NavItem>
               <NavItem>
                 <NavLink onClick={() => togglelogin()}>
-                  Sign In
+                  Sign-In
                 </NavLink>
               </NavItem>
             </>

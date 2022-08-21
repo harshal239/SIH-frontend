@@ -60,10 +60,29 @@ import CollegeHeader from "./CollegeHeader";
 import DefaultFooter from "Components/Footers/DefaultFooter.js";
 
 import styles from "../profile.module.css";
+import axios from "axios"
+import { baseurl } from "Components/baseUrl"
+// import { getstats } from "./GetData";
+// import { useLocation } from 'react-router-dom';
 
 function CollegeProfile() {
   const [filterModal, setfilterModal] = useState(false);
+  const [stats, setstats] = useState({});
+  
+  const getstats = () => {
+    let userid = localStorage.getItem('userid');
+    let temp;
+    axios.get(baseurl + '/chart/placedUnplacedGraph/' + userid)
+    .then(res=>{
+        console.log(res.data);
+        setstats(res.data);
+    })
+  }
   React.useEffect(() => {
+    // console.log(location);
+    // let userid = localStorage.getItem('userid');
+    // console.log(userid);
+    getstats();
     document.body.classList.add("profile-page");
     document.body.classList.add("sidebar-collapse");
     document.documentElement.classList.remove("nav-open");
@@ -140,29 +159,37 @@ function CollegeProfile() {
             <Row style={{ marginTop: -106 }}>
               {
                 // statistics cards
-                statArray.map((item) => {
+                // console.log(stats)
+                (Object.entries(stats).map(([k,v]) => {
+
                   return (
                     <div className="col-xxl-3 col-md-4">
                       <div className="card info-card sales-card">
                         <div className="card-body">
                           <h5 className="card-title">
-                            Total Institutions
-                            <span>| 2020</span>
+                            {k}
+                            {/* <span>| 2020</span> */}
                           </h5>
                           <div className="d-flex align-items-center">
                             <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
                               <i className="bi bi-people"></i>
                             </div>
                             <div className="ps-3">
-                              <h6>8999</h6>
+                              <h6>{v}</h6>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  );
-                })
-              }
+                  )
+                }))
+
+                  
+
+                  
+                }
+
+              
             </Row>
             <h3 className="title">About</h3>
             <h5 className="description">

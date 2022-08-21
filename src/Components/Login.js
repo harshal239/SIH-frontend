@@ -4,7 +4,7 @@ import { baseurl } from "Components/baseUrl";
 import {Modal, ModalBody, Input, InputGroup, InputGroupAddon, InputGroupText, Button} from 'reactstrap'
 import styles from "./modal.module.css"; 
 
-const Login = ({isopen, togglemodal, passRole}) => {
+const Login = ({isopen, togglemodal, passRole, setId}) => {
     const [username, setuserName] = useState("");
     const [password, setpassword] = useState("");
 
@@ -23,8 +23,10 @@ const Login = ({isopen, togglemodal, passRole}) => {
           .then((res) => {
             console.log(res.data.body.user.role);
             passRole(res.data.body.user.role);
+            setId(res.data.body.user._id);
             togglemodal();
             localStorage.setItem('role',res.data.body.user.role);
+            localStorage.setItem('userid',res.data.body.user._id);
             alert("Login Successfull , role: ", res.data.body.user.role);
           })
           .catch((err) => console.log(err));
