@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { baseurl } from "Components/baseUrl";
-import styles from "./modal.module.css";
 
 // reactstrap components
 import {NavItem, NavLink} from "reactstrap";
@@ -9,7 +8,7 @@ import {NavItem, NavLink} from "reactstrap";
 import React from 'react'
 
 
-const NavItems = ({role, toggleUpload, togglelogin, removerole}) => {
+const NavItems = ({role, toggleUpload, togglelogin, toggleAddreason, removerole}) => {
 
     const nav = useNavigate();
   
@@ -38,6 +37,9 @@ const NavItems = ({role, toggleUpload, togglelogin, removerole}) => {
             <NavLink onClick={() => toggleUpload()}>
               Upload placement record
             </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink onClick={() => toggleAddreason()}>Add reason of Unemployability</NavLink>
           </NavItem>
           <NavItem>
             <NavLink onClick={()=>handlelogout()}>Logout</NavLink>

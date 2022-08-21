@@ -17,7 +17,7 @@ import styles from "./profile.module.css";
 
 
 // sample dataset for graphs ************** to be removed upon integration
-import {PieData,BarData,mapRegionData,diversityData, highChartoptions} from "./dataset";
+import {PieData,ProgramData,mapRegionData,diversityData, highChartoptions} from "./dataset";
 
 function Profile() {
   const [filterModal, setfilterModal] = useState(false);
@@ -193,7 +193,7 @@ function Profile() {
 
               <Col md="9" className={styles.graphs_left}>
                 <div ref={pieRef} className={styles.pie}><Pie data={PieData}/></div>
-                <div ref={barRef} id="barid"> <Bar options={BarOptions} data={BarData}/></div>
+                <div ref={barRef} id="barid"> <Bar options={BarOptions} data={ProgramData}/></div>
                 <div ref={diversityBarRef}><Bar options={BarOptions} data={diversityData}/></div>
                 <div className={styles.mapWrapper} ref={mapRef}>
                   <DatamapsIndia

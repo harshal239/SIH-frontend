@@ -1,3 +1,16 @@
+.profile_body{
+    background-color: #fff9f0;
+}
+
+.stat_header{
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.stat_value{
+    font-size: 24px;
+    font-weight: 600;
+}
 .mapWrapper svg{
     position: relative !important;
 }
@@ -10,7 +23,7 @@
 
 .graph_index_list{
     list-style: none;
-    font-size: 24px;
+    font-size: 18px;
 }
 
 .graph_index_list li{
@@ -47,8 +60,14 @@
 
 .graph_index_list .active{
     font-weight: 600;
-    font-size: 28px;
+    font-size: 18px;
     margin-left: 30px;
+}
+
+/* startColor: "#f8fcfe",
+endColor: "#1b7a9f", */
+.disabled{
+    color: gray!important;
 }
 
 
@@ -64,6 +83,7 @@
 .graphs_left div{
     margin: 150px 0;
 }
+
 
 .pie canvas {
     height: 400px !important;

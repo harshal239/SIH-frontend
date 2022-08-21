@@ -1,13 +1,311 @@
-import React from 'react'
-import AicteHeader from './AicteHeader'
-import Profile from 'Components/Profile'
-const AicteProfile = () => {
+import React, { useRef, useState, useEffect } from "react";
+// reactstrap components
+import {
+  Button,
+  Container,
+  Row,
+  Col,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+} from "reactstrap";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Pie, Bar } from "react-chartjs-2";
+import DatamapsIndia from "react-datamaps-india";
+import ScrollIntoView from "react-scroll-into-view";
+import useIntersection from "Components/CustomHooks/useIntersection";
+import DefaultFooter from "Components/Footers/DefaultFooter.js";
+import { BarOptions, MapLayout } from "../Graph_options"; // graph static data
+import HighchartsReact from "highcharts-react-official";
+import Highcharts from "highcharts";
+import highcharts3d from "highcharts/highcharts-3d";
+import styles from "../profile.module.css";
+import AicteHeader from "./AicteHeader";
+import { Card, CardBody, CardTitle } from "reactstrap";
+
+// sample dataset for graphs ************** to be removed upon integration
+import {
+  PieData,
+  ProgramData,
+  InstituteTypeData,
+  mapRegionData,
+  diversityData,
+  highChartoptions,
+} from "../dataset";
+
+function AicteProfile() {
+  const [filterModal, setfilterModal] = useState(false);
+  useEffect(() => {
+    document.body.classList.add("profile-page");
+    document.body.classList.add("sidebar-collapse");
+    document.documentElement.classList.remove("nav-open");
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0;
+    return function cleanup() {
+      document.body.classList.remove("profile-page");
+      document.body.classList.remove("sidebar-collapse");
+    };
+  }, []);
+
+  highcharts3d(Highcharts);
+
+  ChartJS.register(
+    Legend,
+    Tooltip,
+    ArcElement,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+
+  const pieRef = useRef();
+  const barRef = useRef();
+  const diversityBarRef = useRef();
+  const mapRef = useRef();
+  const pieInViewport = useIntersection(pieRef, "-300px");
+  const barInViewport = useIntersection(barRef, "-300px");
+  const diversityBarInViewport = useIntersection(diversityBarRef, "-300px");
+  const mapInViewport = useIntersection(mapRef, "-300px");
+
+  // for rendering list via map functionality ************* to be removed
+  const statArray = [
+    {
+      label: "Total Institutions",
+      value: 8999,
+    },
+    {
+      label: "Total Students",
+      value: 21,
+    },
+    {
+      label: "Placed",
+      value: 16,
+    },
+    {
+      label: "Male",
+      value: 17,
+    },
+    {
+      label: "Female",
+      value: 4,
+    },
+    {
+      label: "Minority",
+      value: 1,
+    },
+  ];
+  // filter dropdowns static data, to be modified.. will remain static
+  const filterArray = [1, 2, 3, 4, 5, 6, 7];
+
   return (
     <div className="wrapper">
-        <AicteHeader/>
-        <Profile/>
+      <AicteHeader />
+      <div className={`section ${styles.profile_body}`}>
+        <Container>
+          <Row style={{ marginTop: -106 }}>
+            {
+              // statistics cards
+              statArray.map((item) => {
+                return (
+                  <div class="col-xxl-3 col-md-4">
+                    <Card>
+                      <CardBody>
+                        <span className={styles.stat_header}>{item.label}</span>
+                        <div
+                          className="d-flex align-items-center"
+                          style={{ height: "40px" }}
+                        >
+                          <div
+                            className=" btn-icon btn-round btn btn-github "
+                            style={{ background: "#f6f6fe" }}
+                          >
+                            <i className="now-ui-icons users_single-02"></i>
+                          </div>
+                          <div class="ps-3">
+                            <span className={styles.stat_value}>
+                              {item.value} M
+                            </span>
+                          </div>
+                        </div>
+                      </CardBody>
+                    </Card>
+                  </div>
+                );
+              })
+            }
+          </Row>
+          <h3 className="title">About</h3>
+          <h5 className="description">
+            An artist of considerable range, Ryan — the name taken by
+            Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and
+            records all of his own music, giving it a warm, intimate feel with a
+            solid groove structure. An artist of considerable range.
+          </h5>
+        </Container>
+
+        {/* FILTERS */}
+        <Modal
+          isOpen={filterModal}
+          toggle={() => setfilterModal(false)}
+          fullscreen={true}
+          className={styles.modal_size}
+          scrollable={false}
+          contentClassName={styles.modal__content}
+        >
+          <ModalHeader toggle={() => setfilterModal(false)}>
+            Filters
+          </ModalHeader>
+          <ModalBody>
+            {filterArray.map((item) => {
+              return (
+                <Dropdown isOpen={false}>
+                  <DropdownToggle
+                    caret
+                    color="neutral"
+                    className={styles.drp_toggle}
+                  >
+                    Default value
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    <DropdownItem header>Header</DropdownItem>
+                    <DropdownItem disabled>Action</DropdownItem>
+                    <DropdownItem>Another Action</DropdownItem>
+                    <DropdownItem divider />
+                    <DropdownItem>Another Action</DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
+              );
+            })}
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary">Submit</Button>{" "}
+            <Button color="secondary" onClick={() => setfilterModal(false)}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </Modal>
+
+        <div className={`container ${styles.graph_container}`}>
+          <div className={styles.filter_row}>
+            <h3>Graphs and Charts</h3>
+            <span
+              className="now-ui-icons design_bullet-list-67"
+              onClick={() => setfilterModal(true)}
+            />
+
+            <div className={styles.filter_container}>
+              {filterArray.map((item) => {
+                return (
+                  <Dropdown isOpen={false}>
+                    <DropdownToggle
+                      caret
+                      color="neutral"
+                      className={styles.drp_toggle}
+                    >
+                      Default value
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem header>Header</DropdownItem>
+                      <DropdownItem disabled>Action</DropdownItem>
+                      <DropdownItem>Another Action</DropdownItem>
+                      <DropdownItem divider />
+                      <DropdownItem>Another Action</DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* main container for graph and charts */}
+          <Row>
+            <Col md="3" className={styles.sticky__index}>
+              <ul className={styles.graph_index_list}>
+                <li className={barInViewport ? styles.active : ""}>
+                  <i className="now-ui-icons business_chart-bar-32"> </i>
+                  <ScrollIntoView selector="#barid" alignToTop={true}>
+                    <span>Placement vs Program</span>
+                  </ScrollIntoView>
+                </li>
+                <li className={barInViewport ? styles.active : ""}>
+                  <i className="now-ui-icons business_chart-bar-32"> </i>
+                  <ScrollIntoView selector="#barid" alignToTop={true}>
+                    <span>Placement vs Institute Types</span>
+                  </ScrollIntoView>
+                </li>
+                <li className={mapInViewport ? styles.active : ""}>
+                  <i className="now-ui-icons location_map-big" />
+                  StateWise
+                </li>
+                <div className={styles.disabled}>
+                  <hr/>
+                  <span><i>future scope</i></span>
+                  <li>
+                    <i className="now-ui-icons business_chart-pie-36"> </i>
+                    Unemployability Distribution
+                  </li>
+                  <li>
+                    <i className="now-ui-icons location_map-big" />
+                    Employability Diversity
+                  </li>
+
+                </div>
+              </ul>
+            </Col>
+
+            <Col md="9" className={styles.graphs_left}>
+              <div ref={barRef} id="barid">
+                <Bar options={BarOptions} data={ProgramData} />
+              </div>
+              <div ref={barRef} id="barid">
+                <Bar options={BarOptions} data={InstituteTypeData} />
+              </div>
+              <div className={styles.mapWrapper} ref={mapRef}>
+                <DatamapsIndia
+                  regionData={mapRegionData}
+                  hoverComponent={({ value }) => {
+                    return (
+                      <>
+                        <p>{value.name}</p>
+                        <p>{value.value}</p>
+                      </>
+                    );
+                  }}
+                  mapLayout={MapLayout}
+                />
+              </div>
+              <hr/>
+              <div ref={pieRef} className={styles.pie}>
+                <Pie data={PieData} />
+              </div>
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={highChartoptions}
+              />
+            </Col>
+          </Row>
+        </div>
+      </div>
+      <DefaultFooter />
     </div>
-  )
+  );
 }
 
-export default AicteProfile
+export default AicteProfile;
