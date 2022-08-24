@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 // reactstrap components
 import {Button, Modal, ModalBody,ModalHeader, ModalFooter, Collapse, NavbarBrand, Navbar, NavItem, NavLink, Nav, Container, InputGroup, Input, InputGroupText,InputGroupAddon} from "reactstrap";
 import NavItems from "./NavItems";
-import AddReasons from "Components/AddReasons";
 import UploadCSV from "Components/UploadCSV";
 import Login from "Components/Login";
 import React from 'react';
@@ -12,17 +11,17 @@ import React from 'react';
 
 
 
-function IndexNavbar() {
+function IndexNavbar({isfixed}) {
 
 
   const [navbarColor, setNavbarColor] = useState("navbar-transparent");
+  const [position, setPosition] = useState("fixed");
   const [collapseOpen, setCollapseOpen] = useState(false);
 
 
 
-  const [modal1, setModal1] = useState(false);
+
   const [modal2, setModal2] = useState(false);
-  const [addreasonsModal, setAddreasons] = useState(false);
   const [reasonsModal, setReasonsModal] = useState(false);
   const [role, setrole] = useState("");
   const [userId, setUserId] = useState("");
@@ -31,6 +30,11 @@ function IndexNavbar() {
 
   useEffect(()=>{
     // cheking if user is already logged in 
+    if (isfixed){
+      setNavbarColor("");
+      setPosition("relative");
+    }
+
     let checkrole = localStorage.getItem('role');
     console.log(checkrole);
     if (checkrole){
@@ -62,9 +66,8 @@ function IndexNavbar() {
     
   });
 
-  const toggleupload = () => setModal1(!modal1);
+
   const togglelogin = () => setModal2(!modal2);
-  const toggleAddreason = () => setAddreasons(!addreasonsModal);
   return (
     <>
       {collapseOpen ? (
@@ -76,7 +79,9 @@ function IndexNavbar() {
           }}
         />
       ) : null}
-      <Navbar className={"fixed-top "+navbarColor} expand="lg" color="black">
+      <Navbar 
+        className={isfixed ? "" :  "fixed-top "+navbarColor }
+        expand="lg" color="black">
         <Container>
           <div className="navbar-translate">
             <NavbarBrand
@@ -111,16 +116,11 @@ function IndexNavbar() {
             <Nav navbar>
               {/* custom nav links */}
               {}
-              <NavItems role={role} toggleUpload={toggleupload} togglelogin={togglelogin} toggleAddreason={toggleAddreason} removerole={()=>setrole("none")} userId={userId}/>
+              <NavItems role={role} togglelogin={togglelogin} removerole={()=>setrole("none")} userId={userId}/>
 
-              {/* upload placement record modal */}
-              <UploadCSV isopen={modal1} togglemodal={toggleupload}/>
 
               {/* // sign in modal */}
               <Login isopen={modal2} togglemodal={togglelogin} passRole={(val)=>setrole(val)} setId={val=>setUserId(val)}/>
-
-
-              <AddReasons addreasonsModal={addreasonsModal} toggleAddreason={toggleAddreason} />
 
 
               

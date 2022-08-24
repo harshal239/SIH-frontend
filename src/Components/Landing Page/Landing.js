@@ -11,7 +11,7 @@ import {
   Row,
   Col
 } from "reactstrap";
-
+import IndexNavbar from "Components/Navbars/IndexNavbar";
 // core components
 import Header from "./Header";
 import DefaultFooter from "Components/Footers/DefaultFooter.js";
@@ -36,6 +36,7 @@ function Landing() {
   return (
     <>
       <div className="wrapper">
+      <IndexNavbar isfixed={false}/>
         <Header/>
         <div className="section section-about-us">
           <Container>

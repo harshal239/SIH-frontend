@@ -21,7 +21,7 @@ import {
   NavItem,
   Nav,
 } from "reactstrap";
-
+import IndexNavbar from "Components/Navbars/IndexNavbar";
 // core components
 import ExamplesNavbar from "Components/Navbars/ExamplesNavbar.js";
 import TransparentFooter from "Components/Footers/TransparentFooter.js";
@@ -53,6 +53,7 @@ function Login() {
           }}
         ></div>
         <div className="content">
+          <IndexNavbar isfixed={false}/>
           <Container>
             <Row>
               <Col className="ml-auto mr-auto" md="6">

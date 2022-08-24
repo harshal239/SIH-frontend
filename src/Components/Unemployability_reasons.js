@@ -14,6 +14,7 @@ import {
   Legend,
 } from "chart.js";
 import axios from "axios";
+import IndexNavbar from "./Navbars/IndexNavbar";
 import TransparentFooter from "Components/Footers/TransparentFooter.js";
 
 
@@ -86,17 +87,9 @@ const Unemployability_reasons = () => {
     };
   }, []);
   return (
-    <>
-      {/* <div className="page-header clear-filter" filter-color="blue"> */}
-      <div className="page-header">
-        <div
-          className="page-header-image"
-          style={{
-          
-            // backgroundImage: "url(" + require("assets/img/reasons_bg.jpg") + ")",
-          }}
-        ></div>
-        <div className="content">
+    <div>
+      
+      <IndexNavbar isfixed={true}/>
           <Container>
             <Bar
               options={BarOptions}
@@ -107,21 +100,16 @@ const Unemployability_reasons = () => {
                     label: "Reasons",
                     data: graphData.count,
                     backgroundColor: "#2CA8FF",
-                  },
-                  // {
-                  //   label: "Unplaced",
-                  //   data: [1,2,3],
-                  //   backgroundColor: "#FFB236",
-                  // },
+                  }
                 ],
               }}
             />
 
           </Container>
-        </div>
+
         <TransparentFooter />
-      </div>
-    </>
+
+    </div>
   );
 }
 

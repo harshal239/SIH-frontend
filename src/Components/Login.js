@@ -1,13 +1,16 @@
 import { useState} from "react";
 import axios from "axios";
 import { baseurl } from "Components/baseUrl";
-import {Modal, ModalBody, Input, InputGroup, InputGroupAddon, InputGroupText, Button} from 'reactstrap'
+import {Modal, ModalBody, Input, InputGroup, InputGroupAddon, InputGroupText, Button, Label} from 'reactstrap'
+import { Dropdown, Selection } from "react-dropdown-now";
 import styles from "./modal.module.css"; 
+import "react-dropdown-now/style.css";
+// import './drpdown.css';
 
 const Login = ({isopen, togglemodal, passRole, setId}) => {
     const [username, setuserName] = useState("");
     const [password, setpassword] = useState("");
-
+    const [role, setrole] = useState("");
     const [firstFocus, setFirstFocus] = useState(false);
     const [lastFocus, setLastFocus] = useState(false);
 
@@ -76,6 +79,17 @@ const Login = ({isopen, togglemodal, passRole, setId}) => {
             onBlur={() => setLastFocus(false)}
             className={styles.login_input}
           ></Input>
+        </InputGroup>
+        <InputGroup >
+          {/* <Label>Select Role</Label> */}
+                {/* program filter */}
+                <Dropdown
+                placeholder="Select Role"
+                // className={}
+                options={['AICTE', 'Corporate', 'College']}
+                value="one"
+                onChange={(item) => setrole(item.value)}
+              />
         </InputGroup>
       </ModalBody>
       <div className={`modal-footer ${styles.footer}`}>

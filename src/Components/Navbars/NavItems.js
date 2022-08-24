@@ -8,7 +8,7 @@ import {NavItem, NavLink} from "reactstrap";
 import React from 'react'
 
 
-const NavItems = ({role, toggleUpload, togglelogin, toggleAddreason, removerole, userId}) => {
+const NavItems = ({role, togglelogin, removerole, userId}) => {
 
     const nav = useNavigate();
   
@@ -35,13 +35,16 @@ const NavItems = ({role, toggleUpload, togglelogin, toggleAddreason, removerole,
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink onClick={() => toggleUpload()}>
+            <NavLink onClick={() => nav('/upload-record')}>
               Upload placement record
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink onClick={() => toggleAddreason()}>Add reason of Unemployability</NavLink>
+            <NavLink onClick={()=> nav('/add-reasons')}>
+              Add Reasons of Unemployability
+            </NavLink>
           </NavItem>
+ 
           <NavItem>
               <NavLink onClick={() => nav("/aicte-profile")}>AICTE Statistics</NavLink>
           </NavItem>

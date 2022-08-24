@@ -58,7 +58,7 @@ import useIntersection from "Components/CustomHooks/useIntersection";
 // core components
 import CollegeHeader from "./CollegeHeader";
 import DefaultFooter from "Components/Footers/DefaultFooter.js";
-
+import IndexNavbar from "Components/Navbars/IndexNavbar";
 import styles from "../profile.module.css";
 import axios from "axios"
 import { baseurl } from "Components/baseUrl"
@@ -152,7 +152,8 @@ function CollegeProfile() {
 
   return (
     <>
-      <div className="wrapper">
+      <div className="wrapper">      
+        <IndexNavbar isfixed={false}/>
         <CollegeHeader />
         <div className="section">
           <Container>

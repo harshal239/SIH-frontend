@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Modal, ModalBody, Button, FormGroup, Label, Input } from "reactstrap";
+import { Modal, ModalBody, Button, FormGroup, Label, Input, Container } from "reactstrap";
+import IndexNavbar from "./Navbars/IndexNavbar";
 import { Dropdown } from "react-dropdown-now";
 import axios from "axios";
-const AddReasons = ({ addreasonsModal, toggleAddreason }) => {
+const AddReasons = () => {
   const [reasonArr, setreasonArr] = useState([]);
   const [otherreason, setotherReason] = useState("");
   const [year, setyear] = useState("");
@@ -54,73 +55,72 @@ const AddReasons = ({ addreasonsModal, toggleAddreason }) => {
     setotherReason("");
   }, []);
   return (
-    <Modal isOpen={addreasonsModal} toggle={toggleAddreason}>
-      <div className="modal-header justify-content-center">
-        <button className="close" type="button" onClick={toggleAddreason}>
-          <i className="now-ui-icons ui-1_simple-remove"></i>
-        </button>
-        <h4 className="title title-up">Add reasons of Unemployability</h4>
-      </div>
-      <ModalBody>
-        <p className="category">Select reasons</p>
+    <div>
+      
+      <IndexNavbar isfixed={true}/>
+      <Container>
+        <div className="justify-content-center">
 
-        {arr.map((reason) => {
-          return (
-            <FormGroup check>
-              <Label check>
-                <Input
-                  type="checkbox"
-                  onChange={(e) => handleOnchange(e, reason)}
-                  // checked={(-1 === -1) ? false : true}
-                  // onChange={()=>setreasonArr(curr=>[...curr, reason])}
-                />
-                <span className="form-check-sign"></span>
-                {reason}
-              </Label>
-            </FormGroup>
-          );
-        })}
+          <h4 className="title title-up">Add reasons of Unemployability</h4>
+        </div>
+        <div>
+          <p className="category">Select reasons</p>
 
-        <br />
-        <Dropdown
-          placeholder="Select Year"
-          className="my-className"
-          options={[2019, 2020, 2021, 2022]}
-          value="one"
-          onChange={(item) => {
-            setyear(item.value);
-          }}
-        />
-        <br />
-        <FormGroup>
-          <Label> If Other than above reasons, please specify</Label>
-          <Input
-            value={otherreason}
-            defaultValue=""
-            placeholder="Enter reasons here"
-            type="textbox"
-            onChange={(e) => setotherReason(e.target.value)}
-          ></Input>
-        </FormGroup>
-      </ModalBody>
+          {arr.map((reason) => {
+            return (
+              <FormGroup check>
+                <Label check>
+                  <Input
+                    type="checkbox"
+                    onChange={(e) => handleOnchange(e, reason)}
+                    // checked={(-1 === -1) ? false : true}
+                    // onChange={()=>setreasonArr(curr=>[...curr, reason])}
+                  />
+                  <span className="form-check-sign"></span>
+                  {reason}
+                </Label>
+              </FormGroup>
+            );
+          })}
 
-      <div className="modal-footer">
-        <Button
-          className="btn btn-success image-btn"
-          type="submit"
-          onClick={handleSubmit}
-        >
-          Submit
-        </Button>
-        <Button
-          className="image-btn btn btn-danger"
-          type="button"
-          onClick={toggleAddreason}
-        >
-          Close
-        </Button>
-      </div>
-    </Modal>
+          <br />
+          <Dropdown
+            placeholder="Select Year"
+            className="my-className"
+            options={[2019, 2020, 2021, 2022]}
+            value="one"
+            onChange={(item) => {
+              setyear(item.value);
+            }}
+          />
+          <br />
+          <FormGroup>
+            <Label> If Other than above reasons, please specify</Label>
+            <Input
+              value={otherreason}
+              defaultValue=""
+              placeholder="Enter reasons here"
+              type="textbox"
+              onChange={(e) => setotherReason(e.target.value)}
+            ></Input>
+          </FormGroup>
+        </div>
+
+        <div>
+          <Button
+            className="btn btn-success image-btn"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            Submit
+          </Button>
+
+        </div>
+
+      </Container>
+    </div>
+
+
   );
 };
 

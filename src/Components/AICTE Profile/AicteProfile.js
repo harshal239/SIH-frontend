@@ -36,6 +36,7 @@ import Highcharts from "highcharts";
 import highcharts3d from "highcharts/highcharts-3d";
 import styles from "../profile.module.css";
 import AicteHeader from "./AicteHeader";
+import IndexNavbar from "Components/Navbars/IndexNavbar";
 import { Card, CardBody, CardTitle } from "reactstrap";
 
 import { Dropdown, Selection } from "react-dropdown-now";
@@ -274,6 +275,7 @@ function AicteProfile() {
 
   return (
     <div className="wrapper">
+      <IndexNavbar isfixed={false}/>
       <AicteHeader />
       <div className={`section ${styles.profile_body}`}>
         <Container>
