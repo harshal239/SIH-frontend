@@ -9,12 +9,22 @@ import {
   InputGroup,
   Container,
   Row,
-  Col
+  Col,
+  Card,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  CardText,
+  CardImg
 } from "reactstrap";
 import IndexNavbar from "Components/Navbars/IndexNavbar";
 // core components
 import Header from "./Header";
 import DefaultFooter from "Components/Footers/DefaultFooter.js";
+import DarkFooter from "Components/Footers/DarkFooter";
+import styles from './landing.module.css';
+import lg1 from '../../alumini_assets/img/fun-fact/picture.svg';
+
 
 function Landing() {
   const [firstFocus, setFirstFocus] = React.useState(false);
@@ -35,70 +45,122 @@ function Landing() {
   const teamMembers = ["Utkarsha Nehe", "Vedangi Bhavsar", "Sudarshan Gawale", "Harshal Walunj", "Yuvraj Deshmukh", "Shubham Sardar"];
   return (
     <>
+    
       <div className="wrapper">
       <IndexNavbar isfixed={false}/>
         <Header/>
 
-        <div className="section section-about-us">
-          <Container>
-            <Row>
-              <Col className="ml-auto mr-auto text-center" md="8">
-                <h2 className="title">Who we are?</h2>
-                <h5 className="description">
-                  Campus Placement is a platform which keeps track of campus placement of all technical institutes/universities throughout the country.
-                </h5>
-              </Col>
-            </Row>
-            <div className="separator separator-primary"></div>
-            <div className="section-story-overview">
-              <Row>
-                <Col md="6">
-                  <div
-                    className="image-container image-left"
-                    style={{
-                      backgroundImage:
-                        "url(" + require("assets/img/stat1.jpg") + ")"
-                    }}
-                  >
-                    <p className="blockquote blockquote-info">
-                      "Our goal is to reduce issue of unemployment and improvise it substantially " <br></br>
-                      <br></br>
-                      <small>-NOAA</small>
-                    </p>
-                  </div>
-                  <div
-                    className="image-container"
-                    style={{
-                      backgroundImage:
-                        "url(" + require("assets/img/stat3.jpg") + ")"
-                    }}
-                  ></div>
-                </Col>
-                <Col md="5">
-                  <div
-                    className="image-container image-right"
-                    style={{
-                      backgroundImage:
-                        "url(" + require("assets/img/stat2.jpg") + ")"
-                    }}
-                  ></div>
-                  <h3>
-                    Project
-                  </h3>
-                  <p>
-                  Our project proposes building an interlinked platform which keeps track of campus placement in all of the technical institutes/universities throughout the country through which government bodies like AICTE can view and analyze the ratio of employability/unemployability across India. 
-                  </p>
-                  <p>This platform provides critical stats based on different parameters like institute type, state, program, stream, year, salary, etc. which helps the government to come out with appropriate policies for reducing unemployment.
-                  </p>
-                  <p>Non-conventional hyper parameters like internships, projects, co-curricular achievements, etc. of students are used to predict the employability score of each candidate which in turn helps AICTE to provide equal opportunities/resources and devise the employability decisions one year ahead of time.
-                  </p>
-                </Col>
-              </Row>
-            </div>
-          </Container>
-        </div>
+        <Container>
+          <Row>
+            <Col md='6'>
+      <Card>
+        <CardImg top width="100%" src={require("assets/img/login.jpg")} />
+        <CardBody>
+          <CardTitle>Card title</CardTitle>
+          <CardSubtitle>Card subtitle</CardSubtitle>
+          <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+          <Button>Button</Button>
+        </CardBody>
+      </Card>
+            </Col>
+            
+            <Col md='6'>
+      <Card>
+        <CardImg top width="100%" src={require("assets/img/login.jpg")} alt="Card image cap" />
+        <CardBody>
+          <CardTitle>Card title</CardTitle>
+          <CardSubtitle>Card subtitle</CardSubtitle>
+          <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+          <Button>Button</Button>
+        </CardBody>
+      </Card>
+            </Col>
+            
+            <Col md='6'>
+      <Card>
+        <CardImg top width="100%" src={require("assets/img/login.jpg")} alt="Card image cap" />
+        <CardBody>
+          <CardTitle>Card title</CardTitle>
+          <CardSubtitle>Card subtitle</CardSubtitle>
+          <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+          <Button>Button</Button>
+        </CardBody>
+      </Card>
+            </Col>
+            <Col md='6'>
+      <Card>
+        <CardImg top width="100%" src={require("assets/img/login.jpg")} alt="Card image cap" />
+        <CardBody>
+          <CardTitle>Card title</CardTitle>
+          <CardSubtitle>Card subtitle</CardSubtitle>
+          <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+          <Button>Button</Button>
+        </CardBody>
+      </Card>
+            </Col>
+          </Row>
+        </Container>
         <div className="section section-team text-center">
+
+
+        <section className={styles.fact_area}>
+      <div class="container-fluid">
+        <div class="row text-center">
+          <div class="col-lg-3 col-sm-6">
+            <div class="single-funfact-wrap">
+              <div class="funfact-icon">
+                <img src="../../alumini_assets/img/fun-fact/user.svg" alt="Funfact" />
+              </div>
+              <div class="funfact-info">
+                <h5 className={styles.fact_count}>4025</h5>
+                <p>Members</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6">
+            <div class="single-funfact-wrap">
+              <div class="funfact-icon">
+                    {/* <img src={lg1}/> */}
+                <img src="../../alumini_assets/img/fun-fact/picture.svg" alt="Funfact" />
+              </div>
+              <div class="funfact-info">
+              <h5 className={styles.fact_count}>8725</h5>
+                <p>Photos</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6">
+            <div class="single-funfact-wrap">
+              <div class="funfact-icon">
+                <img src="../../alumini_assets/img/fun-fact/event.svg" alt="Funfact" />
+              </div>
+              <div class="funfact-info">
+                <h5><span className={styles.fact_count}>321</span>+</h5>
+                <p>Events</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6">
+            <div class="single-funfact-wrap">
+              <div class="funfact-icon">
+                <img src="../../alumini_assets/img/fun-fact/medal.svg" alt="Funfact" />
+              </div>
+              <div class="funfact-info">
+                <h5><span className={styles.fact_count}>32</span>+</h5>
+                <p>Awards</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
           <Container>
+
+   
+
+
+
             <h2 className="title">Here is our team</h2>
             <div className="team">
               <Row>
@@ -110,7 +172,7 @@ function Landing() {
                         <img
                           alt="..."
                           className="rounded-circle img-fluid img-raised"
-                          src={require("assets/img/julie.jpg")}
+                          src={require("assets/img/default-avatar.png")}
                         ></img>
                         <h4 className="title">{person}</h4>
                         <p className="category text-info">Developer</p>
@@ -218,7 +280,8 @@ function Landing() {
             </Row>
           </Container>
         </div>
-        <DefaultFooter />
+        {/* <DefaultFooter /> */}
+        <DarkFooter/>
       </div>
     </>
   );

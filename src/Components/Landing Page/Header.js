@@ -4,6 +4,8 @@ import React from "react";
 import { Button, Container } from "reactstrap";
 import styles from './landing.module.css';
 
+import  lading from '../../assets/img/landing_bg.jpg';
+
 // core components
 
 function Header() {
@@ -24,7 +26,8 @@ function Header() {
   });
   return (
     <>
-      <div className="page-header page-header-small" style={{"minHeight":"70vh"}}>
+      <div className={`page-header page-header-small ${styles.header_image}`} style={{"minHeight":"70vh"}}>
+        {/* <img src={lading} className="page-header-image"/> */}
         <div
           // className="page-header-image"
           className={`page-header-image ${styles.header_image}`}
@@ -39,7 +42,7 @@ function Header() {
               <div className="col-lg-9" style={{"textAlign":"left"}}>
                 <div className={styles.slider_content}>
                   <h2 className={styles.heading}>We Are Proud</h2>
-                  <h3>Students of <span>D.H.E. Goa</span></h3>
+                  <h3>Students of <span>PICT, Pune</span></h3>
                   <p>
                      Needs enables you to harness the power of your 
                     network. Whatever may be the need (academic, relocation,

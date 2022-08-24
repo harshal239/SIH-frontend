@@ -21,5 +21,15 @@
 }
 
 .header_image{
-    background-color: rgba(0,0,0,0.3);
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.fact_area{
+    background-color: #161f37;
+    padding: 100px 0;
+    color: #fff;
+}
+
+.fact_count{
+    font-size: 36px;
 }

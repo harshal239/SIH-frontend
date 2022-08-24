@@ -1,14 +1,23 @@
 .profile_body{
     background-color: #f6f9ff;
+    padding: 70px 0 0 0;
 }
 
+.stat_card{
+    height: 145px;
+}
 .stat_header{
     font-size: 18px;
     font-weight: 500;
 }
 
+.stat_header span{
+    font-size: 14px;
+    font-weight: 400;
+}
+
 .stat_value{
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 600;
 }
 .mapWrapper svg{
@@ -16,9 +25,9 @@
 }
 
 .sticky__index{
-    position: sticky;
-    top: 86px;
-    height: 300px;
+    /* position: sticky;
+    top: 80px;
+    height: 300px; */
 }
 
 .graph_index_list{
@@ -75,6 +84,7 @@ endColor: "#1b7a9f", */
     margin: 0 5%;
     max-width: unset;
     width: 90%;
+
 }
 
 .graphs_left{
@@ -139,7 +149,7 @@ endColor: "#1b7a9f", */
 }
 
 .drpwrapper div{
-    border: none;   
+    /* border: none;    */
 }
 .drpwrapper span{
     margin-bottom: 20px;
@@ -152,8 +162,10 @@ endColor: "#1b7a9f", */
 }
 
 .graphs__mainCard{
-    height: 70%;
-    min-height: 550px;
+    /* height: 70%;
+    min-height: 550px; */
+    height: 637px;
+    overflow-y: scroll;
 }
 
 @media only screen and (max-width: 992px) {

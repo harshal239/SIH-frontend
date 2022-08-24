@@ -58,6 +58,7 @@ import {
 // sample dataset for graphs ************** to be removed upon integration
 import { PieData } from "../dataset";
 import { baseurl } from "Components/baseUrl";
+import DarkFooter from "Components/Footers/DarkFooter";
 
 function AicteProfile() {
   const [filterModal, setfilterModal] = useState(false);
@@ -297,19 +298,19 @@ function AicteProfile() {
       <IndexNavbar isfixed={false} />
       <AicteHeader />
       <div className={`section ${styles.profile_body}`}>
-        <Container>
-          <Row style={{ marginTop: -106 }}>
+        <div className={`container ${styles.graph_container}`}>
+          <Row>
             {
               // statistics cards
               statArray.map((item) => {
                 return (
                   <div class="col-xxl-3 col-md-4">
-                    <Card>
+                    <Card className={styles.stat_card}>
                       <CardBody>
-                        <span className={styles.stat_header}>{item.label}</span>
+                        <span className={styles.stat_header}>{item.label} <span>| 2020</span></span>
                         <div
                           className="d-flex align-items-center"
-                          style={{ height: "40px" }}
+                          style={{ height: "75px" }}
                         >
                           <div
                             className=" btn-icon btn-round btn btn-github "
@@ -330,7 +331,7 @@ function AicteProfile() {
               })
             }
           </Row>
-        </Container>
+        </div>
 
         {/* FILTERS */}
         <Modal
@@ -377,94 +378,99 @@ function AicteProfile() {
         <div className={`container ${styles.graph_container}`}>
           <Row>
             <Col md="3" className={styles.sticky__index}>
-              <h3>Graphs</h3>
-              <div className={styles.drpwrapper}>
-                <span className={styles.filter_label}>Year</span>
-                {/* academic year filter */}
-                <Dropdown
-                  placeholder="Select year"
-                  className="my-className"
-                  options={yearOptions}
-                  value="one"
-                  onChange={(item) =>
-                    setfilters({ ...filters, year: item.value })
-                  }
-                  // onSelect={(value) => console.log('selected!', value)} // always fires once a selection happens even if there is no change
-                  // onClose={(closedBySelection) =>
-                  //   closedBySelection && updategraphs()
-                  // }
-                />
-              </div>
+              <Card>
+                <CardBody>
+                  <h3>Graphs</h3>
+                  <div className={styles.drpwrapper}>
+                    <span className={styles.filter_label}>Year</span>
+                    {/* academic year filter */}
+                    <Dropdown
+                      placeholder="Select year"
+                      className="my-className"
+                      options={yearOptions}
+                      value="one"
+                      onChange={(item) =>
+                        setfilters({ ...filters, year: item.value })
+                      }
+                      // onSelect={(value) => console.log('selected!', value)} // always fires once a selection happens even if there is no change
+                      // onClose={(closedBySelection) =>
+                      //   closedBySelection && updategraphs()
+                      // }
+                    />
+                  </div>
 
-              <div className={styles.drpwrapper}>
-                <span className={styles.filter_label}>Program</span>
-                {/* program filter */}
-                <Dropdown
-                  placeholder="Select Program"
-                  className="my-className"
-                  options={programOptions}
-                  value="one"
-                  onChange={(item) =>
-                    setfilters({ ...filters, program: item.value })
-                  }
-                />
-              </div>
+                  <div className={styles.drpwrapper}>
+                    <span className={styles.filter_label}>Program</span>
+                    {/* program filter */}
+                    <Dropdown
+                      placeholder="Select Program"
+                      className="my-className"
+                      options={programOptions}
+                      value="one"
+                      onChange={(item) =>
+                        setfilters({ ...filters, program: item.value })
+                      }
+                    />
+                  </div>
 
-              <div className={styles.drpwrapper}>
-                <span className={styles.filter_label}>Institute Type</span>
-                {/* institute type filter */}
-                <Dropdown
-                  placeholder="Select Institute Type"
-                  className="my-className"
-                  options={instituteTypes}
-                  value="one"
-                  onChange={(item) =>
-                    setfilters({ ...filters, instituteType: item.value })
-                  }
-                />
-              </div>
+                  <div className={styles.drpwrapper}>
+                    <span className={styles.filter_label}>Institute Type</span>
+                    {/* institute type filter */}
+                    <Dropdown
+                      placeholder="Select Institute Type"
+                      className="my-className"
+                      options={instituteTypes}
+                      value="one"
+                      onChange={(item) =>
+                        setfilters({ ...filters, instituteType: item.value })
+                      }
+                    />
+                  </div>
 
-              <div className={styles.drpwrapper}>
-                <span className={styles.filter_label}>State</span>
-                {/* state filters */}
-                <Dropdown
-                  placeholder="Select State"
-                  className="my-className"
-                  options={statesOptions}
-                  value="one"
-                  onChange={(item) => {
-                    setfilters({ ...filters, state: item.value });
-                  }}
-                />
-              </div>
+                  <div className={styles.drpwrapper}>
+                    <span className={styles.filter_label}>State</span>
+                    {/* state filters */}
+                    <Dropdown
+                      placeholder="Select State"
+                      className="my-className"
+                      options={statesOptions}
+                      value="one"
+                      onChange={(item) => {
+                        setfilters({ ...filters, state: item.value });
+                      }}
+                    />
+                  </div>
 
-              <div className={styles.drpwrapper}>
-                <span className={styles.filter_label}>Gender</span>
-                {/* gender filter */}
-                <Dropdown
-                  placeholder="Select Gender"
-                  className="my-className"
-                  options={["Male", "Female"]}
-                  value="one"
-                  onChange={(item) => {
-                    setfilters({ ...filters, gender: item.value });
-                  }}
-                />
-              </div>
+                  <div className={styles.drpwrapper}>
+                    <span className={styles.filter_label}>Gender</span>
+                    {/* gender filter */}
+                    <Dropdown
+                      placeholder="Select Gender"
+                      className="my-className"
+                      options={["Male", "Female"]}
+                      value="one"
+                      onChange={(item) => {
+                        setfilters({ ...filters, gender: item.value });
+                      }}
+                    />
+                  </div>
 
-              <div className={styles.drpwrapper}>
-                <span className={styles.filter_label}>Minority</span>
-                {/* minority filter */}
-                <Dropdown
-                  placeholder="Select Minority"
-                  className="my-className"
-                  options={["Yes", "No"]}
-                  value="one"
-                  onChange={(item) => {
-                    setfilters({ ...filters, minority: item.value });
-                  }}
-                />
-              </div>
+                  <div className={styles.drpwrapper}>
+                    <span className={styles.filter_label}>Minority</span>
+                    {/* minority filter */}
+                    <Dropdown
+                      placeholder="Select Minority"
+                      className="my-className"
+                      options={["Yes", "No"]}
+                      value="one"
+                      onChange={(item) => {
+                        setfilters({ ...filters, minority: item.value });
+                      }}
+                    />
+                  </div>
+
+                </CardBody>
+              </Card>
             </Col>
 
             <Col md="9" className={styles.graphs_left}>
@@ -480,7 +486,7 @@ function AicteProfile() {
                           setIconPills("1");
                         }}
                       >
-                        <i className="now-ui-icons objects_umbrella-13"></i>
+                        <i className="now-ui-icons location_map-big"></i>
                         Program Wise
                       </NavLink>
                     </NavItem>
@@ -493,7 +499,7 @@ function AicteProfile() {
                           setIconPills("2");
                         }}
                       >
-                        <i className="now-ui-icons shopping_cart-simple"></i>
+                        <i className="now-ui-icons location_map-big"></i>
                         Instititute Type Wise
                       </NavLink>
                     </NavItem>
@@ -506,7 +512,7 @@ function AicteProfile() {
                           setIconPills("3");
                         }}
                       >
-                        <i className="now-ui-icons shopping_shop"></i>
+                        <i className="now-ui-icons location_map-big"></i>
                         Gender Wise
                       </NavLink>
                     </NavItem>
@@ -519,7 +525,7 @@ function AicteProfile() {
                           setIconPills("4");
                         }}
                       >
-                        <i className="now-ui-icons ui-2_settings-90"></i>
+                        <i className="now-ui-icons location_map-big"></i>
                         State Wise
                       </NavLink>
                     </NavItem>
@@ -532,7 +538,7 @@ function AicteProfile() {
                           setIconPills("5");
                         }}
                       >
-                        <i className="now-ui-icons ui-2_settings-90"></i>
+                        <i className="now-ui-icons location_map-big"></i>
                         Year Wise
                       </NavLink>
                     </NavItem>
@@ -716,7 +722,8 @@ function AicteProfile() {
           </Row>
         </div>
       </div>
-      <DefaultFooter />
+      <DarkFooter/>
+      {/* <DefaultFooter /> */}
     </div>
   );
 }
