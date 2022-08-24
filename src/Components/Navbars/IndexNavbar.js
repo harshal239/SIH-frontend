@@ -7,6 +7,7 @@ import NavItems from "./NavItems";
 import UploadCSV from "Components/UploadCSV";
 import Login from "Components/Login";
 import React from 'react';
+import styles from './nav.module.css';
 
 
 
@@ -83,13 +84,15 @@ function IndexNavbar({isfixed}) {
 
 
       
-      <Navbar className={"fixed-top " + navbarColor} expand="lg" color="info">
-        <Container>
-          <div className="navbar-translate">
+      {/* <Navbar className={"fixed-top " + navbarColor} expand="lg" color="info"> */}
+      <Navbar className={`fixed-top white ${styles.nav__main}`} expand="lg" light color="white">
+        {/* <Container> */}
+          {/* <div className="navbar-translate"> */}
             <NavbarBrand
               target="_blank"
               id="navbar-brand"
               onClick={() => nav("/homepage")}
+              className={styles.nvBrand}
             >
               Campus Placement
             </NavbarBrand>
@@ -107,13 +110,13 @@ function IndexNavbar({isfixed}) {
               <span className="navbar-toggler-bar middle-bar"></span>
               <span className="navbar-toggler-bar bottom-bar"></span>
             </button>
-          </div>
+          {/* </div> */}
           <Collapse
             className="justify-content-end"
             isOpen={collapseOpen}
             navbar
           >
-            <Nav navbar>
+            <Nav navbar className={styles.navitems_wrapper}>
               {/* custom nav links */}
               {}
               <NavItems role={role} togglelogin={togglelogin} removerole={()=>setrole("none")} userId={userId}/>
@@ -155,7 +158,7 @@ function IndexNavbar({isfixed}) {
               </Modal>
             </Nav>
           </Collapse>
-        </Container>
+        {/* </Container> */}
       </Navbar>
     </>
   );

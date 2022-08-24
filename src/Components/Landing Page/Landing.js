@@ -38,6 +38,7 @@ function Landing() {
       <div className="wrapper">
       <IndexNavbar isfixed={false}/>
         <Header/>
+
         <div className="section section-about-us">
           <Container>
             <Row>

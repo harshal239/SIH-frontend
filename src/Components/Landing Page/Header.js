@@ -2,6 +2,7 @@ import React from "react";
 
 // reactstrap components
 import { Button, Container } from "reactstrap";
+import styles from './landing.module.css';
 
 // core components
 
@@ -25,44 +26,43 @@ function Header() {
     <>
       <div className="page-header page-header-small" style={{"minHeight":"70vh"}}>
         <div
-          className="page-header-image"
+          // className="page-header-image"
+          className={`page-header-image ${styles.header_image}`}
           style={{
             backgroundImage: "url(" + require("assets/img/landing_bg.jpg") + ")"
           }}
           ref={pageHeader}
         ></div>
-        <div className="content-center">
-          <Container>
-            <h1 className="title">Campus Placement</h1>
-            <div className="text-center">
-              <Button
-                className="btn-icon btn-round"
-                color="info"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <i className="fab fa-facebook-square"></i>
-              </Button>
-              <Button
-                className="btn-icon btn-round"
-                color="info"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <i className="fab fa-twitter"></i>
-              </Button>
-              <Button
-                className="btn-icon btn-round"
-                color="info"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <i className="fab fa-google-plus"></i>
-              </Button>
+        {/* <div className="content-center"> */}
+        <Container>
+            <div className="row">
+              <div className="col-lg-9" style={{"textAlign":"left"}}>
+                <div className={styles.slider_content}>
+                  <h2 className={styles.heading}>We Are Proud</h2>
+                  <h3>Students of <span>D.H.E. Goa</span></h3>
+                  <p>
+                     Needs enables you to harness the power of your 
+                    network. Whatever may be the need (academic, relocation,
+                    career, projects, mentorship, etc. you can ask the community
+                    and get responses in three.
+                  </p>
+                  <div className="slider-btn">
+                    <a href="#about-area" class="btn btn-brand smooth-scroll"
+                      >our mission</a
+                    >
+                    <a href="about.html" class="btn btn-brand-rev">our story</a>
+                  </div>
+                </div>
+              </div>
             </div>
-          </Container>
-        </div>
-      </div>
+            </Container>
+          </div>
+          {/* <Container className={styles.heading}>
+
+            <h2>We Are Proud</h2>
+          </Container> */}
+  
+        {/* </div> */}
     </>
   );
 }

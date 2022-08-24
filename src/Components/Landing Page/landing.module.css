@@ -1,0 +1,25 @@
+.heading{
+    font-size: 100px;
+    font-weight: 700;
+}
+
+.slider_content{
+    /* color: #ffffff !important; */
+}
+
+.slider_content h3{
+    font-size: 36px;
+    font-weight: 400;
+}
+
+.slider_content span{
+    color: #ffe156;
+}
+
+.slider_content p{
+    font-size: 16px;
+}
+
+.header_image{
+    background-color: rgba(0,0,0,0.3);
+}
