@@ -31,7 +31,7 @@ function IndexNavbar({isfixed}) {
   useEffect(()=>{
     // cheking if user is already logged in 
     if (isfixed){
-      setNavbarColor("");
+      // setNavbarColor("primary");
       setPosition("relative");
     }
 
@@ -79,9 +79,11 @@ function IndexNavbar({isfixed}) {
           }}
         />
       ) : null}
-      <Navbar 
-        className={isfixed ? "" :  "fixed-top "+navbarColor }
-        expand="lg" color="black">
+
+
+
+      
+      <Navbar className={"fixed-top " + navbarColor} expand="lg" color="info">
         <Container>
           <div className="navbar-translate">
             <NavbarBrand
@@ -91,9 +93,7 @@ function IndexNavbar({isfixed}) {
             >
               Campus Placement
             </NavbarBrand>
-            {/* <UncontrolledTooltip target="#navbar-brand">
-              Designed by Invision. Coded by Creative Tim
-            </UncontrolledTooltip> */}
+  
             <button
               className="navbar-toggler navbar-toggler"
               onClick={() => {

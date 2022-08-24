@@ -13,6 +13,14 @@ import {
   ModalFooter,
   ModalHeader,
   UncontrolledDropdown,
+  Card,
+  CardBody,
+  CardHeader,
+  NavItem,
+  NavLink,
+  Nav,
+  TabContent,
+  TabPane,
 } from "reactstrap";
 import {
   Chart as ChartJS,
@@ -37,38 +45,35 @@ import highcharts3d from "highcharts/highcharts-3d";
 import styles from "../profile.module.css";
 import AicteHeader from "./AicteHeader";
 import IndexNavbar from "Components/Navbars/IndexNavbar";
-import { Card, CardBody, CardTitle } from "reactstrap";
 
 import { Dropdown, Selection } from "react-dropdown-now";
 import "react-dropdown-now/style.css";
 
-import { yearOptions, programOptions, instituteTypes, statesOptions } from "./DropdownOptions";
-// sample dataset for graphs ************** to be removed upon integration
 import {
-  PieData,
-  // ProgramData,
-  InstituteTypeData,
-  diversityData,
-  highChartoptions,
-} from "../dataset";
+  yearOptions,
+  programOptions,
+  instituteTypes,
+  statesOptions,
+} from "./DropdownOptions";
+// sample dataset for graphs ************** to be removed upon integration
+import { PieData } from "../dataset";
 import { baseurl } from "Components/baseUrl";
-
-
 
 function AicteProfile() {
   const [filterModal, setfilterModal] = useState(false);
   const [programWise, setProgramWise] = useState({});
   const [instituteWise, setInstituteWise] = useState({});
+  const [programGenderWise, setProgramGenderWise] = useState({});
   const [mapRegionData, setmapregionData] = useState({});
   const [yearWise, setYearWise] = useState({});
   const [filters, setfilters] = useState({
     year: "",
     program: "",
     instituteType: "",
-    state:"",
-    gender:"",
-    minority:"",
-  })
+    state: "",
+    gender: "",
+    minority: "",
+  });
 
   const dataMapper = (data) => {
     const ids = [];
@@ -84,34 +89,32 @@ function AicteProfile() {
   };
 
   const getyearWisePlacement = async () => {
-
     let data = {
       program: filters.program,
-      gender: (filters.gender === "Female") ? "Female" : "",
+      gender: filters.gender === "Female" ? "Female" : "",
       state: filters.state,
       institutionType: filters.instituteType,
-      minority: (filters.minority === "Yes") ? "Yes" : "",
-    }
+      minority: filters.minority === "Yes" ? "Yes" : "",
+    };
     try {
       const res = await axios.post(
         "https://optimizers-sih-backend.herokuapp.com/api/v1/chart//yearWisePlacement",
         data
       );
-      
-      let ids = [] ;
+
+      let ids = [];
       let placedcount = [];
       let unplacedcount = [];
-      let total = []
-      
-      res.data.map(obj => {
+      let total = [];
+
+      res.data.map((obj) => {
         ids.push(obj._id);
         placedcount.push(obj.placedStudentCount);
         unplacedcount.push(obj.unplacedStudentCount);
         total.push(obj.totalPlacedCount);
-
-      })
+      });
       console.log(ids, placedcount, unplacedcount, total);
-      setYearWise({ids, placedcount, unplacedcount, total});
+      setYearWise({ ids, placedcount, unplacedcount, total });
       // setProgramWise(response);
     } catch (error) {
       console.log(error);
@@ -119,14 +122,13 @@ function AicteProfile() {
   };
 
   const getprogramwiseplacement = async () => {
-
     let data = {
-      year : parseInt(filters.year),
-      gender: (filters.gender === "Female") ? "Female" : "",
+      year: parseInt(filters.year),
+      gender: filters.gender === "Female" ? "Female" : "",
       state: filters.state,
       institutionType: filters.instituteType,
-      minority: (filters.minority === "Yes") ? "Yes" : "",
-    }
+      minority: filters.minority === "Yes" ? "Yes" : "",
+    };
     try {
       const program = await axios.post(
         "https://optimizers-sih-backend.herokuapp.com/api/v1/chart/programWisePlacement",
@@ -141,12 +143,12 @@ function AicteProfile() {
 
   const getinstitutewisePlacement = async () => {
     let data = {
-      year : parseInt(filters.year),
-      gender: (filters.gender === "Female") ? "Female" : "",
+      year: parseInt(filters.year),
+      gender: filters.gender === "Female" ? "Female" : "",
       state: filters.state,
       program: filters.program,
-      minority: (filters.minority === "Yes") ? "Yes" : "",
-    }
+      minority: filters.minority === "Yes" ? "Yes" : "",
+    };
     try {
       const institute = await axios.post(
         "https://optimizers-sih-backend.herokuapp.com/api/v1/chart/institutionTypeWisePlacement",
@@ -159,17 +161,40 @@ function AicteProfile() {
     }
   };
 
+  const getProgramGenderWise = async () => {
+    try {
+      const memo = await axios.post(
+        "http://localhost:4000/api/v1/chart/programGenderWisePlacement",
+        {
+          year: 2021,
+          state: "",
+          institutionType: "",
+          minority: "",
+        }
+      );
+      let ids = [];
+      let maleplaced = [];
+      let femaleplaced = [];
+      memo.data.map((obj) => {
+        ids.push(obj._id);
+        maleplaced.push(obj.malePlacedStudentCount);
+        femaleplaced.push(obj.femalePlacedStudentCount);
+      });
+      setProgramGenderWise({ ids, maleplaced, femaleplaced });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  const getstatewisePlacement = async() => {
+  const getstatewisePlacement = async () => {
     let data = {
-      year : parseInt(filters.year),
-      gender: (filters.gender === "Female") ? "Female" : "",
+      year: "",
+      gender: filters.gender === "Female" ? "Female" : "",
       institutionType: filters.instituteType,
       program: filters.program,
-      minority: (filters.minority === "Yes") ? "Yes" : "",
-
-    }
-    try{
+      minority: filters.minority === "Yes" ? "Yes" : "",
+    };
+    try {
       const res = await axios.post(
         "https://optimizers-sih-backend.herokuapp.com/api/v1/chart/stateWisePlacement",
         data
@@ -178,24 +203,22 @@ function AicteProfile() {
 
       let obj1 = {};
       res.data.map((item) => {
-        obj1[item._id] = {value:item.unplacedStudentCount};
-      })
+        obj1[item._id] = { value: item.unplacedStudentCount };
+      });
       console.log(obj1);
       setmapregionData(obj1);
-        // placedStudentCount: 1
-        // unplacedStudentCount: 1
-        // _id: "Gujarat"
-    }
-    catch(err){
+      // placedStudentCount: 1
+      // unplacedStudentCount: 1
+      // _id: "Gujarat"
+    } catch (err) {
       console.log(err);
     }
-  }
-
-
+  };
 
   useEffect(() => {
     getprogramwiseplacement();
     getinstitutewisePlacement();
+    getProgramGenderWise();
     getstatewisePlacement();
     getyearWisePlacement();
     document.body.classList.add("profile-page");
@@ -209,14 +232,14 @@ function AicteProfile() {
     };
   }, []);
 
-
   // to update graphs
-  useEffect(()=>{
+  useEffect(() => {
     getprogramwiseplacement();
     getinstitutewisePlacement();
+    getProgramGenderWise();
     getstatewisePlacement();
     getyearWisePlacement();
-  },[filters]);
+  }, [filters]);
 
   highcharts3d(Highcharts);
 
@@ -236,10 +259,6 @@ function AicteProfile() {
   const barRef = useRef();
   const diversityBarRef = useRef();
   const mapRef = useRef();
-  const pieInViewport = useIntersection(pieRef, "-300px");
-  const barInViewport = useIntersection(barRef, "-300px");
-  const diversityBarInViewport = useIntersection(diversityBarRef, "-300px");
-  const mapInViewport = useIntersection(mapRef, "-300px");
 
   // for rendering list via map functionality ************* to be removed
   const statArray = [
@@ -268,14 +287,14 @@ function AicteProfile() {
       value: 1,
     },
   ];
-  // filter dropdowns static data, to be modified.. will remain static
-  const filterArray = [1, 2, 3, 4, 5, 6, 7];
-  // dropdown options
 
+  const filterArray = [1, 2, 3];
+
+  const [iconPills, setIconPills] = React.useState("1");
 
   return (
     <div className="wrapper">
-      <IndexNavbar isfixed={false}/>
+      <IndexNavbar isfixed={false} />
       <AicteHeader />
       <div className={`section ${styles.profile_body}`}>
         <Container>
@@ -356,253 +375,343 @@ function AicteProfile() {
         </Modal>
 
         <div className={`container ${styles.graph_container}`}>
-          <div className={styles.filter_row}>
-            <h3>Graphs and Charts</h3>
-            <span
-              className="now-ui-icons design_bullet-list-67"
-              onClick={() => setfilterModal(true)}
-            />
-
-            <div className={styles.filter_container}>
-              {/* academic year filter */}
-              <Dropdown
-                placeholder="Select year"
-                className="my-className"
-                options={yearOptions}
-                value="one"
-                onChange={(item) => setfilters({...filters, year:item.value})}
-                // onSelect={(value) => console.log('selected!', value)} // always fires once a selection happens even if there is no change
-                // onClose={(closedBySelection) =>
-                //   closedBySelection && updategraphs()
-                // }
-              />
-
-              {/* program filter */}
-              <Dropdown
-                placeholder="Select Program"
-                className="my-className"
-                options={programOptions}
-                value="one"
-                onChange={(item) => setfilters({...filters, program:item.value})}
-              />
-
-              {/* institute type filter */}
-              <Dropdown
-                placeholder="Select Institute Type"
-                className="my-className"
-                options={instituteTypes}
-                value="one"
-                onChange={(item) => setfilters({...filters, instituteType:item.value})}
-              />
-
-              {/* state filters */}
-              <Dropdown
-                placeholder="Select State"
-                className="my-className"
-                options={statesOptions}
-                value="one"
-                onChange={(item) => {
-                  setfilters({...filters, state:item.value});
-                }}
-  
-              />
-
-              {/* gender filter */}
-              <Dropdown
-                placeholder="Select Gender"
-                className="my-className"
-                options={["Male", "Female"]}
-                value="one"
-                onChange={(item) => {
-                  setfilters({...filters, gender:item.value});
-                }}
-              />
-
-              {/* minority filter */}
-              <Dropdown
-                placeholder="Select Minority"
-                className="my-className"
-                options={["Yes", "No"]}
-                value="one"
-                onChange={(item) => {
-                  setfilters({...filters, minority:item.value});
-                }}
-              />
-
-            </div>
-          </div>
-
-          {/* main container for graph and charts */}
           <Row>
             <Col md="3" className={styles.sticky__index}>
-              <ul className={styles.graph_index_list}>
-                <li className={barInViewport ? styles.active : ""}>
-                  <i className="now-ui-icons business_chart-bar-32"> </i>
-                  <ScrollIntoView selector="#barid" alignToTop={true}>
-                    <span>Placement vs Program</span>
-                  </ScrollIntoView>
-                </li>
-                <li className={barInViewport ? styles.active : ""}>
-                  <i className="now-ui-icons business_chart-bar-32"> </i>
-                  <ScrollIntoView selector="#barid" alignToTop={true}>
-                    <span>Placement vs Institute Types</span>
-                  </ScrollIntoView>
-                </li>
-                <li className={mapInViewport ? styles.active : ""}>
-                  <i className="now-ui-icons location_map-big" />
-                  StateWise
-                </li>
-                <div className={styles.disabled}>
-                  <hr />
-                  <span>
-                    <i>future scope</i>
-                  </span>
-                  <li>
-                    <i className="now-ui-icons business_chart-pie-36"> </i>
-                    Unemployability Distribution
-                  </li>
-                  <li>
-                    <i className="now-ui-icons location_map-big" />
-                    Employability Diversity
-                  </li>
-                </div>
-              </ul>
+              <h3>Graphs</h3>
+              <div className={styles.drpwrapper}>
+                <span className={styles.filter_label}>Year</span>
+                {/* academic year filter */}
+                <Dropdown
+                  placeholder="Select year"
+                  className="my-className"
+                  options={yearOptions}
+                  value="one"
+                  onChange={(item) =>
+                    setfilters({ ...filters, year: item.value })
+                  }
+                  // onSelect={(value) => console.log('selected!', value)} // always fires once a selection happens even if there is no change
+                  // onClose={(closedBySelection) =>
+                  //   closedBySelection && updategraphs()
+                  // }
+                />
+              </div>
+
+              <div className={styles.drpwrapper}>
+                <span className={styles.filter_label}>Program</span>
+                {/* program filter */}
+                <Dropdown
+                  placeholder="Select Program"
+                  className="my-className"
+                  options={programOptions}
+                  value="one"
+                  onChange={(item) =>
+                    setfilters({ ...filters, program: item.value })
+                  }
+                />
+              </div>
+
+              <div className={styles.drpwrapper}>
+                <span className={styles.filter_label}>Institute Type</span>
+                {/* institute type filter */}
+                <Dropdown
+                  placeholder="Select Institute Type"
+                  className="my-className"
+                  options={instituteTypes}
+                  value="one"
+                  onChange={(item) =>
+                    setfilters({ ...filters, instituteType: item.value })
+                  }
+                />
+              </div>
+
+              <div className={styles.drpwrapper}>
+                <span className={styles.filter_label}>State</span>
+                {/* state filters */}
+                <Dropdown
+                  placeholder="Select State"
+                  className="my-className"
+                  options={statesOptions}
+                  value="one"
+                  onChange={(item) => {
+                    setfilters({ ...filters, state: item.value });
+                  }}
+                />
+              </div>
+
+              <div className={styles.drpwrapper}>
+                <span className={styles.filter_label}>Gender</span>
+                {/* gender filter */}
+                <Dropdown
+                  placeholder="Select Gender"
+                  className="my-className"
+                  options={["Male", "Female"]}
+                  value="one"
+                  onChange={(item) => {
+                    setfilters({ ...filters, gender: item.value });
+                  }}
+                />
+              </div>
+
+              <div className={styles.drpwrapper}>
+                <span className={styles.filter_label}>Minority</span>
+                {/* minority filter */}
+                <Dropdown
+                  placeholder="Select Minority"
+                  className="my-className"
+                  options={["Yes", "No"]}
+                  value="one"
+                  onChange={(item) => {
+                    setfilters({ ...filters, minority: item.value });
+                  }}
+                />
+              </div>
             </Col>
 
             <Col md="9" className={styles.graphs_left}>
-              <div ref={barRef} id="barid">
-                <Bar
-                  options={BarOptions}
-                  data={{
-                    labels: programWise.ids,
-                    datasets: [
-                      {
-                        label: "Placed",
-                        data: programWise.placedCount,
-                        backgroundColor: "#2CA8FF",
-                      },
-                      {
-                        label: "Unplaced",
-                        data: programWise.unplacedCount,
-                        backgroundColor: "#FFB236",
-                      },
-                    ],
-                  }}
-                />
-              </div>
-
-              <div ref={barRef} id="barid">
-                <Bar
-                  options={BarOptions}
-                  data={{
-                    labels: instituteWise.ids,
-                    datasets: [
-                      {
-                        label: "Placed",
-                        data: instituteWise.placedCount,
-                        backgroundColor: "#2CA8FF",
-                      },
-                      {
-                        label: "Unplaced",
-                        data: instituteWise.unplacedCount,
-                        backgroundColor: "#FFB236",
-                      },
-                    ],
-                  }}
-                />
-              </div>
-              <div className={styles.mapWrapper} ref={mapRef}>
-                <DatamapsIndia
-                  regionData={mapRegionData}
-                  hoverComponent={({ value }) => {
-                    return (
-                      <>
-                        <p>{value.name}</p>
-                        <p>{value.value}</p>
-                      </>
-                    );
-                  }}
-                  mapLayout={MapLayout}
-                />
-              </div>
-              <hr />
-              <div ref={pieRef} className={styles.pie}>
-                <Pie data={PieData} />
-              </div>
-              <HighchartsReact
+              <Card className={styles.graphs__mainCard}>
+                <CardHeader>
+                  <Nav className="justify-content-center" role="tablist" tabs>
+                    <NavItem>
+                      <NavLink
+                        className={iconPills === "1" ? "active" : ""}
+                        href="#pablo"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setIconPills("1");
+                        }}
+                      >
+                        <i className="now-ui-icons objects_umbrella-13"></i>
+                        Program Wise
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={iconPills === "2" ? "active" : ""}
+                        href="#pablo"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setIconPills("2");
+                        }}
+                      >
+                        <i className="now-ui-icons shopping_cart-simple"></i>
+                        Instititute Type Wise
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={iconPills === "3" ? "active" : ""}
+                        href="#pablo"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setIconPills("3");
+                        }}
+                      >
+                        <i className="now-ui-icons shopping_shop"></i>
+                        Gender Wise
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={iconPills === "4" ? "active" : ""}
+                        href="#pablo"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setIconPills("4");
+                        }}
+                      >
+                        <i className="now-ui-icons ui-2_settings-90"></i>
+                        State Wise
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={iconPills === "5" ? "active" : ""}
+                        href="#pablo"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setIconPills("5");
+                        }}
+                      >
+                        <i className="now-ui-icons ui-2_settings-90"></i>
+                        Year Wise
+                      </NavLink>
+                    </NavItem>
+                  </Nav>
+                </CardHeader>
+                <CardBody>
+                  <TabContent
+                    className="text-center"
+                    activeTab={"iconPills" + iconPills}
+                  >
+                    <TabPane tabId="iconPills1">
+                      <div ref={barRef} id="barid">
+                        <Bar
+                          options={BarOptions}
+                          data={{
+                            labels: programWise.ids,
+                            datasets: [
+                              {
+                                label: "Placed",
+                                data: programWise.placedCount,
+                                backgroundColor: "#2CA8FF",
+                              },
+                              {
+                                label: "Unplaced",
+                                data: programWise.unplacedCount,
+                                backgroundColor: "#FFB236",
+                              },
+                            ],
+                          }}
+                        />
+                      </div>
+                    </TabPane>
+                    <TabPane tabId="iconPills2">
+                      <div ref={barRef} id="barid">
+                        <Bar
+                          options={BarOptions}
+                          data={{
+                            labels: instituteWise.ids,
+                            datasets: [
+                              {
+                                label: "Placed",
+                                data: instituteWise.placedCount,
+                                backgroundColor: "#2CA8FF",
+                              },
+                              {
+                                label: "Unplaced",
+                                data: instituteWise.unplacedCount,
+                                backgroundColor: "#FFB236",
+                              },
+                            ],
+                          }}
+                        />
+                      </div>
+                    </TabPane>
+                    <TabPane tabId="iconPills3">
+                      <div ref={barRef} id="barid">
+                        <Bar
+                          options={programGenderWise.ids}
+                          data={{
+                            labels: instituteWise.ids,
+                            datasets: [
+                              {
+                                label: "Male Placed",
+                                data: programGenderWise.maleplaced,
+                                backgroundColor: "#2CA8FF",
+                              },
+                              {
+                                label: "Female Placed",
+                                data: programGenderWise.femaleplaced,
+                                backgroundColor: "#FFB236",
+                              },
+                            ],
+                          }}
+                        />
+                      </div>
+                    </TabPane>
+                    <TabPane tabId="iconPills4">
+                      <div className={styles.mapWrapper} ref={mapRef}>
+                        <DatamapsIndia
+                          regionData={mapRegionData}
+                          hoverComponent={({ value }) => {
+                            return (
+                              <>
+                                <p>{value.name}</p>
+                                <p>{value.value}</p>
+                              </>
+                            );
+                          }}
+                          mapLayout={MapLayout}
+                        />
+                      </div>
+                    </TabPane>
+                    <TabPane tabId="iconPills5">
+                    <HighchartsReact
                 highcharts={Highcharts}
-                options={
+                options={{
+                  chart: {
+                    type: "column",
+                    options3d: {
+                      enabled: true,
+                      alpha: 10,
+                      beta: 25,
+                      depth: 220,
+                      viewDistance: 25,
+                    },
+                  },
+                  title: {
+                    text: "",
+                  },
 
-                  {
-                    chart: {
-                      type: "column",
-                      options3d: {
-                        enabled: true,
-                        alpha: 10,
-                        beta: 25,
-                        depth: 220,
-                        viewDistance: 25,
+                  legend: {
+                    verticalAlign: "right",
+                    layout: "horizontal",
+                    x: 0,
+                    y: 0,
+                  },
+
+                  xAxis: {
+                    categories: yearWise.ids,
+                    labels: {
+                      skew3d: true,
+                      style: {
+                        fontSize: "16px",
                       },
                     },
-                    title: {
-                      text: "",
-                    },
-                  
-                    legend: {       
-                           verticalAlign: 'right',
-                           layout: 'horizontal',
-                           x: 0,
-                           y: 0
-                       },
-                  
-                    xAxis: {
-                      categories: yearWise.ids,
-                      labels: {
-                        skew3d: true,
-                        style: {
-                          fontSize: "16px",
-                        },
-                      },
-                    },
-                  
-                    yAxis: {
-                      categories: ['0M', '2M', '4M', '6M', '8M', '10M', '12M', '14M'],
-                      allowDecimals: false,
-                      min: 0,
-                      title: {
-                        text: "Number of Students",
-                        skew3d: true,
-                      },
-                    },
-                    plotOptions: {
-                      column: {
-                        stacking: true,
-                        // groupZPadding: 10,
-                        depth: 40,
-                        grouping: false
-                      },
-                    },
-                  
-                    series: [
-                      {
-                        name: "Unplaced",
-                        data: yearWise.unplacedcount,
-                        stack: 0,
-                      },
-                      {
-                        name: "Placed",
-                        data: yearWise.placedcount,
-                        stack: 1,
-                      },
-                      {
-                        name: "Total",
-                        data: yearWise.total,
-                        stack: 2,
-                      },
+                  },
+
+                  yAxis: {
+                    categories: [
+                      "0M",
+                      "2M",
+                      "4M",
+                      "6M",
+                      "8M",
+                      "10M",
+                      "12M",
+                      "14M",
                     ],
-                  }
-                }
+                    allowDecimals: false,
+                    min: 0,
+                    title: {
+                      text: "Number of Students",
+                      skew3d: true,
+                    },
+                  },
+                  plotOptions: {
+                    column: {
+                      stacking: true,
+                      // groupZPadding: 10,
+                      depth: 40,
+                      grouping: false,
+                    },
+                  },
+
+                  series: [
+                    {
+                      name: "Unplaced",
+                      data: yearWise.unplacedcount,
+                      stack: 0,
+                    },
+                    {
+                      name: "Placed",
+                      data: yearWise.placedcount,
+                      stack: 1,
+                    },
+                    {
+                      name: "Total",
+                      data: yearWise.total,
+                      stack: 2,
+                    },
+                  ],
+                }}
               />
+                    </TabPane>
+                  </TabContent>
+                </CardBody>
+              </Card>
+              {/* Program wise placement graph */}
+             
             </Col>
           </Row>
         </div>
