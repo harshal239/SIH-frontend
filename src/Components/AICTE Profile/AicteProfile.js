@@ -59,6 +59,7 @@ function AicteProfile() {
   const [programWise, setProgramWise] = useState({});
   const [instituteWise, setInstituteWise] = useState({});
   const [mapRegionData, setmapregionData] = useState({});
+  const [yearWise, setYearWise] = useState({});
   const [filters, setfilters] = useState({
     year: "",
     program: "",
@@ -79,6 +80,41 @@ function AicteProfile() {
       unplacedCount.push(obj.unplacedStudentCount);
     });
     return { ids, placedCount, unplacedCount };
+  };
+
+  const getyearWisePlacement = async () => {
+
+    let data = {
+      program: filters.program,
+      gender: (filters.gender === "Female") ? "Female" : "",
+      state: filters.state,
+      institutionType: filters.instituteType,
+      minority: (filters.minority === "Yes") ? "Yes" : "",
+    }
+    try {
+      const res = await axios.post(
+        "https://optimizers-sih-backend.herokuapp.com/api/v1/chart//yearWisePlacement",
+        data
+      );
+      
+      let ids = [] ;
+      let placedcount = [];
+      let unplacedcount = [];
+      let total = []
+      
+      res.data.map(obj => {
+        ids.push(obj._id);
+        placedcount.push(obj.placedStudentCount);
+        unplacedcount.push(obj.unplacedStudentCount);
+        total.push(obj.totalPlacedCount);
+
+      })
+      console.log(ids, placedcount, unplacedcount, total);
+      setYearWise({ids, placedcount, unplacedcount, total});
+      // setProgramWise(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getprogramwiseplacement = async () => {
@@ -160,6 +196,7 @@ function AicteProfile() {
     getprogramwiseplacement();
     getinstitutewisePlacement();
     getstatewisePlacement();
+    getyearWisePlacement();
     document.body.classList.add("profile-page");
     document.body.classList.add("sidebar-collapse");
     document.documentElement.classList.remove("nav-open");
@@ -177,6 +214,7 @@ function AicteProfile() {
     getprogramwiseplacement();
     getinstitutewisePlacement();
     getstatewisePlacement();
+    getyearWisePlacement();
   },[filters]);
 
   highcharts3d(Highcharts);
@@ -389,22 +427,6 @@ function AicteProfile() {
                 }}
               />
 
-
-{/* 
-              {filterArray.map((item) => {
-                return (
-                  <UncontrolledDropdown>
-                    <DropdownToggle caret>Dropdown</DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem header>Header</DropdownItem>
-                      <DropdownItem disabled>Action</DropdownItem>
-                      <DropdownItem>Another Action</DropdownItem>
-                      <DropdownItem divider />
-                      <DropdownItem>Another Action</DropdownItem>
-                    </DropdownMenu>
-                  </UncontrolledDropdown>
-                );
-              })} */}
             </div>
           </div>
 
@@ -507,7 +529,77 @@ function AicteProfile() {
               </div>
               <HighchartsReact
                 highcharts={Highcharts}
-                options={highChartoptions}
+                options={
+
+                  {
+                    chart: {
+                      type: "column",
+                      options3d: {
+                        enabled: true,
+                        alpha: 10,
+                        beta: 25,
+                        depth: 220,
+                        viewDistance: 25,
+                      },
+                    },
+                    title: {
+                      text: "",
+                    },
+                  
+                    legend: {       
+                           verticalAlign: 'right',
+                           layout: 'horizontal',
+                           x: 0,
+                           y: 0
+                       },
+                  
+                    xAxis: {
+                      categories: yearWise.ids,
+                      labels: {
+                        skew3d: true,
+                        style: {
+                          fontSize: "16px",
+                        },
+                      },
+                    },
+                  
+                    yAxis: {
+                      categories: ['0M', '2M', '4M', '6M', '8M', '10M', '12M', '14M'],
+                      allowDecimals: false,
+                      min: 0,
+                      title: {
+                        text: "Number of Students",
+                        skew3d: true,
+                      },
+                    },
+                    plotOptions: {
+                      column: {
+                        stacking: true,
+                        // groupZPadding: 10,
+                        depth: 40,
+                        grouping: false
+                      },
+                    },
+                  
+                    series: [
+                      {
+                        name: "Unplaced",
+                        data: yearWise.unplacedcount,
+                        stack: 0,
+                      },
+                      {
+                        name: "Placed",
+                        data: yearWise.placedcount,
+                        stack: 1,
+                      },
+                      {
+                        name: "Total",
+                        data: yearWise.total,
+                        stack: 2,
+                      },
+                    ],
+                  }
+                }
               />
             </Col>
           </Row>

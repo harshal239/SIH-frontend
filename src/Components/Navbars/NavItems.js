@@ -78,6 +78,11 @@ const NavItems = ({role, toggleUpload, togglelogin, toggleAddreason, removerole,
               <NavLink onClick={() => nav("/aicte-profile")}>AICTE Statistics</NavLink>
             </NavItem>
             <NavItem>
+              <NavLink onClick={()=>nav("/unemployability-reasons")}>
+                Reason of Unemployability
+              </NavLink>
+            </NavItem>
+            <NavItem>
               <NavLink onClick={()=>handlelogout()}>Logout</NavLink>
             </NavItem>
           </>
