@@ -101,7 +101,7 @@ const BranchWise = () => {
           <Container style={{"marginTop":"100px"}}>
             {/* <button onClick={()=>nav(-1)}>Back</button> */}
             
-            <Card>
+            <Card style={{"marginBottom":"100px"}}>
               
                 <CardBody>
                     <div >

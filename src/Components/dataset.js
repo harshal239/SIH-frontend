@@ -1,10 +1,10 @@
 
 export const PieData = {
-    labels: [ "Computer Science", "IT", "ENTC", "Mechinical" ],
+    labels: [ "Mechanical", "IT", "ENTC", "Computer Science" ],
     datasets: [
       {
         label: '# of Votes',
-        data: [20, 10, 30, 35, 5],
+        data: [20, 10, 30, 35],
         backgroundColor: [
           "rgb(255, 99, 132)",
 
