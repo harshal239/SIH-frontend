@@ -26,64 +26,22 @@ const NavItems = ({role, togglelogin, removerole, userId}) => {
     }
   
     switch(role){
-      case "college":
-        return(
-          <>
-          <NavItem className={styles.nav_item}>
-            <NavLink onClick={() => nav("/college-profile", {state:userId})}>
-              <a className={styles.nav_item}>College Dashboard</a> 
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink onClick={() => nav('/upload-record')}>
-            <a className={styles.nav_item}>Upload placement record</a> 
-              
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink onClick={()=> nav('/add-reasons')}>
-            <a className={styles.nav_item}>Add Reasons of Unemployability</a> 
-              
-            </NavLink>
-          </NavItem>
- 
-          <NavItem>
-              <NavLink onClick={() => nav("/aicte-profile")}>
-              <a className={styles.nav_item}>AICTE Statistics</a> 
-              </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink onClick={()=>handlelogout()}>
-            <a className={styles.nav_item}>Logout</a> 
-              </NavLink>
-          </NavItem>
-          </>
-        );
       case "corporate":
         return(
           <>
             <NavItem>
-              <NavLink onClick={() => nav("/coorporate-profile")}>
+              <NavLink onClick={() => nav("/corporate-profile")}>
               <a className={styles.nav_item}>Coorporate Dashboard</a> 
               
               </NavLink>
             </NavItem>
-            <NavItem>
-              <NavLink>
-              <a className={styles.nav_item}>Reason of Unemployability</a> 
-                
-              </NavLink>
-            </NavItem>
+  
             <NavItem>
               <NavLink onClick={() => nav("/aicte-profile")}>
-              <a className={styles.nav_item}>AICTE Statistics</a> 
+              <a className={styles.nav_item}>Placement Statistics</a> 
             </NavLink>
             </NavItem>
-            <NavItem>
-              <NavLink onClick={()=>nav("/sendEmails")}>
-              <a className={styles.nav_item}>Send Job opportunities</a> 
-              </NavLink>
-            </NavItem>
+
             <NavItem>
             <NavLink onClick={()=>handlelogout()}>
             <a className={styles.nav_item}>Logout</a> 
@@ -96,15 +54,10 @@ const NavItems = ({role, togglelogin, removerole, userId}) => {
           <>
             <NavItem >
               <NavLink onClick={() => nav("/aicte-profile")}>
-              <a className={styles.nav_item}>AICTE Statistics</a> 
+              <a className={styles.nav_item}>Placement Statistics</a> 
                 </NavLink>
             </NavItem>
-            <NavItem>
-              <NavLink onClick={()=>nav("/unemployability-reasons")}>
-              <a className={styles.nav_item}>Reason of Unemployability</a> 
-                
-              </NavLink>
-            </NavItem>
+
             <NavItem>
             <NavLink onClick={()=>handlelogout()}>
             <a className={styles.nav_item}>Logout</a> 

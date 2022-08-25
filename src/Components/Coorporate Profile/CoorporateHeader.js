@@ -35,11 +35,11 @@ function CoorporateHeader() {
           ref={pageHeader}
         ></div>
         <Container>
-          <div className="photo-container">
-            <img alt="..." src={require("assets/img/default-avatar.png")}></img>
+          <div className="photo-container" style={{"borderRadius":"0"}}>
+            <img alt="..." src={require("assets/img/microsoft_logo.png")}></img>
           </div>
-          <h3 className="title">Company pvt. ltd.</h3>
-          <p className="category">some description</p>
+          <h3 className="title">Microsoft</h3>
+          <p className="category">We believe in what people make possible.</p>
           {/* <div className="content">
             <div className="social-description">
               <h2>8999</h2>

@@ -60,11 +60,8 @@ function Landing() {
       <IndexNavbar isfixed={false}/>
         <Header/>
         {/* <Container> */}
-              <h1 className={styles.title}>Policies</h1>
+              {/* <h1 className={styles.title}>Policies</h1>
           <Row>
-            
-
-
       {
         policies.map(item => {
           return(
@@ -83,7 +80,7 @@ function Landing() {
           );
         })
       }
-          </Row>
+          </Row> */}
         {/* </Container> */}
         <div className="section section-team text-center">
 
