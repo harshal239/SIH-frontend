@@ -1,17 +1,22 @@
 
 export const PieData = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    labels: [                 "0-5 LPA",
+    "5-10 LPA",
+    "10-20 LPA",
+    "20-40 LPA",
+    "Above 40 LPA",],
     datasets: [
       {
         label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
+        data: [20, 10, 30, 35, 5],
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
+          "rgb(255, 99, 132)",
+
+          "rgb(255, 205, 86)",
+
+          "rgb(75, 192, 192)",
+          "rgb(201, 203, 207)",
+          'rgb(233,200,145)'
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)',
@@ -102,13 +107,31 @@ export const InstituteTypeData = {
 };
 
 export const hbarData = {
-  programs,
+  labels: [
+    "Rakuten",
+    "Trilogy Innovations",
+    "PhonePe",
+    "Goldman Sachs",
+    "Avalara Technologies",
+    "Valuence Holdings",
+    "FinIQ",
+    "Deutsche Bank",
+    "IDFC FIRST Bank",
+    "Codevita Live",
+  ],
   datasets: [
     {
       label: 'Dataset 1',
-      data: [43,23,54,76,12,5],
+      data: [36,31, 30, 23, 22, 21.22, 20, 19, 15, 14.4],
       backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    }
+    },
+    {
+      label: 'Dataset 2',
+      data: [36,31, 30, 23, 22, 21.22, 20, 19, 15, 14.4],
+      borderColor: 'rgb(53, 162, 235)',
+      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+    },
+
   ],
 };
 
@@ -258,17 +281,17 @@ export const mapRegionData = {
 }
 
 export const LineData = {
-  programs,
+  labels:["Computer Science", "IT", "ENTC"],
   datasets: [
     {
-      label: 'Dataset 1',
-      data: [45,49,37],
+      label: 'Male',
+      data: [650, 590, 800],
       borderColor: 'rgb(255, 99, 132)',
       backgroundColor: 'rgba(255, 99, 132, 0.5)',
     },
     {
-      label: 'Dataset 2',
-      data: [67,33,47],
+      label: 'Female',
+      data:[430, 890, 670],
       borderColor: 'rgb(53, 162, 235)',
       backgroundColor: 'rgba(53, 162, 235, 0.5)',
     },

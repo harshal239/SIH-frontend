@@ -1,13 +1,17 @@
 import React from "react";
-import { Modal, ModalBody, Button, Container} from 'reactstrap'
+import { Modal, ModalBody, Button, Container, Card, CardBody} from 'reactstrap'
 import IndexNavbar from "./Navbars/IndexNavbar";
 import styles from "./modal.module.css"; 
+import DarkFooter from "./Footers/DarkFooter";
 
 const UploadCSV = () => {
   return (
     <div>
       <IndexNavbar isfixed={true}/>
-      <Container>
+      <Container style={{"marginTop":"80px"}}>
+      <Card>
+        <CardBody>
+    
         <div className="modal-header justify-content-center">
           <h4 className="title title-up">Upload Placement Record</h4>
         </div>
@@ -61,7 +65,12 @@ const UploadCSV = () => {
           </Button>
 
         </div>
+      
+          
+        </CardBody>
+      </Card>
       </Container>
+      <DarkFooter/>
     </div>
   );
 };

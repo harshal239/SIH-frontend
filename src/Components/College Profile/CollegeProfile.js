@@ -20,7 +20,11 @@ import {
   Modal,
   ModalHeader,
   ModalFooter,
-  ModalBody
+  ModalBody,
+  Card,
+  CardBody,
+  CardText,
+  CardTitle
 } from "reactstrap";
 
 import {
@@ -122,7 +126,7 @@ function CollegeProfile() {
   };
 
   const hbarOptions = {
-    indexAxis: "y",
+    indexAxis: "x",
     elements: {
       bar: {
         borderWidth: 2,
@@ -155,33 +159,38 @@ function CollegeProfile() {
       <div className="wrapper">      
         <IndexNavbar isfixed={false}/>
         <CollegeHeader />
-        <div className="section">
-          <Container>
-            <Row style={{ marginTop: -106 }}>
+        <div className={`section ${styles.profile_body}`}>
+          <div className={`container ${styles.graph_container}`}>
+            <Row>
               {
                 // statistics cards
                 // console.log(stats)
                 (Object.entries(stats).map(([k,v]) => {
 
                   return (
-                    <div className="col-xxl-3 col-md-4">
-                      <div className="card info-card sales-card">
-                        <div className="card-body">
-                          <h5 className="card-title">
-                            {k}
-                            {/* <span>| 2020</span> */}
-                          </h5>
-                          <div className="d-flex align-items-center">
-                            <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                              <i className="bi bi-people"></i>
-                            </div>
-                            <div className="ps-3">
-                              <h6>{v}</h6>
-                            </div>
+                    <div class="col-xxl-3 col-md-4">
+                    <Card className={styles.stat_card}>
+                      <CardBody>
+                        <span className={styles.stat_header}>{k} <span>| 2020</span></span>
+                        <div
+                          className="d-flex align-items-center"
+                          style={{ height: "75px" }}
+                        >
+                          <div
+                            className=" btn-icon btn-round btn btn-github "
+                            style={{ background: "#f6f6fe" }}
+                          >
+                            <i className="now-ui-icons users_single-02"></i>
+                          </div>
+                          <div class="ps-3">
+                            <span className={styles.stat_value}>
+                              {v} M
+                            </span>
                           </div>
                         </div>
-                      </div>
-                    </div>
+                      </CardBody>
+                    </Card>
+                  </div>
                   )
                 }))
 
@@ -192,123 +201,63 @@ function CollegeProfile() {
 
               
             </Row>
-            <h3 className="title">About</h3>
-            <h5 className="description">
-              An artist of considerable range, Ryan — the name taken by
-              Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs
-              and records all of his own music, giving it a warm, intimate feel
-              with a solid groove structure. An artist of considerable range.
-            </h5>
+          </div>
 
-            {/* FILTERS */}
-          </Container>
-
-          <Modal
-            isOpen={filterModal}
-            toggle={() => setfilterModal(false)}
-            fullscreen={true}
-            className={styles.modal_size}
-            scrollable={false}
-            contentClassName={styles.modal__content}
-          >
-            <ModalHeader toggle={() => setfilterModal(false)}>
-              Filters
-            </ModalHeader>
-            <ModalBody>
-              {filterArray.map((item) => {
-                return (
-                  <Dropdown isOpen={false}>
-                    <DropdownToggle
-                      caret
-                      color="neutral"
-                      className={styles.drp_toggle}
-                    >
-                      Default value
-                    </DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem header>Header</DropdownItem>
-                      <DropdownItem disabled>Action</DropdownItem>
-                      <DropdownItem>Another Action</DropdownItem>
-                      <DropdownItem divider />
-                      <DropdownItem>Another Action</DropdownItem>
-                    </DropdownMenu>
-                  </Dropdown>
-                );
-              })}
-            </ModalBody>
-            <ModalFooter>
-              <Button color="primary">Submit</Button>{" "}
-              <Button color="secondary" onClick={() => setfilterModal(false)}>
-                Cancel
-              </Button>
-            </ModalFooter>
-          </Modal>
+         
 
 
           <div className={`container ${styles.graph_container}`}>
-            <div className={styles.filter_row}>
-              <h3>Graphs and Charts</h3>
-              <span
-                className="now-ui-icons design_bullet-list-67"
-                onClick={() => setfilterModal(true)}
-              />
 
-              <div className={styles.filter_container}>
-                {filterArray.map((item) => {
-                  return (
-                    <Dropdown isOpen={false}>
-                      <DropdownToggle
-                        caret
-                        color="neutral"
-                        className={styles.drp_toggle}
-                      >
-                        Default value
-                      </DropdownToggle>
-                      <DropdownMenu>
-                        <DropdownItem header>Header</DropdownItem>
-                        <DropdownItem disabled>Action</DropdownItem>
-                        <DropdownItem>Another Action</DropdownItem>
-                        <DropdownItem divider />
-                        <DropdownItem>Another Action</DropdownItem>
-                      </DropdownMenu>
-                    </Dropdown>
-                  );
-                })}
-              </div>
-            </div>
 
             {/* main container for graph and charts */}
-            <Row>
+            <Row style={{"justifyContent":"center"}}>
               {/* graph nav index */}
-              <Col md="3" className={styles.sticky__index}>
-                <ul className={styles.graph_index_list}>
-                  <li className={pieInViewport ? styles.active : ""}>
-                    <i className="now-ui-icons business_chart-pie-36"> </i>
-                    Salary Based Pie Chart
-                  </li>
-                  <li className={barInViewport ? styles.active : ""}>
-                    <i className="now-ui-icons business_chart-bar-32"> </i>
-                    <ScrollIntoView selector="#barid" alignToTop={true}>
-                      <span>Gender Diversity</span>
-                    </ScrollIntoView>
-                  </li>
-                  <li className={diversityBarInViewport ? styles.active : ""}>
-                    <i className="now-ui-icons location_map-big" />
-                    Top 10 hiring Companies
-                  </li>
-                </ul>
-              </Col>
-              <Col md="9" className={styles.graphs_left}>
-                <div ref={pieRef} className={styles.pie}>
+
+              <Col md="9" className={styles.graphs_left} >
+ 
+                <Card>
+                  <CardBody>
+                  <CardTitle><h3>Salary Based Pie Chart</h3></CardTitle>
+                  <div ref={pieRef} className={styles.pie}>
                   <Pie data={PieData} />
                 </div>
-                <div ref={barRef} id="barid">
-                  <Line options={barOptions} data={LineData} />
+                  </CardBody>
+                </Card>
+
+
+                <Card>
+                  <CardBody>
+                  <div ref={barRef} id="barid">
+                  <Line options={{
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Gender Based Placements",
+      },
+    },
+  }} data={LineData} />
                 </div>
-                <div ref={diversityBarRef}>
+                  </CardBody>
+                </Card>
+
+                <Card>
+                  <CardBody>
+                  <div ref={diversityBarRef}>
                   <Bar options={hbarOptions} data={hbarData} />
                 </div>
+                  </CardBody>
+                </Card>
+
+
               </Col>
+
+
+
+
             </Row>
           </div>
         </div>
