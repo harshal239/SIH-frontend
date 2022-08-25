@@ -123,14 +123,15 @@ export const hbarData = {
     {
       label: 'Dataset 1',
       data: [36,31, 30, 23, 22, 21.22, 20, 19, 15, 14.4],
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-    {
-      label: 'Dataset 2',
-      data: [36,31, 30, 23, 22, 21.22, 20, 19, 15, 14.4],
       borderColor: 'rgb(53, 162, 235)',
       backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },
+    }
+    // {
+    //   label: 'Dataset 2',
+    //   data: [36,31, 30, 23, 22, 21.22, 20, 19, 15, 14.4],
+    //   borderColor: 'rgb(53, 162, 235)',
+    //   backgroundColor: 'rgba(53, 162, 235, 0.5)',
+    // },
 
   ],
 };

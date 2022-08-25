@@ -49,12 +49,7 @@ function Header() {
                     career, projects, mentorship, etc. you can ask the community
                     and get responses in three.
                   </p>
-                  <div className="slider-btn">
-                    <a href="#about-area" class="btn btn-brand smooth-scroll"
-                      >our mission</a
-                    >
-                    <a href="about.html" class="btn btn-brand-rev">our story</a>
-                  </div>
+  
                 </div>
               </div>
             </div>

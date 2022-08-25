@@ -24,7 +24,7 @@ import {
   Card,
   CardBody,
   CardText,
-  CardTitle
+  CardTitle,
 } from "reactstrap";
 
 import {
@@ -64,24 +64,23 @@ import CollegeHeader from "./CollegeHeader";
 import DefaultFooter from "Components/Footers/DefaultFooter.js";
 import IndexNavbar from "Components/Navbars/IndexNavbar";
 import styles from "../profile.module.css";
-import axios from "axios"
-import { baseurl } from "Components/baseUrl"
+import axios from "axios";
+import { baseurl } from "Components/baseUrl";
 // import { getstats } from "./GetData";
 // import { useLocation } from 'react-router-dom';
 
 function CollegeProfile() {
   const [filterModal, setfilterModal] = useState(false);
   const [stats, setstats] = useState({});
-  
+
   const getstats = () => {
-    let userid = localStorage.getItem('userid');
+    let userid = localStorage.getItem("userid");
     let temp;
-    axios.get(baseurl + '/chart/placedUnplacedGraph/' + userid)
-    .then(res=>{
-        console.log(res.data);
-        setstats(res.data);
-    })
-  }
+    axios.get(baseurl + "/chart/placedUnplacedGraph/" + userid).then((res) => {
+      console.log(res.data);
+      setstats(res.data);
+    });
+  };
   React.useEffect(() => {
     // console.log(location);
     // let userid = localStorage.getItem('userid');
@@ -125,25 +124,6 @@ function CollegeProfile() {
     },
   };
 
-  const hbarOptions = {
-    indexAxis: "x",
-    elements: {
-      bar: {
-        borderWidth: 2,
-      },
-    },
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "right",
-      },
-      title: {
-        display: true,
-        text: "Chart.js Horizontal Bar Chart",
-      },
-    },
-  };
-
   const pieRef = useRef();
   const barRef = useRef();
   const diversityBarRef = useRef();
@@ -156,8 +136,8 @@ function CollegeProfile() {
 
   return (
     <>
-      <div className="wrapper">      
-        <IndexNavbar isfixed={false}/>
+      <div className="wrapper">
+        <IndexNavbar isfixed={false} />
         <CollegeHeader />
         <div className={`section ${styles.profile_body}`}>
           <div className={`container ${styles.graph_container}`}>
@@ -165,99 +145,105 @@ function CollegeProfile() {
               {
                 // statistics cards
                 // console.log(stats)
-                (Object.entries(stats).map(([k,v]) => {
-
+                Object.entries(stats).map(([k, v]) => {
                   return (
                     <div class="col-xxl-3 col-md-4">
-                    <Card className={styles.stat_card}>
-                      <CardBody>
-                        <span className={styles.stat_header}>{k} <span>| 2020</span></span>
-                        <div
-                          className="d-flex align-items-center"
-                          style={{ height: "75px" }}
-                        >
+                      <Card className={styles.stat_card}>
+                        <CardBody>
+                          <span className={styles.stat_header}>
+                            {k} <span>| 2020</span>
+                          </span>
                           <div
-                            className=" btn-icon btn-round btn btn-github "
-                            style={{ background: "#f6f6fe" }}
+                            className="d-flex align-items-center"
+                            style={{ height: "75px" }}
                           >
-                            <i className="now-ui-icons users_single-02"></i>
+                            <div
+                              className=" btn-icon btn-round btn btn-github "
+                              style={{ background: "#f6f6fe" }}
+                            >
+                              <i className="now-ui-icons users_single-02"></i>
+                            </div>
+                            <div class="ps-3">
+                              <span className={styles.stat_value}>{v} M</span>
+                            </div>
                           </div>
-                          <div class="ps-3">
-                            <span className={styles.stat_value}>
-                              {v} M
-                            </span>
-                          </div>
-                        </div>
-                      </CardBody>
-                    </Card>
-                  </div>
-                  )
-                }))
-
-                  
-
-                  
-                }
-
-              
+                        </CardBody>
+                      </Card>
+                    </div>
+                  );
+                })
+              }
             </Row>
           </div>
 
-         
-
-
           <div className={`container ${styles.graph_container}`}>
-
-
             {/* main container for graph and charts */}
-            <Row style={{"justifyContent":"center"}}>
+            <Row style={{ justifyContent: "center" }}>
               {/* graph nav index */}
 
-              <Col md="9" className={styles.graphs_left} >
- 
+              <Col md="9" className={styles.graphs_left}>
                 <Card>
                   <CardBody>
-                  <CardTitle><h3>Salary Based Pie Chart</h3></CardTitle>
-                  <div ref={pieRef} className={styles.pie}>
-                  <Pie data={PieData} />
-                </div>
-                  </CardBody>
-                </Card>
-
-
-                <Card>
-                  <CardBody>
-                  <div ref={barRef} id="barid">
-                  <Line options={{
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: true,
-        text: "Gender Based Placements",
-      },
-    },
-  }} data={LineData} />
-                </div>
+                    <CardTitle>
+                      <h3>Salary Based Pie Chart</h3>
+                    </CardTitle>
+                    <div ref={pieRef} className={styles.pie}>
+                      <Pie data={PieData} />
+                    </div>
                   </CardBody>
                 </Card>
 
                 <Card>
                   <CardBody>
-                  <div ref={diversityBarRef}>
-                  <Bar options={hbarOptions} data={hbarData} />
-                </div>
+                    <div ref={barRef} id="barid">
+                      <Line
+                        options={{
+                          responsive: true,
+                          plugins: {
+                            legend: {
+                              position: "top",
+                            },
+                            title: {
+                              display: true,
+                              text: "Gender Based Placements",
+                            },
+                          },
+                        }}
+                        data={LineData}
+                      />
+                    </div>
                   </CardBody>
                 </Card>
 
-
+                <Card>
+                  <CardBody>
+                    <div ref={diversityBarRef}>
+                      <Bar
+                        options={{
+                          // type="column",
+                          indexAxis: "y",
+                          elements: {
+                            bar: {
+                              borderWidth: 2,
+                            },
+                          },
+                          responsive: true,
+                          plugins: {
+                            legend: {
+                              position: "right",
+                            },
+                            title: {
+                              display: true,
+                              text: "Top Hiring Companies",
+                            },
+                          },
+                        }}
+                        data={hbarData}
+                      />
+                    </div>
+                  </CardBody>
+                </Card>
               </Col>
-
-
-
-
             </Row>
           </div>
         </div>
