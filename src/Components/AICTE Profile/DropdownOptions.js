@@ -1,7 +1,10 @@
-export const yearOptions = ['2018','2019','2020','2021', '2022'];
-export const programOptions = ['Architecture', 'Planning', 'Design', 'TownPlanning', 'EngineeringandTechnology', 'Management', 'MCA', 'Pharmacy', 'Hotel ManagementandCatering'];
-export const instituteTypes = ["Central University","Private","Deemed University(Government)","Deemed University(Private)","Government","Govt aided","Private-Aided","Private-Self Financing","State Government University","Unaided - Private","University Managed","University Managed-Govt","University Managed-Private"];
+export const yearOptions = ['All','2020','2021', '2022'];
+
+export const programOptions = ['All','Applied arts and crafts', 'Architecture', 'Design', 'Town planning', 'Engineering and Technology', 'Management', 'MCA', 'Pharmacy', 'Hotel management and catering '];
+
+export const instituteTypes = ['All',"Unaided Private","Government","Private Aided","Deemed University Private","Deemed University Government"];
 export const statesOptions = [ 
+  'All',
     "Andaman & Nicobar Islands",
     "Andhra Pradesh",
     "Arunanchal Pradesh",

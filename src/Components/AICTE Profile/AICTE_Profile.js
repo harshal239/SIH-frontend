@@ -33,7 +33,7 @@ import {
   Legend,
 } from "chart.js";
 import axios from "axios";
-import { Pie, Bar } from "react-chartjs-2";
+import { Pie, Bar, getElementAtEvent} from "react-chartjs-2";
 import DatamapsIndia from "react-datamaps-india";
 import ScrollIntoView from "react-scroll-into-view";
 import useIntersection from "Components/CustomHooks/useIntersection";
@@ -61,6 +61,11 @@ import { PieData } from "../dataset";
 import { baseurl } from "Components/baseUrl";
 import DarkFooter from "Components/Footers/DarkFooter";
 
+
+// function valuetext(value: number) {
+//   return `${value}°C`;
+// }
+
 function AICTE_Profile() {
   const nav = useNavigate();
   const [filterModal, setfilterModal] = useState(false);
@@ -70,12 +75,12 @@ function AICTE_Profile() {
   const [mapRegionData, setmapregionData] = useState({});
   const [yearWise, setYearWise] = useState({});
   const [filters, setfilters] = useState({
-    year: "2022",
-    program: "",
-    instituteType: "",
-    state: "",
-    gender: "",
-    minority: "",
+    year: "All",
+    program: "All",
+    instituteType: "All",
+    state: "All",
+    gender: "All",
+    minority: "All",
   });
 
   const dataMapper = (data) => {
@@ -93,11 +98,11 @@ function AICTE_Profile() {
 
   const getyearWisePlacement = async () => {
     let data = {
-      program: filters.program,
+      program: filters.program === "All" ? "" : filters.program,
       // gender: filters.gender === "Female" ? "Female" : "",
       gender:"",
-      state: filters.state,
-      institutionType: filters.instituteType,
+      state: filters.state === "All" ? "" : filters.program,
+      institutionType: filters.instituteType === "All" ? "" : filters.instituteType,
       minority: filters.minority === "Yes" ? "Yes" : "",
     };
     try {
@@ -117,7 +122,7 @@ function AICTE_Profile() {
         unplacedcount.push(obj.unplacedStudentCount);
         total.push(obj.totalPlacedCount);
       });
-      console.log(ids, placedcount, unplacedcount, total);
+      // console.log(ids, placedcount, unplacedcount, total);
       setYearWise({ ids, placedcount, unplacedcount, total });
       // setProgramWise(response);
     } catch (error) {
@@ -127,11 +132,11 @@ function AICTE_Profile() {
 
   const getprogramwiseplacement = async () => {
     let data = {
-      year: parseInt(filters.year),
+      year: filters.program === "All" ? "" : parseInt(filters.year),
       // gender: filters.gender === "Female" ? "Female" : "",
       gender:"",
-      state: filters.state,
-      institutionType: filters.instituteType,
+      state: filters.state === "All" ? "" : filters.state,
+      institutionType: filters.instituteType === "All" ? "" : filters.instituteType,
       minority: filters.minority === "Yes" ? "Yes" : "",
     };
     try {
@@ -139,7 +144,15 @@ function AICTE_Profile() {
         "https://optimizers-sih-backend.herokuapp.com/api/v1/chart/programWisePlacement",
         data
       );
+      program.data.sort((a,b)=>{
+        return (b.placedStudentCount - a.placedStudentCount);
+      })
+
       const response = dataMapper(program.data);
+      // response.sort((a,b) => { 
+      //   return a.
+      // })
+      // console.log(response);
       setProgramWise(response);
     } catch (error) {
       console.log(error);
@@ -148,11 +161,11 @@ function AICTE_Profile() {
 
   const getinstitutewisePlacement = async () => {
     let data = {
-      year: parseInt(filters.year),
+      year: "All" ? "" : parseInt(filters.year),
       // gender: filters.gender === "Female" ? "Female" : "",
       gender:"",
-      state: filters.state,
-      program: filters.program,
+      state: filters.state === "All" ? "" : filters.state,
+      program: filters.program === "All" ? "" : filters.program,
       minority: filters.minority === "Yes" ? "Yes" : "",
     };
     try {
@@ -160,6 +173,9 @@ function AICTE_Profile() {
         "https://optimizers-sih-backend.herokuapp.com/api/v1/chart/institutionTypeWisePlacement",
         data
       );
+      institute.data.sort((a,b)=>{
+        return (b.placedStudentCount - a.placedStudentCount);
+      })
       const res = dataMapper(institute.data);
       setInstituteWise(res);
     } catch (err) {
@@ -170,7 +186,7 @@ function AICTE_Profile() {
   const getProgramGenderWise = async () => {
     try {
       const memo = await axios.post(
-        "http://localhost:4000/api/v1/chart/programGenderWisePlacement",
+        "https://optimizers-sih-backend.herokuapp.com/api/v1/chart/programGenderWisePlacement",
         {
           year: 2021,
           state: "",
@@ -186,6 +202,7 @@ function AICTE_Profile() {
         maleplaced.push(obj.malePlacedStudentCount);
         femaleplaced.push(obj.femalePlacedStudentCount);
       });
+      
       setProgramGenderWise({ ids, maleplaced, femaleplaced });
     } catch (err) {
       console.log(err);
@@ -194,11 +211,11 @@ function AICTE_Profile() {
 
   const getstatewisePlacement = async () => {
     let data = {
-      year: "",
+      year: filters.program === "All" ? "" : parseInt(filters.year),
       // gender: filters.gender === "Female" ? "Female" : "",
       gender:"",
-      institutionType: filters.instituteType,
-      program: filters.program,
+      institutionType: filters.instituteType === "All" ? "" : filters.instituteType,
+      program: filters.program === "All" ? "" : parseInt(filters.year),
       minority: filters.minority === "Yes" ? "Yes" : "",
     };
     try {
@@ -206,13 +223,13 @@ function AICTE_Profile() {
         "https://optimizers-sih-backend.herokuapp.com/api/v1/chart/stateWisePlacement",
         data
       );
-      console.log(res.data[0]);
+      // console.log(res.data[0]);
 
       let obj1 = {};
       res.data.map((item) => {
         obj1[item._id] = { value: item.unplacedStudentCount };
       });
-      console.log(obj1);
+      // console.log(obj1);
       setmapregionData(obj1);
       // placedStudentCount: 1
       // unplacedStudentCount: 1
@@ -264,21 +281,32 @@ function AICTE_Profile() {
 
   const pieRef = useRef();
   const barRef = useRef();
+  const programWiseref = useRef();
   const diversityBarRef = useRef();
   const mapRef = useRef();
+
+  const onProgramclick = (event) => {
+    console.log("abc");
+    const elem = getElementAtEvent(programWiseref.current, event)
+    console.log(elem[0].index, elem[0].datasetIndex);
+    // props.onHandleBarClickEvent(elem[0].index, elem[0].datasetIndex)    
+  }
 
   // for rendering list via map functionality ************* to be removed
   const statArray = [
     {
       label: "Total Institutions",
+      image: "assets/img/Building_icon1.png",
       value: 8999,
     },
     {
       label: "Total Students",
+      image: "assets/img/Building_icon2.png",
       value: "15L",
     },
     {
       label: "Placed",
+      image: "assets/img/Women_icon1.png",
       value: "11L",
     },
     // {
@@ -322,7 +350,9 @@ function AICTE_Profile() {
                             className=" btn-icon btn-round btn btn-github "
                             style={{ background: "#f6f6fe" }}
                           >
-                            <i className="now-ui-icons users_single-02"></i>
+                            {/* <i className="now-ui-icons users_single-02"></i> */}
+                            {/* {item.image}   */}
+                            <img src={require("assets/img/Building_icon1.png")}/>
                           </div>
                           <div class="ps-3">
                             <span className={styles.stat_value}>
@@ -412,7 +442,7 @@ function AICTE_Profile() {
                       placeholder="Select Program"
                       className="my-className"
                       options={programOptions}
-                      value="one"
+                      value={filters.program}
                       onChange={(item) =>
                         setfilters({ ...filters, program: item.value })
                       }
@@ -426,7 +456,7 @@ function AICTE_Profile() {
                       placeholder="Select Institute Type"
                       className="my-className"
                       options={instituteTypes}
-                      value="one"
+                      value={filters.instituteType}
                       onChange={(item) =>
                         setfilters({ ...filters, instituteType: item.value })
                       }
@@ -440,7 +470,7 @@ function AICTE_Profile() {
                       placeholder="Select State"
                       className="my-className"
                       options={statesOptions}
-                      value="one"
+                      value={filters.state}
                       onChange={(item) => {
                         setfilters({ ...filters, state: item.value });
                       }}
@@ -554,9 +584,11 @@ function AICTE_Profile() {
                     activeTab={"iconPills" + iconPills}
                   >
                     <TabPane tabId="iconPills1">
-                      <div ref={barRef} id="barid">
+                      <div ref={programWiseref} id="barid">
                         <Bar
-                          onClick = {()=>nav("/branch-wise")}
+                          
+                          // onClick = {()=>nav("/branch-wise")}
+                          onClick={()=>onProgramclick()}
                           options={BarOptions}
                           data={{
                             labels: programWise.ids,

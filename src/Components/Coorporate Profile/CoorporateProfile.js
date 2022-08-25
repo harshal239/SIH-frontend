@@ -1,24 +1,15 @@
 import React, { useRef, useState, useEffect } from "react";
 // reactstrap components
 import {
-  Button,
-  Container,
+
   Row,
   Col,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-  UncontrolledDropdown,
+
   Card,
   CardBody,
   CardHeader,
   NavItem,
-  NavLink,
-  Nav,
+
   TabContent,
   TabPane,
 } from "reactstrap";
@@ -49,6 +40,9 @@ import CoorporateHeader from "./CoorporateHeader";
 import { Dropdown, Selection } from "react-dropdown-now";
 import "react-dropdown-now/style.css";
 
+import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
+
 import classes from './corporate.module.css';
 
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
@@ -64,171 +58,195 @@ import { PieData } from "../dataset";
 import { baseurl } from "Components/baseUrl";
 import DarkFooter from "Components/Footers/DarkFooter";
 
+
+import PropTypes from 'prop-types';
+import {
+  useAutocomplete,
+  AutocompleteGetTagProps,
+} from '@mui/base/AutocompleteUnstyled';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import { styled } from '@mui/material/styles';
+import { autocompleteClasses } from '@mui/material/Autocomplete';
+// import {MaterialTable} from '@material-ui/core';
+import MaterialTable from 'material-table';
+
+import { top100Films } from "./Autocomplete";
+
+const Root = styled('div')(
+  ({ theme }) => `
+  color: ${
+    theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.65)' : 'rgba(0,0,0,.85)'
+  };
+  font-size: 16px;
+`,
+);
+
+const Label = styled('label')`
+  padding: 0 0 4px;
+  line-height: 1.5;
+  display: block;
+`;
+
+const InputWrapper = styled('div')(
+  ({ theme }) => `
+  width: 300px;
+  border: 1px solid ${theme.palette.mode === 'dark' ? '#434343' : '#d9d9d9'};
+  background-color: ${theme.palette.mode === 'dark' ? '#141414' : '#fff'};
+  border-radius: 4px;
+  padding: 1px;
+  display: flex;
+  flex-wrap: wrap;
+
+  &:hover {
+    border-color: ${theme.palette.mode === 'dark' ? '#177ddc' : '#40a9ff'};
+  }
+
+  &.focused {
+    border-color: ${theme.palette.mode === 'dark' ? '#177ddc' : '#40a9ff'};
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  }
+
+  & input {
+    background-color: ${theme.palette.mode === 'dark' ? '#141414' : '#fff'};
+    color: ${
+      theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.65)' : 'rgba(0,0,0,.85)'
+    };
+    height: 30px;
+    box-sizing: border-box;
+    padding: 4px 6px;
+    width: 0;
+    min-width: 30px;
+    flex-grow: 1;
+    border: 0;
+    margin: 0;
+    outline: 0;
+  }
+`,
+);
+
+function Tag(props) {
+  const { label, onDelete, ...other } = props;
+  return (
+    <div {...other}>
+      <span>{label}</span>
+      <CloseIcon onClick={onDelete}  className={styles.cls_icon} style={{"fontSize":"22px"}}/>
+    </div>
+  );
+}
+
+Tag.propTypes = {
+  label: PropTypes.string.isRequired,
+  onDelete: PropTypes.func.isRequired,
+};
+
+const StyledTag = styled(Tag)(
+  ({ theme }) => `
+  display: flex;
+  align-items: center;
+  height: 24px;
+  margin: 2px;
+  line-height: 22px;
+  background-color: ${
+    theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.08)' : '#fafafa'
+  };
+  border: 1px solid ${theme.palette.mode === 'dark' ? '#303030' : '#e8e8e8'};
+  border-radius: 2px;
+  box-sizing: content-box;
+  padding: 0 4px 0 10px;
+  outline: 0;
+  overflow: hidden;
+
+  &:focus {
+    border-color: ${theme.palette.mode === 'dark' ? '#177ddc' : '#40a9ff'};
+    background-color: ${theme.palette.mode === 'dark' ? '#003b57' : '#e6f7ff'};
+  }
+
+  & span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  & svg {
+    font-size: 12px;
+    cursor: pointer;
+    padding: 4px;
+  }
+`,
+);
+
+const Listbox = styled('ul')(
+  ({ theme }) => `
+  width: 300px;
+  margin: 2px 0 0;
+  padding: 0;
+  position: absolute;
+  list-style: none;
+  background-color: ${theme.palette.mode === 'dark' ? '#141414' : '#fff'};
+  overflow: auto;
+  max-height: 250px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1;
+
+  & li {
+    padding: 5px 12px;
+    display: flex;
+
+    & span {
+      flex-grow: 1;
+    }
+
+    & svg {
+      color: transparent;
+    }
+  }
+
+  & li[aria-selected='true'] {
+    background-color: ${theme.palette.mode === 'dark' ? '#2b2b2b' : '#fafafa'};
+    font-weight: 600;
+
+    & svg {
+      color: #1890ff;
+    }
+  }
+
+  & li.${autocompleteClasses.focused} {
+    background-color: ${theme.palette.mode === 'dark' ? '#003b57' : '#e6f7ff'};
+    cursor: pointer;
+
+    & svg {
+      color: currentColor;
+    }
+  }
+`,
+);
+
+
 function CoorporateProfile() {
+
+
+
   const [filterModal, setfilterModal] = useState(false);
   const [programWise, setProgramWise] = useState({});
   const [instituteWise, setInstituteWise] = useState({});
   const [programGenderWise, setProgramGenderWise] = useState({});
   const [mapRegionData, setmapregionData] = useState({});
   const [yearWise, setYearWise] = useState({});
+  const [sliderValue, setSliderVal] = React.useState([5,10]);
 
 
   const [tableData, settableData] = useState([
-    // {srno: 0, name: 'Rashmi', email: 'student@gmail.com', year: 2022, branch: 'Computer Engineering'}
   ]);
 
-  // const tableData = [
-  //   {id: 0, name: 'Rashmi', email: 'student@gmail.com', year: 2022, branch: 'Computer Engineering'}
-  // ]
+
   const [filters, setfilters] = useState({
     year: "2022",
     branch: "",
   });
 
 
-
-
-
-
-  const dataMapper = (data) => {
-    const ids = [];
-    const placedCount = [];
-    const unplacedCount = [];
-
-    data.map((obj) => {
-      ids.push(obj._id);
-      placedCount.push(obj.placedStudentCount);
-      unplacedCount.push(obj.unplacedStudentCount);
-    });
-    return { ids, placedCount, unplacedCount };
-  };
-
-  const getyearWisePlacement = async () => {
-    let data = {
-      program: filters.program,
-      gender: filters.gender === "Female" ? "Female" : "",
-      state: filters.state,
-      institutionType: filters.instituteType,
-      minority: filters.minority === "Yes" ? "Yes" : "",
-    };
-    try {
-      const res = await axios.post(
-        "https://optimizers-sih-backend.herokuapp.com/api/v1/chart//yearWisePlacement",
-        data
-      );
-
-      let ids = [];
-      let placedcount = [];
-      let unplacedcount = [];
-      let total = [];
-
-      res.data.map((obj) => {
-        ids.push(obj._id);
-        placedcount.push(obj.placedStudentCount);
-        unplacedcount.push(obj.unplacedStudentCount);
-        total.push(obj.totalPlacedCount);
-      });
-      console.log(ids, placedcount, unplacedcount, total);
-      setYearWise({ ids, placedcount, unplacedcount, total });
-      // setProgramWise(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getprogramwiseplacement = async () => {
-    let data = {
-      year: parseInt(filters.year),
-      gender: filters.gender === "Female" ? "Female" : "",
-      state: filters.state,
-      institutionType: filters.instituteType,
-      minority: filters.minority === "Yes" ? "Yes" : "",
-    };
-    try {
-      const program = await axios.post(
-        "https://optimizers-sih-backend.herokuapp.com/api/v1/chart/programWisePlacement",
-        data
-      );
-      const response = dataMapper(program.data);
-      setProgramWise(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getinstitutewisePlacement = async () => {
-    let data = {
-      year: parseInt(filters.year),
-      gender: filters.gender === "Female" ? "Female" : "",
-      state: filters.state,
-      program: filters.program,
-      minority: filters.minority === "Yes" ? "Yes" : "",
-    };
-    try {
-      const institute = await axios.post(
-        "https://optimizers-sih-backend.herokuapp.com/api/v1/chart/institutionTypeWisePlacement",
-        data
-      );
-      const res = dataMapper(institute.data);
-      setInstituteWise(res);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const getProgramGenderWise = async () => {
-    try {
-      const memo = await axios.post(
-        "http://localhost:4000/api/v1/chart/programGenderWisePlacement",
-        {
-          year: 2021,
-          state: "",
-          institutionType: "",
-          minority: "",
-        }
-      );
-      let ids = [];
-      let maleplaced = [];
-      let femaleplaced = [];
-      memo.data.map((obj) => {
-        ids.push(obj._id);
-        maleplaced.push(obj.malePlacedStudentCount);
-        femaleplaced.push(obj.femalePlacedStudentCount);
-      });
-      setProgramGenderWise({ ids, maleplaced, femaleplaced });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const getstatewisePlacement = async () => {
-    let data = {
-      year: "",
-      gender: filters.gender === "Female" ? "Female" : "",
-      institutionType: filters.instituteType,
-      program: filters.program,
-      minority: filters.minority === "Yes" ? "Yes" : "",
-    };
-    try {
-      const res = await axios.post(
-        "https://optimizers-sih-backend.herokuapp.com/api/v1/chart/stateWisePlacement",
-        data
-      );
-      console.log(res.data[0]);
-
-      let obj1 = {};
-      res.data.map((item) => {
-        obj1[item._id] = { value: item.unplacedStudentCount };
-      });
-      console.log(obj1);
-      setmapregionData(obj1);
-      // placedStudentCount: 1
-      // unplacedStudentCount: 1
-      // _id: "Gujarat"
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
 
   const getTableData = async () => {
@@ -254,7 +272,7 @@ function CoorporateProfile() {
         temp2.push(temp);
       })
 
-      console.log(temp2);
+      // console.log(temp2);
       settableData(temp2);
     }
     catch(err){
@@ -263,6 +281,31 @@ function CoorporateProfile() {
 
   
   }
+
+  const handleSliderChange = (event, newValue) => {
+    setSliderVal(newValue);
+    // setValue(newValue);
+  };
+
+  // autocomplete comp
+  const {
+    getRootProps,
+    getInputLabelProps,
+    getInputProps,
+    getTagProps,
+    getListboxProps,
+    getOptionProps,
+    groupedOptions,
+    value,
+    focused,
+    setAnchorEl,
+  } = useAutocomplete({
+    id: 'customized-hook-demo',
+    defaultValue: [top100Films[1]],
+    multiple: true,
+    options: top100Films,
+    getOptionLabel: (option) => option.title,
+  });
 
   useEffect(() => {
     getTableData();
@@ -333,7 +376,7 @@ function CoorporateProfile() {
 
   const [iconPills, setIconPills] = React.useState("1");
 
-  const columns: GridColDef[] = [
+  const columns = [
     { field: "id", headerName: "Sr. No"
     // , width: 70 
   },
@@ -355,7 +398,7 @@ function CoorporateProfile() {
     {
       field: "year",
       headerName: "Graduation Year",
-      type: "number",
+      // type: "number",
       width: 150,
     },
   ];
@@ -459,6 +502,86 @@ function CoorporateProfile() {
                       }
                     />
                   </div>
+
+                  <span className={styles.filter_label}>CGPA</span>
+                      <Box sx={{ width: 250 }} >
+                      <Slider
+                      // getAriaLabel={() => 'Temperature range'}
+                      min={0}
+                      max={10}
+                      marks = {[{
+                        value: 1,
+                        label: '1',
+                      },
+                      {
+                        value: 2,
+                        label: '2',
+                      },
+                      {
+                        value: 3,
+                        label: '3',
+                      },
+                      {
+                        value: 4,
+                        label: '4',
+                      },
+                      {
+                        value: 5,
+                        label: '5',
+                      },
+                      {
+                        value: 6,
+                        label: '6',
+                      },
+                      {
+                        value: 7,
+                        label: '7',
+                      },
+                      {
+                        value: 8,
+                        label: '8',
+                      },
+                      {
+                        value: 9,
+                        label: '9',
+                      },
+                      {
+                        value: 10,
+                        label: '10',
+                      }]}
+                      value={sliderValue}
+                      onChange={handleSliderChange}
+                      valueLabelDisplay="auto"
+                      // getAriaValueText={valuetext}
+                      />
+                      </Box>
+
+
+                    
+                      <Root>
+      <div {...getRootProps()}>
+        <Label {...getInputLabelProps()} className={styles.filter_label}>Skills</Label>
+        <InputWrapper ref={setAnchorEl} className={focused ? 'focused' : ''}>
+          {value.map((option, index) => (
+            <StyledTag label={option.title} {...getTagProps({ index })} />
+          ))}
+
+          <input {...getInputProps()} />
+        </InputWrapper>
+      </div>
+      {groupedOptions.length > 0 ? (
+        <Listbox {...getListboxProps()}>
+          {groupedOptions.map((option, index) => (
+            <li {...getOptionProps({ option, index })}>
+              <span>{option.title}</span>
+              <CheckIcon fontSize="small" />
+            </li>
+          ))}
+        </Listbox>
+      ) : null}
+    </Root>
+
+
                 </CardBody>
               </Card>
             </Col>
@@ -468,13 +591,50 @@ function CoorporateProfile() {
                 <CardHeader></CardHeader>
                 <CardBody>
                   <div style={{ height: 400, width: "100%" }}>
+
+                  {/* <MaterialTable
+                    title="Actions On Selected Rows Preview"
+                    columns={[
+                      { title: 'Name', field: 'name' },
+                      { title: 'Surname', field: 'surname' },
+                      { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
+                      {
+                        title: 'Birth Place',
+                        field: 'birthCity',
+                        lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
+                      },
+                    ]}
+                    data={[
+                      { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
+                      { name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34 },
+                    ]}        
+                    options={{
+                      selection: true
+                    }}
+                    actions={[
+                      {
+                        tooltip: 'Remove All Selected Users',
+                        icon: 'delete',
+                        // onClick: (evt, data) => alert('You want to delete ' + data.length + ' rows')
+                      }
+                    ]}
+                  /> */}
+{/* 
+<MaterialTable
+    // other props
+    options={{
+      search: true
+    }}
+/> */}
+
+
                     <DataGrid
                       rows={tableData}
                       columns={columns}
                       pageSize={5}
                       rowsPerPageOptions={[5]}
                       className={classes.datagrid}
-                      // checkboxSelection
+                      checkboxSelection
                     />
                   </div>
                 </CardBody>
