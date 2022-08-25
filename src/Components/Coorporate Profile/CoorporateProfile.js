@@ -243,17 +243,33 @@ function CoorporateProfile() {
 
   const [filters, setfilters] = useState({
     year: "2022",
-    branch: "",
+    branch: "All",
   });
 
 
 
 
   const getTableData = async () => {
+
+    console.log(groupedOptions);
+    console.log(focused);
+    console.log(getListboxProps);
+
+    let skill_temp = [];
+    value.map(obj=>{
+      return(
+        skill_temp.push(obj.title)
+      );
+    })
     let data = {
-      "year":parseInt(filters.year),
-      "branch":filters.branch
+      "year": filters.year === "All" ? "" : parseInt(filters.year),
+      "branch":filters.branch === "All" ? "" : filters.branch,
+      "minCGPA" : sliderValue[0],
+      "maxCGPA" : sliderValue[1],
+      "skills": skill_temp
   };
+
+  console.log(data);
     try{
       const res = await axios.post(
         "https://optimizers-sih-backend.herokuapp.com/api/v1/student/getAllStudentsByYearAndBranch",
@@ -269,7 +285,10 @@ function CoorporateProfile() {
         temp.email = obj.emailID;
         temp.year = obj.year;
         temp.branch = obj.branch;
+        temp.skills = obj.skills;
+        temp.cgpa = obj.cgpa;
         temp2.push(temp);
+
       })
 
       // console.log(temp2);
@@ -323,7 +342,7 @@ function CoorporateProfile() {
   // to update graphs
   useEffect(() => {
     getTableData();
-  }, [filters]);
+  }, [filters, sliderValue, value]);
 
   highcharts3d(Highcharts);
 
@@ -385,7 +404,7 @@ function CoorporateProfile() {
       headerName: "Name",
       description: "This column has a value getter and is not sortable.",
       sortable: false,
-      width: 220
+      width: 60
       // valueGetter: (params: GridValueGetterParams) =>
       //   `${params.row.firstName || ""} ${params.row.lastName || ""}`,
     },
@@ -401,6 +420,15 @@ function CoorporateProfile() {
       // type: "number",
       width: 150,
     },
+    {field: "cgpa",
+    headerName: "CGPA",
+    // width:100
+  },
+  {field: "skills",
+  headerName: "Skills",
+  // width:100
+}
+
   ];
 
   const rows = [
@@ -489,6 +517,7 @@ function CoorporateProfile() {
                       className="my-className"
 
                       options={[
+                        "All",
                         "Computer Engineering",
                         "Information Technology",
                         "Electronics and telecommunication",
@@ -496,7 +525,7 @@ function CoorporateProfile() {
                         "Mechinical Engineering",
                         "Civil Engineering",
                       ]}
-                      value="one"
+                      value={filters.branch}
                       onChange={(item) =>
                         setfilters({ ...filters, branch: item.value })
                       }
@@ -561,19 +590,21 @@ function CoorporateProfile() {
                       <Root>
       <div {...getRootProps()}>
         <Label {...getInputLabelProps()} className={styles.filter_label}>Skills</Label>
+       
         <InputWrapper ref={setAnchorEl} className={focused ? 'focused' : ''}>
           {value.map((option, index) => (
             <StyledTag label={option.title} {...getTagProps({ index })} />
           ))}
-
           <input {...getInputProps()} />
         </InputWrapper>
       </div>
+
+
       {groupedOptions.length > 0 ? (
         <Listbox {...getListboxProps()}>
           {groupedOptions.map((option, index) => (
             <li {...getOptionProps({ option, index })}>
-              <span>{option.title}</span>
+              <span>{option.title}</span> 
               <CheckIcon fontSize="small" />
             </li>
           ))}

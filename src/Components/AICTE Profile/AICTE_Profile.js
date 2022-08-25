@@ -97,6 +97,7 @@ function AICTE_Profile() {
   };
 
   const getyearWisePlacement = async () => {
+    
     let data = {
       program: filters.program === "All" ? "" : filters.program,
       // gender: filters.gender === "Female" ? "Female" : "",

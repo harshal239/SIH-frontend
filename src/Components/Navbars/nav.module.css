@@ -9,7 +9,11 @@
     /* font-size: 1.5rem; */
     font-size: 16px;
     line-height: 2.72rem;
+    cursor:pointer;
+
 }
+
+
 
 .nvBrand{
     color:#012970 !important;
