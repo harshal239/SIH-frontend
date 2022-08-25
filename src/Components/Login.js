@@ -44,13 +44,14 @@ const Login = ({isopen, togglemodal, passRole, setId}) => {
     >
       <div className="modal-header justify-content-center">
         <div className="modal-profile">
-          <i className="now-ui-icons users_circle-08"></i>
+          {/* <i className="now-ui-icons users_circle-08"></i> */}
+          <img src={require("assets/img/default-avatar.png")} style={{"borderRadius":"50%"}}/>
         </div>
       </div>
       <ModalBody>
         <InputGroup className={firstFocus ? "input-group-focus" : ""}>
           <InputGroupAddon addonType="prepend">
-            <InputGroupText>
+            <InputGroupText className={styles.login__logo}>
               <i className="fa fa-user-circle"></i>
             </InputGroupText>
           </InputGroupAddon>
@@ -66,7 +67,7 @@ const Login = ({isopen, togglemodal, passRole, setId}) => {
         </InputGroup>
         <InputGroup className={lastFocus ? "input-group-focus" : ""}>
           <InputGroupAddon addonType="prepend">
-            <InputGroupText>
+            <InputGroupText className={styles.login__logo}>
               <i className="now-ui-icons text_caps-small"></i>
             </InputGroupText>
           </InputGroupAddon>
@@ -85,7 +86,7 @@ const Login = ({isopen, togglemodal, passRole, setId}) => {
                 {/* program filter */}
                 <Dropdown
                 placeholder="Select Role"
-                // className={}
+                className={styles.drpdwn}
                 options={['AICTE', 'Corporate', 'College']}
                 value="one"
                 onChange={(item) => setrole(item.value)}

@@ -103,6 +103,15 @@
 
   .login_input{
     background: #FFFFFF;
+    border-radius: 0;
+  }
+
+  .login__logo{
+    border-radius: 0;
+  }
+
+  .drpdwn{
+    width: 208px;
   }
 
   .footer button{
