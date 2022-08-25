@@ -38,12 +38,12 @@ import DatamapsIndia from "react-datamaps-india";
 import ScrollIntoView from "react-scroll-into-view";
 import useIntersection from "Components/CustomHooks/useIntersection";
 import DefaultFooter from "Components/Footers/DefaultFooter.js";
-import { BarOptions, MapLayout } from "../Graph_options"; // graph static data
+import { BarOptions, MapLayout } from "./Graph_options"; // graph static data
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import highcharts3d from "highcharts/highcharts-3d";
-import styles from "../profile.module.css";
-import AicteHeader from "./AicteHeader";
+import styles from "./profile.module.css";
+import AicteHeader from "./AICTE Profile/AicteHeader";
 import IndexNavbar from "Components/Navbars/IndexNavbar";
 
 import { Dropdown, Selection } from "react-dropdown-now";
@@ -54,13 +54,13 @@ import {
   programOptions,
   instituteTypes,
   statesOptions,
-} from "./DropdownOptions";
+} from "./AICTE Profile/DropdownOptions";
 // sample dataset for graphs ************** to be removed upon integration
-import { PieData } from "../dataset";
+import { PieData } from "./dataset";
 import { baseurl } from "Components/baseUrl";
 import DarkFooter from "Components/Footers/DarkFooter";
 
-function AicteProfile() {
+function Profile() {
   const [filterModal, setfilterModal] = useState(false);
   const [programWise, setProgramWise] = useState({});
   const [instituteWise, setInstituteWise] = useState({});
@@ -294,9 +294,9 @@ function AicteProfile() {
   const [iconPills, setIconPills] = React.useState("1");
 
   return (
-    <div className="wrapper">
-      <IndexNavbar isfixed={false} />
-      <AicteHeader />
+    <>
+      {/* <IndexNavbar/> */}
+      {/* <AicteHeader /> */}
       <div className={`section ${styles.profile_body}`}>
         <div className={`container ${styles.graph_container}`}>
           <Row>
@@ -724,8 +724,8 @@ function AicteProfile() {
       </div>
       <DarkFooter/>
       {/* <DefaultFooter /> */}
-    </div>
+    </>
   );
 }
 
-export default AicteProfile;
+export default Profile;

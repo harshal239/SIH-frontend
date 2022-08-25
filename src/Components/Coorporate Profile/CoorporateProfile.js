@@ -1,7 +1,9 @@
 import React from 'react'
 import CoorporateHeader from './CoorporateHeader'
 import IndexNavbar from 'Components/Navbars/IndexNavbar'
-import AicteProfile from 'Components/AICTE Profile/AicteProfile'
+import Profile from 'Components/Profile'
+import DarkFooter from 'Components/Footers/DarkFooter'
+// import AicteProfile from 'Components/AICTE Profile/AicteProfile'
 // import Profile from 'Components/Profile'
 const CoorporateProfile = () => {
   return (
@@ -9,8 +11,7 @@ const CoorporateProfile = () => {
         
         <IndexNavbar isfixed={false}/>
         <CoorporateHeader/>
-        <AicteProfile/>
-        {/* <Profile/> */}
+        <Profile/>
     </div>
   )
 }

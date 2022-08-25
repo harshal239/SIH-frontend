@@ -3,7 +3,7 @@ import axios from "axios";
 import { baseurl } from "Components/baseUrl";
 
 // reactstrap components
-import {NavItem, NavLink} from "reactstrap";
+import {Nav, NavItem, NavLink} from "reactstrap";
 
 import React from 'react';
 import styles from './nav.module.css';
@@ -78,6 +78,11 @@ const NavItems = ({role, togglelogin, removerole, userId}) => {
               <NavLink onClick={() => nav("/aicte-profile")}>
               <a className={styles.nav_item}>AICTE Statistics</a> 
             </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink onClick={()=>nav("/sendEmails")}>
+              <a className={styles.nav_item}>Send Job opportunities</a> 
+              </NavLink>
             </NavItem>
             <NavItem>
             <NavLink onClick={()=>handlelogout()}>

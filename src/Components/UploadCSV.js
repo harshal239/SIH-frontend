@@ -12,10 +12,10 @@ const UploadCSV = () => {
       <Card>
         <CardBody>
     
-        <div className="modal-header justify-content-center">
+        <div className={styles.title}>
           <h4 className="title title-up">Upload Placement Record</h4>
         </div>
-        <ModalBody>
+        <div>
           <div className={styles.fileupload}>
             <button
               className={styles.file_upld_btn}
@@ -57,9 +57,9 @@ const UploadCSV = () => {
               </div>
             </div>
           </div>
-        </ModalBody>
+        </div>
 
-        <div className="modal-footer">
+        <div>
           <Button className="btn btn-success image-btn" type="button">
             Submit
           </Button>

@@ -131,7 +131,32 @@ function CollegeProfile() {
   const pieInViewport = useIntersection(pieRef, "-300px");
   const barInViewport = useIntersection(barRef, "-300px");
   const diversityBarInViewport = useIntersection(diversityBarRef, "-300px");
-  const statArray = [1, 2, 3, 4, 5, 6];
+  const statArray = [
+    {
+      label: "Total Institutions",
+      value: 8999,
+    },
+    {
+      label: "Total Students",
+      value: 21,
+    },
+    {
+      label: "Placed",
+      value: 16,
+    },
+    {
+      label: "Male",
+      value: 17,
+    },
+    {
+      label: "Female",
+      value: 4,
+    },
+    {
+      label: "Minority",
+      value: 1,
+    },
+  ];
   const filterArray = [1, 2, 3, 4, 5, 6, 7];
 
   return (
@@ -145,13 +170,17 @@ function CollegeProfile() {
               {
                 // statistics cards
                 // console.log(stats)
-                Object.entries(stats).map(([k, v]) => {
+                // Object.entries(stats).map(([k, v]) => {
+                  statArray.map(item=>{
                   return (
                     <div class="col-xxl-3 col-md-4">
                       <Card className={styles.stat_card}>
                         <CardBody>
                           <span className={styles.stat_header}>
-                            {k} <span>| 2020</span>
+                            {/* {k} */}
+                            {/* 2534 */}
+                            {item.label}
+                             <span>| 2022</span>
                           </span>
                           <div
                             className="d-flex align-items-center"
@@ -164,7 +193,10 @@ function CollegeProfile() {
                               <i className="now-ui-icons users_single-02"></i>
                             </div>
                             <div class="ps-3">
-                              <span className={styles.stat_value}>{v} M</span>
+                              <span className={styles.stat_value}>
+                                {/* {v} M */}
+                                {item.value}
+                                </span>
                             </div>
                           </div>
                         </CardBody>

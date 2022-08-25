@@ -40,7 +40,7 @@ function CoorporateHeader() {
           </div>
           <h3 className="title">Company pvt. ltd.</h3>
           <p className="category">some description</p>
-          <div className="content">
+          {/* <div className="content">
             <div className="social-description">
               <h2>8999</h2>
               <p>Total Institutions</p>
@@ -49,7 +49,7 @@ function CoorporateHeader() {
               <h2>21M</h2>
               <p>Total Students</p>
             </div>
-          </div>
+          </div> */}
         </Container>
       </div>
     </>

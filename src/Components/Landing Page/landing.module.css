@@ -3,6 +3,16 @@
     font-weight: 700;
 }
 
+.title{
+    color: #131c33;
+    font-size: 3.6rem;
+    line-height: 5.760000000000001rem;
+    line-height: 100%;
+    text-align: center;
+    margin-top: 36px;
+    text-transform: capitalize;
+}
+
 .slider_content{
     /* color: #ffffff !important; */
 }
@@ -32,4 +42,12 @@
 
 .fact_count{
     font-size: 36px;
+}
+
+.content_text{
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

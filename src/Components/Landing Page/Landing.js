@@ -43,63 +43,48 @@ function Landing() {
 
 
   const teamMembers = ["Utkarsha Nehe", "Vedangi Bhavsar", "Sudarshan Gawale", "Harshal Walunj", "Yuvraj Deshmukh", "Shubham Sardar"];
+  const policies = [
+    {name: "National Career Service Scheme",
+      content: "The Government of India has initiated National Career Service Scheme whereby a web portal named National Career Service Portal (www.ncs.gov.in) has been launched by the Ministry of Labour and Employment (India). Through this portal, job-seekers and employers can avail the facility of a common platform for seeking and updating job information. Not only private vacancies, contractual jobs available in the government sector are also available on the portal."},
+    {name: "Steps taken on disguised unemployment",
+  content: "Agriculture is the most labour absorbing sector of the economy. In recent years, there has been a decline in the dependence of population on agriculture partly because of disguised unemployment. Some of the surplus labour in agriculture has moved to either secondary or the tertiary sector. In the secondary sector, small scale manufacturing is the most labour absorbing. In case of the tertiary sector, various new services are now appearing ."},
+    {name: "Mahatma Gandhi National Rural Employment Guarantee Act 2005",
+  content: "The Government of India has taken several steps to decrease the unemployment rates like launching the Mahatma Gandhi National Rural Employment Guarantee Scheme which guarantees a 100-day employment to an unemployed person in a year. It has implemented it in 200 of the districts and further will be expanded to 600 districts. In exchange for working under this scheme the person is paid 150 per day."},
+  //   {name: "National Rural Employment Programme",
+  // content: "The National Rural Employment Programme offers people from the rural areas an equal shot at job opportunities across the nation. The growing disparity in terms of personal finance between those in the rural and urban areas has increasingly led to people from the rural areas to move to the urban areas, making urban management difficult. The NREP aims to provide employment opportunities in the rural areas, especially in times of drought and other such scarcities."}
+  ];
   return (
     <>
     
       <div className="wrapper">
       <IndexNavbar isfixed={false}/>
         <Header/>
-
-        <Container>
+        {/* <Container> */}
+              <h1 className={styles.title}>Policies</h1>
           <Row>
-            <Col md='6'>
-      <Card>
-        <CardImg top width="100%" src={require("assets/img/login.jpg")} />
-        <CardBody>
-          <CardTitle>Card title</CardTitle>
-          <CardSubtitle>Card subtitle</CardSubtitle>
-          <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-          <Button>Button</Button>
-        </CardBody>
-      </Card>
-            </Col>
             
-            <Col md='6'>
-      <Card>
-        <CardImg top width="100%" src={require("assets/img/login.jpg")} alt="Card image cap" />
-        <CardBody>
-          <CardTitle>Card title</CardTitle>
-          <CardSubtitle>Card subtitle</CardSubtitle>
-          <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-          <Button>Button</Button>
-        </CardBody>
-      </Card>
-            </Col>
-            
-            <Col md='6'>
-      <Card>
-        <CardImg top width="100%" src={require("assets/img/login.jpg")} alt="Card image cap" />
-        <CardBody>
-          <CardTitle>Card title</CardTitle>
-          <CardSubtitle>Card subtitle</CardSubtitle>
-          <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-          <Button>Button</Button>
-        </CardBody>
-      </Card>
-            </Col>
-            <Col md='6'>
-      <Card>
-        <CardImg top width="100%" src={require("assets/img/login.jpg")} alt="Card image cap" />
-        <CardBody>
-          <CardTitle>Card title</CardTitle>
-          <CardSubtitle>Card subtitle</CardSubtitle>
-          <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-          <Button>Button</Button>
-        </CardBody>
-      </Card>
-            </Col>
+
+
+      {
+        policies.map(item => {
+          return(
+            <Col sm={{ size: 3, offset: 1 }}>
+            <Card>
+            <CardImg top width="100%" src={require("assets/img/login.jpg")} />
+            <CardBody>
+    
+              <CardTitle>{item.name}</CardTitle>
+              <CardSubtitle>Card subtitle</CardSubtitle>
+              <CardText className={styles.content_text}>{item.content}</CardText>
+              <Button color="info">More</Button>
+            </CardBody>
+          </Card>
+          </Col>
+          );
+        })
+      }
           </Row>
-        </Container>
+        {/* </Container> */}
         <div className="section section-team text-center">
 
 

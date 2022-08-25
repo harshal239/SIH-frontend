@@ -12,10 +12,12 @@ import NucleoIcons from 'views/NucleoIcons';
 
 import Landing from 'Components/Landing Page/Landing';
 import CoorporateProfile from 'Components/Coorporate Profile/CoorporateProfile';
-import AicteProfile from 'Components/AICTE Profile/AicteProfile';
+// import AicteProfile from 'Components/AICTE Profile/AicteProfile';
+import AICTE_Profile from 'Components/AICTE Profile/AICTE_Profile';
 import CollegeProfile from 'Components/College Profile/CollegeProfile';
 import AddReasons from 'Components/AddReasons';
 import UploadCSV from 'Components/UploadCSV';
+import SendJobs from 'Components/Coorporate Profile/SendJobs';
 import Login from 'Components/Login/Login';
 import Unemployability_reasons from 'Components/Unemployability_reasons';
 import IndexNavbar from 'Components/Navbars/IndexNavbar';
@@ -36,7 +38,8 @@ function App() {
           <Route path="/homepage" element={<Landing/>}/>
           <Route path="/upload-record" element={<UploadCSV/>}/>
           <Route path="/coorporate-profile" element={<CoorporateProfile/>}/>
-          <Route path="/aicte-profile" element={<AicteProfile/>}/>
+          <Route path="/sendEmails" element={<SendJobs/>}/>
+          <Route path="/aicte-profile" element={<AICTE_Profile/>}/>
           <Route path="/college-profile" element={<CollegeProfile/>}/>
           <Route path="/add-reasons" element={<AddReasons/>}/>
           <Route path="/unemployability-reasons" element={<Unemployability_reasons/>}/>

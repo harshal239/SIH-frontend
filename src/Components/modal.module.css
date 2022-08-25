@@ -35,6 +35,9 @@
   }
   
 
+  .title{
+    text-align: center;
+  }
 
   .file_upload_content {
     display: none;
