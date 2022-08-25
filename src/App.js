@@ -21,10 +21,10 @@ function App() {
   return (
     <div className="App">
       <Routes>
-          <Route path="/" element={<Landing/>}/>
+          <Route path="/" element={<AICTE_Profile/>}/>
           <Route path="/sign-up" element={<Login/>}/>
           <Route path="/icons" element={<NucleoIcons/>}/>
-          <Route path="/homepage" element={<Landing/>}/>
+          {/* <Route path="/homepage" element={<Landing/>}/> */}
           <Route path="/upload-record" element={<UploadCSV/>}/>
           <Route path="/corporate-profile" element={<CoorporateProfile/>}/>
           <Route path="/aicte-profile" element={<AICTE_Profile/>}/>

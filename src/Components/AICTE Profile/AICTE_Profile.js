@@ -45,6 +45,7 @@ import highcharts3d from "highcharts/highcharts-3d";
 import styles from "../profile.module.css";
 import AicteHeader from "../AICTE Profile/AicteHeader";
 import IndexNavbar from "Components/Navbars/IndexNavbar";
+import { useNavigate } from "react-router-dom";
 
 import { Dropdown, Selection } from "react-dropdown-now";
 import "react-dropdown-now/style.css";
@@ -61,6 +62,7 @@ import { baseurl } from "Components/baseUrl";
 import DarkFooter from "Components/Footers/DarkFooter";
 
 function AICTE_Profile() {
+  const nav = useNavigate();
   const [filterModal, setfilterModal] = useState(false);
   const [programWise, setProgramWise] = useState({});
   const [instituteWise, setInstituteWise] = useState({});
@@ -92,7 +94,8 @@ function AICTE_Profile() {
   const getyearWisePlacement = async () => {
     let data = {
       program: filters.program,
-      gender: filters.gender === "Female" ? "Female" : "",
+      // gender: filters.gender === "Female" ? "Female" : "",
+      gender:"",
       state: filters.state,
       institutionType: filters.instituteType,
       minority: filters.minority === "Yes" ? "Yes" : "",
@@ -125,7 +128,8 @@ function AICTE_Profile() {
   const getprogramwiseplacement = async () => {
     let data = {
       year: parseInt(filters.year),
-      gender: filters.gender === "Female" ? "Female" : "",
+      // gender: filters.gender === "Female" ? "Female" : "",
+      gender:"",
       state: filters.state,
       institutionType: filters.instituteType,
       minority: filters.minority === "Yes" ? "Yes" : "",
@@ -145,7 +149,8 @@ function AICTE_Profile() {
   const getinstitutewisePlacement = async () => {
     let data = {
       year: parseInt(filters.year),
-      gender: filters.gender === "Female" ? "Female" : "",
+      // gender: filters.gender === "Female" ? "Female" : "",
+      gender:"",
       state: filters.state,
       program: filters.program,
       minority: filters.minority === "Yes" ? "Yes" : "",
@@ -190,7 +195,8 @@ function AICTE_Profile() {
   const getstatewisePlacement = async () => {
     let data = {
       year: "",
-      gender: filters.gender === "Female" ? "Female" : "",
+      // gender: filters.gender === "Female" ? "Female" : "",
+      gender:"",
       institutionType: filters.instituteType,
       program: filters.program,
       minority: filters.minority === "Yes" ? "Yes" : "",
@@ -378,7 +384,7 @@ function AICTE_Profile() {
         <div className={`container ${styles.graph_container}`}>
           <Row>
             <Col md="3" className={styles.sticky__index}>
-              <Card>
+              <Card style={{"height":"637px"}}>
                 <CardBody>
                   <h3>Graphs</h3>
                   <div className={styles.drpwrapper}>
@@ -550,6 +556,7 @@ function AICTE_Profile() {
                     <TabPane tabId="iconPills1">
                       <div ref={barRef} id="barid">
                         <Bar
+                          onClick = {()=>nav("/branch-wise")}
                           options={BarOptions}
                           data={{
                             labels: programWise.ids,
@@ -717,7 +724,22 @@ function AICTE_Profile() {
               {/* Program wise placement graph */}
              
             </Col>
+
           </Row>
+          {/* <Row>
+            <Col>
+            <Card>
+              
+              <CardBody>
+                  <h2>Branch Wise Placement</h2>
+                  <div style={{"height":"400px", "width":"400px", "margin":"auto"}}>
+
+              <Pie data={PieData} />
+                  </div>
+              </CardBody>
+            </Card>
+            </Col>
+          </Row> */}
         </div>
       </div>
       <DarkFooter/>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 // reactstrap components
-import { CardBody, Container, Card } from "reactstrap";
+import { CardBody, Container, Card, Row } from "reactstrap";
 import {Pie, Bar, Line} from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -18,7 +18,7 @@ import {
 import axios from "axios";
 import IndexNavbar from "Components/Navbars/IndexNavbar";
 import DarkFooter from "Components/Footers/DarkFooter";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { PieData } from "Components/dataset";
 
 
@@ -99,10 +99,17 @@ const BranchWise = () => {
       
       <IndexNavbar isfixed={true}/>
           <Container style={{"marginTop":"100px"}}>
+            {/* <button onClick={()=>nav(-1)}>Back</button> */}
+            
             <Card>
               
                 <CardBody>
-                    <h2>Branch Wise Placement</h2>
+                    <div >
+                        <h3> <span className="now-ui-icons arrows-1_minimal-left" 
+                        style={{"marginRight":"20px"}}
+                        onClick={()=>nav(-1)}></span>Branch Wise Placement</h3>
+
+                    </div>
                     <div style={{"height":"400px", "width":"400px", "margin":"auto"}}>
 
                 <Pie data={PieData} />

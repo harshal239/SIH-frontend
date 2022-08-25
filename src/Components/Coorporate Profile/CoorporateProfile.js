@@ -81,7 +81,7 @@ function CoorporateProfile() {
   //   {id: 0, name: 'Rashmi', email: 'student@gmail.com', year: 2022, branch: 'Computer Engineering'}
   // ]
   const [filters, setfilters] = useState({
-    year: "",
+    year: "2022",
     branch: "",
   });
 
@@ -427,7 +427,7 @@ function CoorporateProfile() {
                       placeholder="Select year"
                       className="my-className"
                       options={yearOptions}
-                      value="one"
+                      value={filters.year}
                       onChange={(item) =>
                         setfilters({ ...filters, year: item.value })
                       }
