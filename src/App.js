@@ -14,6 +14,7 @@ import CoorporateProfile from 'Components/Coorporate Profile/CoorporateProfile';
 import AICTE_Profile from 'Components/AICTE Profile/AICTE_Profile';
 import UploadCSV from 'Components/UploadCSV';
 import Login from 'Components/Login/Login';
+import BranchWise from 'Components/AICTE Profile/BranchWise';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/upload-record" element={<UploadCSV/>}/>
           <Route path="/corporate-profile" element={<CoorporateProfile/>}/>
           <Route path="/aicte-profile" element={<AICTE_Profile/>}/>
+          <Route path="/branch-wise" element={<BranchWise/>}/>
           <Route path="/sign-in" element={<Login/>}/>
         </Routes>
     </div>

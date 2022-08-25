@@ -269,24 +269,24 @@ function AICTE_Profile() {
     },
     {
       label: "Total Students",
-      value: 21,
+      value: "15L",
     },
     {
       label: "Placed",
-      value: 16,
+      value: "11L",
     },
-    {
-      label: "Male",
-      value: 17,
-    },
-    {
-      label: "Female",
-      value: 4,
-    },
-    {
-      label: "Minority",
-      value: 1,
-    },
+    // {
+    //   label: "Male",
+    //   value: 17,
+    // },
+    // {
+    //   label: "Female",
+    //   value: 4,
+    // },
+    // {
+    //   label: "Minority",
+    //   value: 1,
+    // },
   ];
 
   const filterArray = [1, 2, 3];
@@ -320,7 +320,7 @@ function AICTE_Profile() {
                           </div>
                           <div class="ps-3">
                             <span className={styles.stat_value}>
-                              {item.value} M
+                              {item.value} 
                             </span>
                           </div>
                         </div>
@@ -388,7 +388,7 @@ function AICTE_Profile() {
                       placeholder="Select year"
                       className="my-className"
                       options={yearOptions}
-                      value="one"
+                      value={filters.year}
                       onChange={(item) =>
                         setfilters({ ...filters, year: item.value })
                       }
@@ -440,10 +440,9 @@ function AICTE_Profile() {
                       }}
                     />
                   </div>
-
+{/* 
                   <div className={styles.drpwrapper}>
                     <span className={styles.filter_label}>Gender</span>
-                    {/* gender filter */}
                     <Dropdown
                       placeholder="Select Gender"
                       className="my-className"
@@ -453,11 +452,10 @@ function AICTE_Profile() {
                         setfilters({ ...filters, gender: item.value });
                       }}
                     />
-                  </div>
+                  </div> */}
 
-                  <div className={styles.drpwrapper}>
+                  {/* <div className={styles.drpwrapper}>
                     <span className={styles.filter_label}>Minority</span>
-                    {/* minority filter */}
                     <Dropdown
                       placeholder="Select Minority"
                       className="my-className"
@@ -467,7 +465,7 @@ function AICTE_Profile() {
                         setfilters({ ...filters, minority: item.value });
                       }}
                     />
-                  </div>
+                  </div> */}
 
                 </CardBody>
               </Card>
@@ -503,7 +501,7 @@ function AICTE_Profile() {
                         Instititute Type Wise
                       </NavLink>
                     </NavItem>
-                    <NavItem>
+                    {/* <NavItem>
                       <NavLink
                         className={iconPills === "3" ? "active" : ""}
                         href="#pablo"
@@ -515,7 +513,7 @@ function AICTE_Profile() {
                         <i className="now-ui-icons location_map-big"></i>
                         Gender Wise
                       </NavLink>
-                    </NavItem>
+                    </NavItem> */}
                     <NavItem>
                       <NavLink
                         className={iconPills === "4" ? "active" : ""}

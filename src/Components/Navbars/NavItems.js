@@ -68,6 +68,11 @@ const NavItems = ({role, togglelogin, removerole, userId}) => {
       default:
         return(
             <>
+             <NavItem >
+              <NavLink onClick={() => nav("/aicte-profile")}>
+              <a className={styles.nav_item}>Placement Statistics</a> 
+                </NavLink>
+            </NavItem>
               <NavItem>
                 <NavLink onClick={() => nav("/sign-up")}>
                 <a className={styles.nav_item}>Sign-Up</a> 

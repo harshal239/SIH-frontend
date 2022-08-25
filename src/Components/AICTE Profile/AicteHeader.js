@@ -37,7 +37,7 @@ function AicteHeader() {
           </div>
           <h3 className="title">AICTE</h3>
           <p className="category">All India Council for Technical Education</p>
-          <div className="content">
+          {/* <div className="content">
             <div className="social-description">
               <h2>8999</h2>
               <p>Total Institutions</p>
@@ -46,7 +46,7 @@ function AicteHeader() {
               <h2>21M</h2>
               <p>Total Students</p>
             </div>
-          </div>
+          </div> */}
         </Container>
       </div>
     </>

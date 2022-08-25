@@ -1,10 +1,6 @@
 
 export const PieData = {
-    labels: [                 "0-5 LPA",
-    "5-10 LPA",
-    "10-20 LPA",
-    "20-40 LPA",
-    "Above 40 LPA",],
+    labels: [ "Computer Science", "IT", "ENTC", "Mechinical" ],
     datasets: [
       {
         label: '# of Votes',
