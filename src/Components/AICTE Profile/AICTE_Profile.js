@@ -591,8 +591,8 @@ function AICTE_Profile() {
                       <div ref={programWiseref} id="barid">
                         <Bar
                           
-                          // onClick = {()=>nav("/branch-wise")}
-                          onClick={()=>onProgramclick()}
+                          onClick = {()=>nav("/branch-wise")}
+                          // onClick={()=>onProgramclick()}
                           options={BarOptions}
                           data={{
                             labels: programWise.ids,

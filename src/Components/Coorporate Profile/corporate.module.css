@@ -17,6 +17,7 @@
     align-items: flex-end;
 }
 
-.send__btn{
-    width: 80px;
+
+.send___row{
+    padding: 0 20px;
 }

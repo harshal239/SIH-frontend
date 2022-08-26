@@ -310,23 +310,24 @@ function CoorporateProfile() {
 
   const sendMail = async () => {
     let data = {
-      "from":"",
-      "to":"",
-      "subject":"",
-      "text":""
+      "from":"sardarshubham17@gmail.com",
+      "to":emailList,
+      "subject":"Hello , Congratulations for getting shortlisted at Microsoft!",
+      "text":"Hi Sudarshan,You are shortlisted for interview rounds at FamPay.Thank you for your interest in joining our mission at FamPay. We were super impressed by your work and background and would like to share an assignment for the next steps for your application. Please let us know by when you want us to schedule interview Looking forward to hearing back from you! Best, HR",
     };
 
-    // try{
-    //   const res = await axios.post(
-    //     "http...",
-    //     data
-    //   )
+    try{
+      const res = await axios.post(
+        "https://optimizers-sih-backend.herokuapp.com/api/v1/email/sendEmail",
+        data
+      )
 
-    //   console.log(res);
-    // }
-    // catch(err){
-    //   console.log(err);
-    // }
+      console.log(res);
+      alert("Email Sent Successfully");
+    }
+    catch(err){
+      console.log(err);
+    }
   }
 
   const handleSliderChange = (event, newValue) => {
@@ -698,13 +699,10 @@ function CoorporateProfile() {
                       // onSelectionModelChange={r=>console.log(r)}
                       onSelectionModelChange={(list)=> handleStudentSelection(list)}
                     />
-                    <Row >
-                      {/* className={styles.send__btn_row} */}
-                      {/* <Col md={{ size: 8, offset: 2 }}> */}
-                      <Button disabled color="info" className={styles.send__btn}>Send Job Opportunities</Button>
-
-                      {/* </Col> */}
-
+                    <Row className={classes.send___row}>
+                      <Button 
+                      onClick={()=>sendMail()}
+                      color="info">Send Email</Button>
                     </Row>
                   </div>
                 </CardBody>
