@@ -1,0 +1,23 @@
+.graphs__mainCard{
+    /* height: 70%;
+    min-height: 550px; */
+    height: 500px;
+    overflow-y: scroll;
+}
+
+.datagrid{
+    /* background: rebeccapurple; */
+}
+
+.cls_icon{
+    font-size: 22px;
+}
+
+.send__btn_row{
+    align-items: flex-end;
+}
+
+
+.send___row{
+    padding: 0 20px;
+}
