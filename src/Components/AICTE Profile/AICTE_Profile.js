@@ -345,7 +345,7 @@ function AICTE_Profile() {
                   <div class="col-xxl-3 col-md-4">
                     <Card className={styles.stat_card}>
                       <CardBody>
-                        <span className={styles.stat_header}>{item.label} <span>| {filters.year}</span></span>
+                        <span className={styles.stat_header}>{item.label} <span>| 2022</span></span>
                         <div
                           className="d-flex align-items-center"
                           style={{ height: "75px" }}

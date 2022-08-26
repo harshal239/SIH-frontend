@@ -426,14 +426,14 @@ function CoorporateProfile() {
 
   const columns = [
     { field: "id", headerName: "Sr. No"
-    // , width: 70 
+    , width: 50
   },
     {
       field: "name",
       headerName: "Name",
       description: "This column has a value getter and is not sortable.",
       sortable: false,
-      width: 60
+      width: 100
       // valueGetter: (params: GridValueGetterParams) =>
       //   `${params.row.firstName || ""} ${params.row.lastName || ""}`,
     },

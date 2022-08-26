@@ -107,7 +107,7 @@ const BranchWise = () => {
                     <div >
                         <h3> <span className="now-ui-icons arrows-1_minimal-left" 
                         style={{"marginRight":"20px"}}
-                        onClick={()=>nav(-1)}></span>Branch Wise Placement</h3>
+                        onClick={()=>nav(-1)}></span>Branch Wise Placement in Percentage</h3>
 
                     </div>
                     <div style={{"height":"400px", "width":"400px", "margin":"auto"}}>

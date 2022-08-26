@@ -3,16 +3,14 @@ export const PieData = {
     labels: [ "Mechanical", "IT", "ENTC", "Computer Science" ],
     datasets: [
       {
-        label: '# of Votes',
-        data: [20, 10, 30, 35],
+        label: 'lkdfj',
+        data: [20, 10, 30, 40],
         backgroundColor: [
-          "rgb(255, 99, 132)",
-
-          "rgb(255, 205, 86)",
-
-          "rgb(75, 192, 192)",
-          "rgb(201, 203, 207)",
-          'rgb(233,200,145)'
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)',
