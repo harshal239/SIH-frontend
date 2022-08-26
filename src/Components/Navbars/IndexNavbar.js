@@ -10,7 +10,7 @@ import React from 'react';
 import styles from './nav.module.css';
 
 
-
+import logo from '../../assets/img/favicon.png';
 
 function IndexNavbar({isfixed}) {
 
@@ -67,6 +67,7 @@ function IndexNavbar({isfixed}) {
     
   });
 
+  
 
   const togglelogin = () => setModal2(!modal2);
   return (
@@ -92,8 +93,12 @@ function IndexNavbar({isfixed}) {
               target="_blank"
               id="navbar-brand"
               onClick={() => nav("/homepage")}
-              className={styles.nvBrand}
+              className = {`navbar-brand  ${styles.nvBrand}`}
+              // className={styles.nvBrand}
             >
+
+  
+              <img src={logo} width="30" height="24" className={styles.nav_logo}/>
               Campus Placement
             </NavbarBrand>
   

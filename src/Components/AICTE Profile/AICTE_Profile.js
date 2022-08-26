@@ -61,7 +61,9 @@ import { PieData } from "../dataset";
 import { baseurl } from "Components/baseUrl";
 import DarkFooter from "Components/Footers/DarkFooter";
 
-
+import stat_img1 from "../../assets/img/Building_icon1.png";
+import stat_img2 from "../../assets/img/Building_icon2.png";
+import stat_img3 from "../../assets/img/Women_icon1.png";
 // function valuetext(value: number) {
 //   return `${value}°C`;
 // }
@@ -297,17 +299,18 @@ function AICTE_Profile() {
   const statArray = [
     {
       label: "Total Institutions",
-      image: "assets/img/Building_icon1.png",
+      // image: "../../assets/img/Building_icon1.png",
+      image: stat_img1,
       value: 8999,
     },
     {
       label: "Total Students",
-      image: "assets/img/Building_icon2.png",
+      image: stat_img2,
       value: "15L",
     },
     {
       label: "Placed",
-      image: "assets/img/Women_icon1.png",
+      image: stat_img3,
       value: "11L",
     },
     // {
@@ -352,8 +355,8 @@ function AICTE_Profile() {
                             style={{ background: "#f6f6fe" }}
                           >
                             {/* <i className="now-ui-icons users_single-02"></i> */}
-                            {/* {item.image}   */}
-                            <img src={require("assets/img/Building_icon1.png")}/>
+                             
+                            <img src={item.image}/>
                           </div>
                           <div class="ps-3">
                             <span className={styles.stat_value}>

@@ -12,3 +12,11 @@
 .cls_icon{
     font-size: 22px;
 }
+
+.send__btn_row{
+    align-items: flex-end;
+}
+
+.send__btn{
+    width: 80px;
+}

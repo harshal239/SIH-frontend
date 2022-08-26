@@ -5,9 +5,11 @@ import {Modal, ModalBody, Input, InputGroup, InputGroupAddon, InputGroupText, Bu
 import { Dropdown, Selection } from "react-dropdown-now";
 import styles from "./modal.module.css"; 
 import "react-dropdown-now/style.css";
+import { useNavigate } from "react-router-dom";
 // import './drpdown.css';
 
 const Login = ({isopen, togglemodal, passRole, setId}) => {
+    const nav = useNavigate();
     const [username, setuserName] = useState("");
     const [password, setpassword] = useState("");
     const [role, setrole] = useState("");
@@ -16,7 +18,7 @@ const Login = ({isopen, togglemodal, passRole, setId}) => {
 
     const handleLogin = () => {
         console.log("login clicked");
-        console.log(username, password);
+        // console.log(username, password);
         const data = {
           userName: username,
           password: password,
@@ -30,7 +32,13 @@ const Login = ({isopen, togglemodal, passRole, setId}) => {
             togglemodal();
             localStorage.setItem('role',res.data.body.user.role);
             localStorage.setItem('userid',res.data.body.user._id);
-            alert("Login Successfull , role: ", res.data.body.user.role);
+            alert("Login Successfull !", res.data.body.user.role);
+            if (res.data.body.user.role === "corporate"){
+              nav("/corporate-profile")
+            }
+            else{
+              nav("/homepage");
+            }
           })
           .catch((err) => console.log(err));
       };

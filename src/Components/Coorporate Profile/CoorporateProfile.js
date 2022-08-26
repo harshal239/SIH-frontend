@@ -9,7 +9,7 @@ import {
   CardBody,
   CardHeader,
   NavItem,
-
+Button,
   TabContent,
   TabPane,
 } from "reactstrap";
@@ -235,6 +235,7 @@ function CoorporateProfile() {
   const [mapRegionData, setmapregionData] = useState({});
   const [yearWise, setYearWise] = useState({});
   const [sliderValue, setSliderVal] = React.useState([5,10]);
+  const [emailList, setemailList] = useState([]);
 
 
   const [tableData, settableData] = useState([
@@ -251,10 +252,6 @@ function CoorporateProfile() {
 
   const getTableData = async () => {
 
-    console.log(groupedOptions);
-    console.log(focused);
-    console.log(getListboxProps);
-
     let skill_temp = [];
     value.map(obj=>{
       return(
@@ -267,9 +264,8 @@ function CoorporateProfile() {
       "minCGPA" : sliderValue[0],
       "maxCGPA" : sliderValue[1],
       "skills": skill_temp
-  };
+    };
 
-  console.log(data);
     try{
       const res = await axios.post(
         "https://optimizers-sih-backend.herokuapp.com/api/v1/student/getAllStudentsByYearAndBranch",
@@ -297,8 +293,40 @@ function CoorporateProfile() {
     catch(err){
       console.log(err);
     }
+  }
 
-  
+  const handleStudentSelection = (indices) => {
+    let emails = [];
+    indices.map(ind => {
+      return(
+        emails.push(tableData[ind-1].email)
+      );
+    })
+
+    console.log(emails);
+    setemailList(emails);
+
+  }
+
+  const sendMail = async () => {
+    let data = {
+      "from":"",
+      "to":"",
+      "subject":"",
+      "text":""
+    };
+
+    // try{
+    //   const res = await axios.post(
+    //     "http...",
+    //     data
+    //   )
+
+    //   console.log(res);
+    // }
+    // catch(err){
+    //   console.log(err);
+    // }
   }
 
   const handleSliderChange = (event, newValue) => {
@@ -666,7 +694,18 @@ function CoorporateProfile() {
                       rowsPerPageOptions={[5]}
                       className={classes.datagrid}
                       checkboxSelection
+
+                      // onSelectionModelChange={r=>console.log(r)}
+                      onSelectionModelChange={(list)=> handleStudentSelection(list)}
                     />
+                    <Row >
+                      {/* className={styles.send__btn_row} */}
+                      {/* <Col md={{ size: 8, offset: 2 }}> */}
+                      <Button disabled color="info" className={styles.send__btn}>Send Job Opportunities</Button>
+
+                      {/* </Col> */}
+
+                    </Row>
                   </div>
                 </CardBody>
               </Card>

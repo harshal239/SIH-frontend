@@ -22,12 +22,13 @@ function App() {
     <div className="App">
       <Routes>
           <Route path="/" element={<AICTE_Profile/>}/>
+          <Route path="/homepage" element={<AICTE_Profile/>}/>
           <Route path="/sign-up" element={<Login/>}/>
           <Route path="/icons" element={<NucleoIcons/>}/>
           {/* <Route path="/homepage" element={<Landing/>}/> */}
           <Route path="/upload-record" element={<UploadCSV/>}/>
           <Route path="/corporate-profile" element={<CoorporateProfile/>}/>
-          <Route path="/aicte-profile" element={<AICTE_Profile/>}/>
+          {/* <Route path="/aicte-profile" element={<AICTE_Profile/>}/> */}
           <Route path="/branch-wise" element={<BranchWise/>}/>
           <Route path="/sign-in" element={<Login/>}/>
         </Routes>
